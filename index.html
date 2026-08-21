@@ -1292,6 +1292,225 @@
       width: 100%;
       margin: 6px 0 4px;
     }
+
+    .datetime-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .datetime-row .small-btn {
+      height: 44px;
+      white-space: nowrap;
+    }
+
+    .field-warning {
+      display: block;
+      margin-top: 6px;
+      margin-bottom: 8px;
+      padding-left: 2px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--danger);
+      -webkit-text-fill-color: var(--danger);
+    }
+
+    input.field-error {
+      border-color: var(--danger) !important;
+      box-shadow: 0 0 0 2px rgba(150, 105, 105, .08);
+    }
+
+    .modal-box input + .field-warning {
+      margin-top: 6px;
+    }
+
+    .auction-duration-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      align-items: center;
+      margin: 8px 0 12px;
+    }
+
+    .auction-duration-label {
+      width: 100%;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .auction-duration-row > button,
+    .auction-custom-duration button {
+      padding: 8px 11px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+
+    .auction-custom-duration {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .auction-custom-duration input {
+      width: 86px;
+      min-width: 0;
+      margin: 0;
+      padding: 8px 9px;
+    }
+
+    /* QUALITY-OF-LIFE FEATURES */
+    .checkout-toast {
+      position: fixed;
+      z-index: 3000;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(.96);
+      min-width: 220px;
+      padding: 20px 26px;
+      border-radius: 18px;
+      background: rgba(52, 48, 48, .94);
+      color: #fff;
+      -webkit-text-fill-color: #fff;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+      box-shadow: 0 18px 50px rgba(0,0,0,.22);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s ease, transform .15s ease;
+    }
+
+    .checkout-toast.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .checkout-toast small {
+      display: block;
+      margin-top: 5px;
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,.78);
+      -webkit-text-fill-color: rgba(255,255,255,.78);
+    }
+
+    .payment-card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 10px;
+      margin: 12px 0 18px;
+    }
+
+    .payment-mini-card {
+      padding: 13px;
+      border-radius: 13px;
+      background: var(--panel);
+      box-shadow: 0 3px 12px rgba(72,58,58,.035);
+    }
+
+    .payment-mini-card .amount {
+      margin-top: 4px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .data-management-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .data-management-grid button {
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: var(--soft);
+      cursor: pointer;
+    }
+
+    .shift-summary {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .shift-summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .auction-bid-history {
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    @media (max-width: 700px) {
+      .payment-card-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .transfer-account-settings {
+      margin: 8px 0 12px 28px;
+      padding: 12px;
+      border-radius: 12px;
+      background: var(--soft);
+    }
+
+    .transfer-account-settings label {
+      display: block;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .transfer-account-settings label:first-child {
+      margin-top: 0;
+    }
+
+    .transfer-account-settings input {
+      margin-top: 4px;
+      width: 100%;
+    }
+
+    .transfer-account-preview {
+      margin-top: 10px;
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .transfer-account-display {
+      display: block;
+      width: fit-content;
+      max-width: 100%;
+      margin: 12px auto 4px;
+      padding: 8px 12px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text);
+      -webkit-text-fill-color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.45;
+      text-align: center;
+      word-break: break-all;
+      cursor: pointer;
+    }
+
+    .transfer-account-display:active {
+      background: var(--soft);
+    }
+
+    .transfer-copy-hint {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+    }
 </style>
 </head>
 
@@ -1333,11 +1552,21 @@
       <div id="auctionCountdownValue" class="auction-countdown-value">00:00:00</div>
     </div>
 
-    <button class="auction-edit" onclick="openAuctionQuickEdit()">更新金額</button>
+    <div style="display:flex;gap:7px;align-items:center">
+      <button class="auction-edit" onclick="openAuctionQuickEdit()">更新金額</button>
+      <button class="auction-edit danger-btn" onclick="closeAuctionManually()">關閉競標</button>
+    </div>
 
     <div id="auctionWinnerMessage" class="auction-winner-message">
       <span id="auctionWinnerMessageText">恭喜得標</span>
       <span id="auctionWinnerAmount" class="auction-winner-amount"></span>
+      <button
+        class="auction-close-button"
+        style="max-width:180px;margin:12px auto 0"
+        onclick="closeAuctionManually()"
+      >
+        關閉競標
+      </button>
     </div>
   </section>
 
@@ -1409,6 +1638,14 @@
     </div>
 
     <h3>付款方式</h3>
+
+    <div class="payment-card-grid">
+      <div class="payment-mini-card">現金<div class="amount">NT$ <span id="payCardCash">0</span></div></div>
+      <div class="payment-mini-card">街口<div class="amount">NT$ <span id="payCardJko">0</span></div></div>
+      <div class="payment-mini-card">轉帳<div class="amount">NT$ <span id="payCardTransfer">0</span></div></div>
+      <div class="payment-mini-card">LINE Pay<div class="amount">NT$ <span id="payCardLinePay">0</span></div></div>
+    </div>
+
     <div class="table-wrap">
       <table>
         <thead><tr><th>付款方式</th><th>筆數</th><th>金額</th></tr></thead>
@@ -1433,8 +1670,10 @@
     </div>
 
     <div class="page-actions">
+      <button onclick="duplicateLastOrder()">複製上一筆到購物車</button>
       <button onclick="undoLastOrder()">撤銷上一筆</button>
       <button onclick="exportCSV()">匯出 CSV</button>
+      <button onclick="openShiftCloseModal()">收攤</button>
       <button class="danger-btn" onclick="resetCurrentSession()">清除此場次紀錄</button>
     </div>
   </section>
@@ -1503,6 +1742,25 @@
       </table>
     </div>
 
+    <h3>庫存提醒設定</h3>
+    <div class="auction-setting-row">
+      <div class="subtle" style="margin-bottom:8px">預設低庫存警示門檻，可在每個商品的「庫存」視窗另外覆寫。</div>
+      <div class="datetime-row">
+        <input id="defaultStockWarningInput" type="number" min="1" inputmode="numeric" value="5">
+        <button class="small-btn" onclick="saveDefaultStockWarning()">儲存</button>
+      </div>
+    </div>
+
+    <h3>資料管理</h3>
+    <div class="auction-setting-row">
+      <div class="subtle" style="margin-bottom:10px">備份包含商品、庫存、場次、訂單、競標紀錄與付款 QR。</div>
+      <div class="data-management-grid">
+        <button onclick="exportFullBackup()">完整備份 JSON</button>
+        <button onclick="document.getElementById('backupRestoreInput').click()">還原備份</button>
+      </div>
+      <input id="backupRestoreInput" class="hidden" type="file" accept=".json,application/json" onchange="restoreFullBackup(this.files[0])">
+    </div>
+
     <h3>付款方式設定</h3>
     <div class="auction-setting-row">
       <div class="subtle" style="margin-bottom:10px">現金固定開啟；街口、轉帳、LINE Pay 可自行決定是否顯示。</div>
@@ -1516,6 +1774,19 @@
         <input id="enableTransfer" type="checkbox" onchange="savePaymentMethodSettings()">
         <span>開啟轉帳</span>
       </label>
+
+      <div class="transfer-account-settings">
+        <label for="transferBankNameInput">銀行名稱</label>
+        <input id="transferBankNameInput" type="text" placeholder="例如：彰化銀行" oninput="saveTransferAccountSettings()">
+
+        <label for="transferBankCodeInput">銀行代碼</label>
+        <input id="transferBankCodeInput" type="text" inputmode="numeric" maxlength="3" placeholder="例如：009" oninput="saveTransferAccountSettings()">
+
+        <label for="transferAccountInput">轉帳帳號</label>
+        <input id="transferAccountInput" type="text" inputmode="numeric" placeholder="輸入帳號" oninput="saveTransferAccountSettings()">
+
+        <div id="transferAccountPreview" class="transfer-account-preview subtle">尚未設定轉帳帳號</div>
+      </div>
 
       <label class="checkbox-row">
         <input id="enableLinePay" type="checkbox" onchange="savePaymentMethodSettings()">
@@ -1531,6 +1802,14 @@
         <button onclick="openAuctionSetting()">設定競標</button>
         <button id="auctionCloseButton" class="auction-close-button hidden" onclick="closeAuctionManually()">關閉競標</button>
       </div>
+    </div>
+
+    <h3>目前競標出價紀錄</h3>
+    <div class="table-wrap auction-bid-history">
+      <table>
+        <thead><tr><th>時間</th><th>署名</th><th>金額</th></tr></thead>
+        <tbody id="activeBidHistoryBody"></tbody>
+      </table>
     </div>
 
     <h3>競標紀錄</h3>
@@ -1717,6 +1996,9 @@
       <div id="stockInputArea">
         <label for="stockInitial">初始數量</label>
         <input id="stockInitial" type="number" inputmode="numeric" min="0">
+
+        <label for="stockWarningThreshold">低庫存警示門檻</label>
+        <input id="stockWarningThreshold" type="number" inputmode="numeric" min="1" placeholder="留空＝使用預設">
       </div>
 
       <div class="modal-actions">
@@ -1836,6 +2118,9 @@
         <div class="qr-card-title">轉帳付款</div>
         <div class="qr-card-amount">NT$ <span id="transferTotal">0</span></div>
 
+        <button id="transferAccountDisplay" class="transfer-account-display hidden" type="button" onclick="copyTransferAccount()" title="點一下複製帳號"></button>
+        <div id="transferAccountCopyHint" class="transfer-copy-hint hidden">點一下可複製帳號</div>
+
         <div class="qr-frame">
           <img id="transferQrImage" class="hidden" alt="轉帳 QR Code">
           <div id="transferQrPlaceholder" class="qr-placeholder">尚未上傳 QR</div>
@@ -1850,7 +2135,7 @@
         <div class="qr-upload-note">從相簿／檔案選擇圖片後，手動把 QR 裁到白色方框內。</div>
       </div>
 
-      <div class="modal-note">請依畫面 QR Code 完成付款。非彰銀帳戶可能產生跨行手續費，<strong>請勿從應付金額中扣除。</strong></div>
+      <div class="modal-note">請依畫面資訊完成付款。跨行轉帳可能依各家銀行規定產生手續費，<strong>請勿從應付金額中扣除。</strong></div>
 
       <div class="modal-actions">
         <button class="cancel" onclick="closeModal('transferModal')">取消</button>
@@ -1905,23 +2190,50 @@
       <label for="auctionTitleInput">顯示名稱</label>
       <input id="auctionTitleInput" type="text" value="掛軸競標">
 
+      <label for="auctionStartPriceInput">起標價</label>
+      <input id="auctionStartPriceInput" type="number" min="0" inputmode="numeric" placeholder="例如：500">
+
       <label for="auctionBidInput">目前競標金額（可自由輸入）</label>
       <input id="auctionBidInput" type="number" min="0" inputmode="numeric" placeholder="直接輸入目前金額">
 
       <label for="auctionStepInput">每標加價</label>
       <input id="auctionStepInput" type="number" min="1" inputmode="numeric" placeholder="例如：100">
 
-      <label for="auctionWinnerInput">目前署名</label>
-      <input id="auctionWinnerInput" type="text" placeholder="例如：小花">
+      <label for="auctionWinnerInput">目前署名 <span style="color:var(--danger)">*</span></label>
+      <input
+        id="auctionWinnerInput"
+        type="text"
+        placeholder="開啟競標前請輸入署名"
+        oninput="clearAuctionSetupWinnerWarning()"
+      >
+      <div id="auctionSetupWinnerWarning" class="field-warning hidden">署名為必填欄位</div>
 
       <label for="auctionStartInput">競標開始時間</label>
-      <input id="auctionStartInput" type="datetime-local">
+      <div class="datetime-row">
+        <input id="auctionStartInput" type="datetime-local" step="300" onchange="normalizeAuctionTimeToFiveMinutes('auctionStartInput')">
+        <button type="button" class="small-btn" onclick="setAuctionTimeNow('auctionStartInput')">現在</button>
+      </div>
 
       <label for="auctionEndInput">競標結束時間</label>
-      <input id="auctionEndInput" type="datetime-local">
+      <div class="datetime-row">
+        <input id="auctionEndInput" type="datetime-local" step="300" onchange="normalizeAuctionTimeToFiveMinutes('auctionEndInput')">
+        <button type="button" class="small-btn" onclick="setAuctionTimeNow('auctionEndInput')">現在</button>
+      </div>
+
+      <div class="auction-duration-row">
+        <span class="auction-duration-label">幾小時後結束</span>
+        <button type="button" onclick="setAuctionEndAfterHours(1)">1 小時</button>
+        <button type="button" onclick="setAuctionEndAfterHours(2)">2 小時</button>
+        <button type="button" onclick="setAuctionEndAfterHours(3)">3 小時</button>
+        <button type="button" onclick="setAuctionEndAfterHours(4)">4 小時</button>
+        <div class="auction-custom-duration">
+          <input id="auctionCustomHoursInput" type="number" min="0.1" step="0.5" inputmode="decimal" placeholder="自訂">
+          <button type="button" onclick="setAuctionEndAfterCustomHours()">套用</button>
+        </div>
+      </div>
 
       <div class="modal-note">
-        尚未開始時顯示開始時間；競標開始後只顯示距離結束倒數；結束後若有署名會顯示「恭喜 XXX 得標」。
+        尚未開始時顯示開始時間；競標開始後只顯示距離結束倒數；結束後若有署名會顯示「恭喜 XXX 得標」。關閉競標後，署名、金額與時間會全部清除並歸零。開始／結束時間會自動整理成 5 分鐘一格；結束時間也可以直接選擇幾小時後。
       </div>
 
       <div class="modal-actions">
@@ -1937,14 +2249,20 @@
       <h2>更新競標金額</h2>
 
       <div class="modal-note">
-        可以直接輸入任意競標金額；「＋一標」只是快速加上每標金額，不會限制你手動輸入的數字。
+        可以直接輸入任意競標金額；「＋一標」只是快速加上每標金額。每次更新都必須重新輸入署名，避免沿用上一位競標者。
       </div>
 
       <label for="auctionQuickBidInput">目前競標金額（可自由輸入）</label>
       <input id="auctionQuickBidInput" type="number" min="0" inputmode="numeric" placeholder="直接輸入任意金額">
 
-      <label for="auctionQuickWinnerInput">目前署名</label>
-      <input id="auctionQuickWinnerInput" type="text" placeholder="例如：小花">
+      <label for="auctionQuickWinnerInput">目前署名 <span style="color:var(--danger)">*</span></label>
+      <input
+        id="auctionQuickWinnerInput"
+        type="text"
+        placeholder="請輸入這一標的署名"
+        oninput="clearAuctionWinnerWarning()"
+      >
+      <div id="auctionWinnerWarning" class="field-warning hidden">請輸入署名後再更新金額</div>
 
       <button
         id="auctionAddStepButton"
@@ -1960,6 +2278,23 @@
       <div class="modal-actions">
         <button class="cancel" onclick="closeModal('auctionQuickEditModal')">取消</button>
         <button class="confirm" onclick="saveAuctionQuickBid()">更新金額</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHIFT CLOSE -->
+  <div id="shiftCloseModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>收攤確認</h2>
+      <div id="shiftSummary" class="shift-summary"></div>
+      <div class="modal-note">收攤會關閉目前競標並保留已完成的競標紀錄。建議同時下載 CSV 與完整備份。</div>
+      <div class="cart-actions">
+        <button class="clear-cart" onclick="exportCSV()">先下載 CSV</button>
+        <button class="clear-cart" onclick="exportFullBackup()">完整備份 JSON</button>
+      </div>
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('shiftCloseModal')">取消</button>
+        <button class="confirm" onclick="finishShift()">確認收攤</button>
       </div>
     </div>
   </div>
@@ -2088,6 +2423,8 @@
 
       return {
         lotteryMax: 60,
+        defaultStockWarning: 5,
+        stockWarningThresholds: {},
 
         payments: {
           jko: true,
@@ -2096,12 +2433,21 @@
           ...(saved.payments || {})
         },
 
+        transferAccount: {
+          bankName: "",
+          bankCode: "",
+          account: "",
+          ...(saved.transferAccount || {})
+        },
+
         auction: {
           enabled: false,
           title: "掛軸競標",
+          startingBid: 0,
           currentBid: 0,
           step: 100,
           winner: "",
+          bidHistory: [],
           startAt: "",
           endAt: "",
           ...(saved.auction || {})
@@ -2372,11 +2718,72 @@
       return Math.max(0, Number(stock) - getSoldByKey(key) - (includeCart ? getCartByKey(key) : 0));
     }
 
+    function getDefaultStockWarning() {
+      return Math.max(
+        1,
+        Number(
+          getSettings()
+            .defaultStockWarning || 5
+        )
+      );
+    }
+
+    function getStockWarningThreshold(key) {
+      const settings =
+        getSettings();
+
+      const thresholds =
+        settings.stockWarningThresholds || {};
+
+      const custom =
+        Number(
+          thresholds[key]
+        );
+
+      return (
+        Number.isFinite(custom) &&
+        custom >= 1
+      )
+        ? custom
+        : getDefaultStockWarning();
+    }
+
+    function saveStockWarningThreshold(key,value) {
+      const settings =
+        getSettings();
+
+      const thresholds = {
+        ...(settings.stockWarningThresholds || {})
+      };
+
+      if (
+        value === null ||
+        value === "" ||
+        !Number.isFinite(Number(value))
+      ) {
+        delete thresholds[key];
+      } else {
+        thresholds[key] =
+          Math.max(
+            1,
+            Number(value)
+          );
+      }
+
+      settings.stockWarningThresholds =
+        thresholds;
+
+      saveSettings(
+        settings
+      );
+    }
+
+
     function stockInfo(stock,key,includeCart=false) {
       const r = remaining(stock,key,includeCart);
       if (r === null) return {text:"不限量",low:false,sold:false,remaining:null};
       if (r <= 0) return {text:"SOLD OUT",low:false,sold:true,remaining:0};
-      return {text:`剩餘 ${r}`,low:r<=5,sold:false,remaining:r};
+      return {text:`剩餘 ${r}`,low:r<=getStockWarningThreshold(key),sold:false,remaining:r};
     }
 
     function canAdd(stock,key,qty=1) {
@@ -2904,6 +3311,197 @@
       };
     }
 
+    function getTransferAccountSettings() {
+      return {
+        bankName: "",
+        bankCode: "",
+        account: "",
+        ...(getSettings().transferAccount || {})
+      };
+    }
+
+    function formatTransferAccount(info) {
+      const bankName =
+        (info.bankName || "").trim();
+
+      const bankCode =
+        (info.bankCode || "").trim();
+
+      const account =
+        (info.account || "").trim();
+
+      if (!account) {
+        return "";
+      }
+
+      const bankPart =
+        bankName
+          ? (
+              bankCode
+                ? `${bankName} (${bankCode})`
+                : bankName
+            )
+          : (
+              bankCode
+                ? `(${bankCode})`
+                : ""
+            );
+
+      return bankPart
+        ? `${bankPart} ${account}`
+        : account;
+    }
+
+    function saveTransferAccountSettings() {
+      const settings =
+        getSettings();
+
+      settings.transferAccount = {
+        bankName:
+          document.getElementById(
+            "transferBankNameInput"
+          )?.value.trim() || "",
+
+        bankCode:
+          document.getElementById(
+            "transferBankCodeInput"
+          )?.value.replace(/\D/g,"").slice(0,3) || "",
+
+        account:
+          document.getElementById(
+            "transferAccountInput"
+          )?.value.replace(/\s/g,"") || ""
+      };
+
+      const codeInput =
+        document.getElementById(
+          "transferBankCodeInput"
+        );
+
+      if (codeInput) {
+        codeInput.value =
+          settings.transferAccount.bankCode;
+      }
+
+      saveSettings(
+        settings
+      );
+
+      renderTransferAccountPreview();
+    }
+
+    function renderTransferAccountPreview() {
+      const info =
+        getTransferAccountSettings();
+
+      const text =
+        formatTransferAccount(
+          info
+        );
+
+      const preview =
+        document.getElementById(
+          "transferAccountPreview"
+        );
+
+      if (preview) {
+        preview.textContent =
+          text ||
+          "尚未設定轉帳帳號";
+      }
+    }
+
+    function renderTransferAccountDisplay() {
+      const info =
+        getTransferAccountSettings();
+
+      const text =
+        formatTransferAccount(
+          info
+        );
+
+      const display =
+        document.getElementById(
+          "transferAccountDisplay"
+        );
+
+      const hint =
+        document.getElementById(
+          "transferAccountCopyHint"
+        );
+
+      if (!display) return;
+
+      if (!text) {
+        display.classList.add(
+          "hidden"
+        );
+
+        if (hint) {
+          hint.classList.add(
+            "hidden"
+          );
+        }
+
+        return;
+      }
+
+      display.textContent =
+        text;
+
+      display.classList.remove(
+        "hidden"
+      );
+
+      if (hint) {
+        hint.textContent =
+          "點一下可複製帳號";
+
+        hint.classList.remove(
+          "hidden"
+        );
+      }
+    }
+
+    async function copyTransferAccount() {
+      const info =
+        getTransferAccountSettings();
+
+      const account =
+        (info.account || "").trim();
+
+      if (!account) return;
+
+      try {
+        await navigator.clipboard.writeText(
+          account
+        );
+
+        const hint =
+          document.getElementById(
+            "transferAccountCopyHint"
+          );
+
+        if (hint) {
+          hint.textContent =
+            "已複製帳號";
+
+          setTimeout(
+            () => {
+              hint.textContent =
+                "點一下可複製帳號";
+            },
+            1400
+          );
+        }
+      } catch {
+        alert(
+          `帳號：${account}`
+        );
+      }
+    }
+
+
     function renderPaymentMethodSettings() {
       const payments =
         getPaymentMethodSettings();
@@ -2943,6 +3541,41 @@
             payments.linepay
           );
       }
+
+      const transferAccount =
+        getTransferAccountSettings();
+
+      const bankNameInput =
+        document.getElementById(
+          "transferBankNameInput"
+        );
+
+      const bankCodeInput =
+        document.getElementById(
+          "transferBankCodeInput"
+        );
+
+      const accountInput =
+        document.getElementById(
+          "transferAccountInput"
+        );
+
+      if (bankNameInput) {
+        bankNameInput.value =
+          transferAccount.bankName;
+      }
+
+      if (bankCodeInput) {
+        bankCodeInput.value =
+          transferAccount.bankCode;
+      }
+
+      if (accountInput) {
+        accountInput.value =
+          transferAccount.account;
+      }
+
+      renderTransferAccountPreview();
     }
 
     function savePaymentMethodSettings() {
@@ -3032,6 +3665,7 @@
       }
       if (type === "transfer") {
         document.getElementById("transferTotal").textContent = money(getCartTotal());
+        renderTransferAccountDisplay();
         loadQrToUI("transfer");
         return document.getElementById("transferModal").classList.remove("hidden");
       }
@@ -3126,6 +3760,42 @@
       alert(`結帳完成\n\n${method}\nNT$ ${money(total)}`);
     }
 
+    function showCheckoutToast(payment,total) {
+      const toast =
+        document.getElementById(
+          "checkoutToast"
+        );
+
+      const detail =
+        document.getElementById(
+          "checkoutToastDetail"
+        );
+
+      if (!toast) return;
+
+      detail.textContent =
+        `${payment}・NT$ ${money(total)}`;
+
+      toast.classList.add(
+        "show"
+      );
+
+      clearTimeout(
+        showCheckoutToast.timer
+      );
+
+      showCheckoutToast.timer =
+        setTimeout(
+          () => {
+            toast.classList.remove(
+              "show"
+            );
+          },
+          1600
+        );
+    }
+
+
     function saveOrder(payment,extra={}) {
       const s = getCurrentSession();
       const order = {
@@ -3144,6 +3814,11 @@
       const orders = getOrders();
       orders.push(order);
       saveOrders(orders);
+
+      showCheckoutToast(
+        payment,
+        order.total
+      );
 
       cart = [];
       cartExpanded = false;
@@ -3719,6 +4394,15 @@
       const unlimited = context.stock === null || context.stock === undefined;
       document.getElementById("stockUnlimited").checked = unlimited;
       document.getElementById("stockInitial").value = unlimited ? sold : context.stock;
+
+      const settings =
+        getSettings();
+
+      document.getElementById(
+        "stockWarningThreshold"
+      ).value =
+        settings.stockWarningThresholds?.[context.key] ?? "";
+
       toggleStockInput();
       document.getElementById("stockModal").classList.remove("hidden");
     }
@@ -3752,6 +4436,13 @@
         savePolaroids(items);
       }
 
+      saveStockWarningThreshold(
+        stockContext.key,
+        document.getElementById(
+          "stockWarningThreshold"
+        ).value
+      );
+
       stockContext = null;
       closeModal("stockModal");
       renderMainProducts();
@@ -3773,7 +4464,7 @@
           const r = remaining(p.stock,key,false);
           inventory = p.stock == null
             ? `<span class="pill">不限量</span><div class="subtle">已售 ${sold}</div>`
-            : `<span class="pill ${r<=5?"low":""}">剩餘 ${r} / ${p.stock}</span><div class="subtle">已售 ${sold}</div>`;
+            : `<span class="pill ${r<=getStockWarningThreshold(key)?"low":""}">剩餘 ${r} / ${p.stock}</span><div class="subtle">已售 ${sold}</div>`;
           stockBtn = `<button class="small-btn" onclick="openStockModal({type:'product',id:'${p.id}',name:'${esc(p.name)}',stock:${p.stock===null?"null":p.stock},key:'${inventoryKeyForProduct(p.id)}'})">庫存</button>`;
         }
 
@@ -3806,7 +4497,7 @@
         tr.innerHTML = `
           <td>${esc(theme)}</td>
           <td>${sold}</td>
-          <td>${photoStock[theme]==null?'<span class="pill">不限量</span>':`<span class="pill ${r<=5?"low":""}">${r} / ${photoStock[theme]}</span>`}</td>
+          <td>${photoStock[theme]==null?'<span class="pill">不限量</span>':`<span class="pill ${r<=getStockWarningThreshold(key)?"low":""}">${r} / ${photoStock[theme]}</span>`}</td>
           <td><button class="small-btn" onclick="openStockModal({type:'photo',id:'${theme}',name:'生寫真｜${theme}',stock:${photoStock[theme]===null?"null":photoStock[theme]},key:'${key}'})">修改</button></td>`;
         photoBody.appendChild(tr);
       }
@@ -3823,7 +4514,7 @@
           <td>${esc(p.name)}</td>
           <td>$${money(p.price)}</td>
           <td>${sold}</td>
-          <td>${p.stock==null?'<span class="pill">不限量</span>':`<span class="pill ${r<=5?"low":""}">${r} / ${p.stock}</span>`}</td>
+          <td>${p.stock==null?'<span class="pill">不限量</span>':`<span class="pill ${r<=getStockWarningThreshold(key)?"low":""}">${r} / ${p.stock}</span>`}</td>
           <td><span class="pill">${p.visible?"顯示中":"已隱藏"}</span></td>
           <td>
             <div class="library-actions">
@@ -3836,9 +4527,56 @@
       }
 
       document.getElementById("lotteryMaxText").textContent = getSettings().lotteryMax;
+
+      const warningInput =
+        document.getElementById(
+          "defaultStockWarningInput"
+        );
+
+      if (warningInput) {
+        warningInput.value =
+          getDefaultStockWarning();
+      }
+
       renderPaymentMethodSettings();
       renderAuctionLibraryStatus();
     }
+
+    function saveDefaultStockWarning() {
+      const input =
+        document.getElementById(
+          "defaultStockWarningInput"
+        );
+
+      const value =
+        Number(
+          input.value
+        );
+
+      if (
+        !Number.isInteger(value) ||
+        value < 1
+      ) {
+        alert(
+          "請輸入 1 以上的警示門檻"
+        );
+        return;
+      }
+
+      const settings =
+        getSettings();
+
+      settings.defaultStockWarning =
+        value;
+
+      saveSettings(
+        settings
+      );
+
+      renderLibrary();
+      renderMainProducts();
+    }
+
 
     function toggleProductVisibility(id) {
       const items = getProducts();
@@ -3893,6 +4631,107 @@
       closeModal("lotterySettingModal");
       renderLibrary();
       renderMainProducts();
+    }
+
+
+    function showAuctionWinnerWarning() {
+      const input =
+        document.getElementById(
+          "auctionQuickWinnerInput"
+        );
+
+      const warning =
+        document.getElementById(
+          "auctionWinnerWarning"
+        );
+
+      if (warning) {
+        warning.classList.remove(
+          "hidden"
+        );
+      }
+
+      if (input) {
+        input.classList.add(
+          "field-error"
+        );
+
+        input.focus();
+      }
+    }
+
+    function clearAuctionWinnerWarning() {
+      const input =
+        document.getElementById(
+          "auctionQuickWinnerInput"
+        );
+
+      const warning =
+        document.getElementById(
+          "auctionWinnerWarning"
+        );
+
+      if (warning) {
+        warning.classList.add(
+          "hidden"
+        );
+      }
+
+      if (input) {
+        input.classList.remove(
+          "field-error"
+        );
+      }
+    }
+
+    function showAuctionSetupWinnerWarning() {
+      const input =
+        document.getElementById(
+          "auctionWinnerInput"
+        );
+
+      const warning =
+        document.getElementById(
+          "auctionSetupWinnerWarning"
+        );
+
+      if (warning) {
+        warning.classList.remove(
+          "hidden"
+        );
+      }
+
+      if (input) {
+        input.classList.add(
+          "field-error"
+        );
+
+        input.focus();
+      }
+    }
+
+    function clearAuctionSetupWinnerWarning() {
+      const input =
+        document.getElementById(
+          "auctionWinnerInput"
+        );
+
+      const warning =
+        document.getElementById(
+          "auctionSetupWinnerWarning"
+        );
+
+      if (warning) {
+        warning.classList.add(
+          "hidden"
+        );
+      }
+
+      if (input) {
+        input.classList.remove(
+          "field-error"
+        );
+      }
     }
 
 
@@ -3985,6 +4824,11 @@
             auction.currentBid || 0
           ),
 
+        bidHistory:
+          deepCopy(
+            auction.bidHistory || []
+          ),
+
         startAt:
           auction.startAt || "",
 
@@ -4046,9 +4890,11 @@
       const auction = {
         enabled: false,
         title: "掛軸競標",
+        startingBid: 0,
         currentBid: 0,
         step: 100,
         winner: "",
+        bidHistory: [],
         startAt: "",
         endAt: "",
         ...(settings.auction || {})
@@ -4066,15 +4912,28 @@
         return;
       }
 
-      settings.auction = {
-        ...auction,
-        enabled: false
-      };
+      settings.auction =
+        getResetAuctionState();
 
       saveSettings(
         settings
       );
     }
+
+    function getResetAuctionState() {
+      return {
+        enabled: false,
+        title: "掛軸競標",
+        startingBid: 0,
+        currentBid: 0,
+        step: 100,
+        winner: "",
+        bidHistory: [],
+        startAt: "",
+        endAt: ""
+      };
+    }
+
 
     function closeAuctionManually() {
       const auction =
@@ -4086,12 +4945,13 @@
 
       if (
         !confirm(
-          "確定要關閉目前競標嗎？\n\n已結束的競標仍會保留在競標紀錄。"
+          "確定要關閉目前競標嗎？\n\n關閉後會清除目前署名、競標金額與時間設定；已完成的競標紀錄不會被刪除。"
         )
       ) {
         return;
       }
 
+      /* 若已經正式結束，先留下紀錄 */
       recordAuctionIfNeeded(
         auction
       );
@@ -4099,10 +4959,8 @@
       const settings =
         getSettings();
 
-      settings.auction = {
-        ...auction,
-        enabled: false
-      };
+      settings.auction =
+        getResetAuctionState();
 
       saveSettings(
         settings
@@ -4111,6 +4969,48 @@
       renderAuctionBanner();
       renderLibrary();
     }
+
+
+    function renderActiveBidHistory() {
+      const body =
+        document.getElementById(
+          "activeBidHistoryBody"
+        );
+
+      if (!body) return;
+
+      const auction =
+        getAuctionSettings();
+
+      const items =
+        [
+          ...(auction.bidHistory || [])
+        ].reverse();
+
+      body.innerHTML =
+        "";
+
+      if (!items.length) {
+        body.innerHTML =
+          `<tr><td colspan="3">尚無出價紀錄</td></tr>`;
+        return;
+      }
+
+      for (const item of items) {
+        const tr =
+          document.createElement(
+            "tr"
+          );
+
+        tr.innerHTML =
+          `<td>${esc(timeText(item.time))}</td><td>${esc(item.winner || "—")}</td><td>$${money(item.amount || 0)}</td>`;
+
+        body.appendChild(
+          tr
+        );
+      }
+    }
+
 
     function renderAuctionHistory() {
       const body =
@@ -4209,6 +5109,216 @@
         ? null
         : d;
     }
+
+    function roundDateToFiveMinutes(date) {
+      const d =
+        new Date(
+          date
+        );
+
+      d.setSeconds(
+        0,
+        0
+      );
+
+      const minutes =
+        d.getMinutes();
+
+      const rounded =
+        Math.round(
+          minutes / 5
+        ) * 5;
+
+      if (rounded === 60) {
+        d.setHours(
+          d.getHours() + 1,
+          0,
+          0,
+          0
+        );
+      } else {
+        d.setMinutes(
+          rounded
+        );
+      }
+
+      return d;
+    }
+
+
+    function dateToLocalInputValue(date) {
+      const pad =
+        value =>
+          String(value)
+            .padStart(
+              2,
+              "0"
+            );
+
+      return (
+        `${date.getFullYear()}-` +
+        `${pad(date.getMonth() + 1)}-` +
+        `${pad(date.getDate())}T` +
+        `${pad(date.getHours())}:` +
+        `${pad(date.getMinutes())}`
+      );
+    }
+
+
+    function getAuctionDurationBase() {
+      const startInput =
+        document.getElementById(
+          "auctionStartInput"
+        );
+
+      if (
+        startInput &&
+        startInput.value
+      ) {
+        const start =
+          new Date(
+            startInput.value
+          );
+
+        if (
+          !Number.isNaN(
+            start.getTime()
+          )
+        ) {
+          return start;
+        }
+      }
+
+      return new Date();
+    }
+
+
+    function setAuctionEndAfterHours(hours) {
+      const numericHours =
+        Number(hours);
+
+      if (
+        !Number.isFinite(
+          numericHours
+        ) ||
+        numericHours <= 0
+      ) {
+        return;
+      }
+
+      const base =
+        getAuctionDurationBase();
+
+      const end =
+        new Date(
+          base.getTime() +
+          numericHours *
+          60 *
+          60 *
+          1000
+        );
+
+      const input =
+        document.getElementById(
+          "auctionEndInput"
+        );
+
+      if (input) {
+        input.value =
+          dateToLocalInputValue(
+            roundDateToFiveMinutes(
+              end
+            )
+          );
+      }
+    }
+
+
+    function setAuctionEndAfterCustomHours() {
+      const input =
+        document.getElementById(
+          "auctionCustomHoursInput"
+        );
+
+      const hours =
+        Number(
+          input?.value
+        );
+
+      if (
+        !Number.isFinite(hours) ||
+        hours <= 0
+      ) {
+        alert(
+          "請輸入正確的小時數"
+        );
+
+        if (input) {
+          input.focus();
+        }
+
+        return;
+      }
+
+      setAuctionEndAfterHours(
+        hours
+      );
+    }
+
+
+    function setAuctionTimeNow(inputId) {
+      const input =
+        document.getElementById(
+          inputId
+        );
+
+      if (!input) {
+        return;
+      }
+
+      input.value =
+        dateToLocalInputValue(
+          roundDateToFiveMinutes(
+            new Date()
+          )
+        );
+    }
+
+
+    function normalizeAuctionTimeToFiveMinutes(inputId) {
+      const input =
+        document.getElementById(
+          inputId
+        );
+
+      if (
+        !input ||
+        !input.value
+      ) {
+        return;
+      }
+
+      const date =
+        new Date(
+          input.value
+        );
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+        return;
+      }
+
+      input.value =
+        dateToLocalInputValue(
+          roundDateToFiveMinutes(
+            date
+          )
+        );
+    }
+
 
     function formatAuctionDateTime(value) {
       const d =
@@ -4475,6 +5585,7 @@
         }
 
         renderAuctionHistory();
+        renderActiveBidHistory();
 
         return;
       }
@@ -4509,6 +5620,13 @@
         "auctionTitleInput"
       ).value =
         auction.title || "掛軸競標";
+
+      document.getElementById(
+        "auctionStartPriceInput"
+      ).value =
+        Number(
+          auction.startingBid || 0
+        );
 
       document.getElementById(
         "auctionBidInput"
@@ -4551,6 +5669,14 @@
     }
 
     function saveAuctionSetting() {
+      normalizeAuctionTimeToFiveMinutes(
+        "auctionStartInput"
+      );
+
+      normalizeAuctionTimeToFiveMinutes(
+        "auctionEndInput"
+      );
+
       const enabled =
         document.getElementById(
           "auctionEnabled"
@@ -4561,6 +5687,13 @@
           "auctionTitleInput"
         ).value.trim() ||
         "掛軸競標";
+
+      const startingBid =
+        Number(
+          document.getElementById(
+            "auctionStartPriceInput"
+          ).value
+        );
 
       const currentBid =
         Number(
@@ -4592,11 +5725,21 @@
         ).value;
 
       if (
-        !Number.isFinite(currentBid) ||
-        currentBid < 0
+        !Number.isFinite(startingBid) ||
+        startingBid < 0
       ) {
         alert(
-          "請輸入正確競標金額"
+          "請輸入正確起標價"
+        );
+        return;
+      }
+
+      if (
+        !Number.isFinite(currentBid) ||
+        currentBid < startingBid
+      ) {
+        alert(
+          "目前競標金額不能低於起標價"
         );
 
         return;
@@ -4612,6 +5755,16 @@
 
         return;
       }
+
+      if (
+        enabled &&
+        !winner
+      ) {
+        showAuctionSetupWinnerWarning();
+        return;
+      }
+
+      clearAuctionSetupWinnerWarning();
 
       if (enabled) {
         const start =
@@ -4653,15 +5806,46 @@
         getAuctionSettings()
       );
 
+      const previous =
+        getAuctionSettings();
+
+      const sameAuction =
+        previous.startAt === startAt &&
+        previous.endAt === endAt &&
+        previous.title === title;
+
       settings.auction = {
         enabled,
         title,
+        startingBid,
         currentBid,
         step,
         winner,
+        bidHistory:
+          sameAuction
+            ? (previous.bidHistory || [])
+            : [],
         startAt,
         endAt
       };
+
+      if (
+        enabled &&
+        winner &&
+        currentBid >= startingBid &&
+        (
+          !settings.auction.bidHistory ||
+          settings.auction.bidHistory.length === 0
+        )
+      ) {
+        settings.auction.bidHistory = [
+          {
+            time: nowISO(),
+            winner,
+            amount: currentBid
+          }
+        ];
+      }
 
       saveSettings(
         settings
@@ -4690,7 +5874,9 @@
       document.getElementById(
         "auctionQuickWinnerInput"
       ).value =
-        auction.winner || "";
+        "";
+
+      clearAuctionWinnerWarning();
 
       document.getElementById(
         "auctionAddStepButton"
@@ -4744,30 +5930,53 @@
           ).value
         );
 
+      const winner =
+        document.getElementById(
+          "auctionQuickWinnerInput"
+        ).value.trim();
+
+      const currentAuction =
+        getAuctionSettings();
+
       if (
         !Number.isFinite(value) ||
-        value < 0
+        value < Number(currentAuction.startingBid || 0)
       ) {
         alert(
-          "請輸入正確競標金額"
+          `競標金額不能低於起標價 NT$ ${money(currentAuction.startingBid || 0)}`
         );
 
         return;
       }
 
+      if (!winner) {
+        showAuctionWinnerWarning();
+        return;
+      }
+
+      clearAuctionWinnerWarning();
+
       const settings =
         getSettings();
 
+      const nextHistory = [
+        ...(currentAuction.bidHistory || []),
+        {
+          time: nowISO(),
+          winner,
+          amount: value
+        }
+      ];
+
       settings.auction = {
-        ...getAuctionSettings(),
+        ...currentAuction,
 
         currentBid:
           value,
 
-        winner:
-          document.getElementById(
-            "auctionQuickWinnerInput"
-          ).value.trim()
+        winner,
+        bidHistory:
+          nextHistory
       };
 
       saveSettings(
@@ -4782,6 +5991,381 @@
 
       renderLibrary();
     }
+
+    async function blobToDataUrl(blob) {
+      if (!blob) return null;
+
+      return await new Promise(
+        (resolve,reject) => {
+          const reader =
+            new FileReader();
+
+          reader.onload =
+            () =>
+              resolve(
+                reader.result
+              );
+
+          reader.onerror =
+            reject;
+
+          reader.readAsDataURL(
+            blob
+          );
+        }
+      );
+    }
+
+    function dataUrlToBlob(dataUrl) {
+      const [meta,data] =
+        dataUrl.split(",");
+
+      const mime =
+        (
+          meta.match(
+            /data:(.*?);base64/
+          ) || []
+        )[1] ||
+        "image/png";
+
+      const binary =
+        atob(
+          data
+        );
+
+      const bytes =
+        new Uint8Array(
+          binary.length
+        );
+
+      for (
+        let i = 0;
+        i < binary.length;
+        i++
+      ) {
+        bytes[i] =
+          binary.charCodeAt(i);
+      }
+
+      return new Blob(
+        [bytes],
+        {
+          type:
+            mime
+        }
+      );
+    }
+
+    async function exportFullBackup() {
+      const storage = {};
+
+      for (
+        let i = 0;
+        i < localStorage.length;
+        i++
+      ) {
+        const key =
+          localStorage.key(i);
+
+        if (
+          key &&
+          (
+            key.startsWith("cash-register") ||
+            key.startsWith("ff46")
+          )
+        ) {
+          storage[key] =
+            localStorage.getItem(
+              key
+            );
+        }
+      }
+
+      const qr = {};
+
+      for (
+        const type of
+        ["jko","transfer","linepay"]
+      ) {
+        try {
+          const blob =
+            await getQr(
+              qrKey(type)
+            );
+
+          qr[type] =
+            blob
+              ? await blobToDataUrl(blob)
+              : null;
+
+        } catch {
+          qr[type] =
+            null;
+        }
+      }
+
+      const backup = {
+        version: 1,
+        exportedAt: nowISO(),
+        storage,
+        qr
+      };
+
+      const blob =
+        new Blob(
+          [
+            JSON.stringify(
+              backup,
+              null,
+              2
+            )
+          ],
+          {
+            type:
+              "application/json"
+          }
+        );
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+      const a =
+        document.createElement(
+          "a"
+        );
+
+      const session =
+        getCurrentSession();
+
+      a.href =
+        url;
+
+      a.download =
+        `收銀機完整備份_${session?.date || todayISO()}.json`;
+
+      document.body.appendChild(
+        a
+      );
+
+      a.click();
+      a.remove();
+
+      URL.revokeObjectURL(
+        url
+      );
+    }
+
+    async function restoreFullBackup(file) {
+      if (!file) return;
+
+      if (
+        !confirm(
+          "還原備份會覆蓋目前這台裝置的收銀機資料，確定繼續嗎？"
+        )
+      ) {
+        return;
+      }
+
+      try {
+        const backup =
+          JSON.parse(
+            await file.text()
+          );
+
+        if (
+          !backup ||
+          typeof backup.storage !==
+            "object"
+        ) {
+          throw new Error(
+            "備份格式不正確"
+          );
+        }
+
+        for (
+          let i =
+            localStorage.length - 1;
+          i >= 0;
+          i--
+        ) {
+          const key =
+            localStorage.key(i);
+
+          if (
+            key &&
+            (
+              key.startsWith("cash-register") ||
+              key.startsWith("ff46")
+            )
+          ) {
+            localStorage.removeItem(
+              key
+            );
+          }
+        }
+
+        for (
+          const [
+            key,
+            value
+          ] of Object.entries(
+            backup.storage
+          )
+        ) {
+          localStorage.setItem(
+            key,
+            value
+          );
+        }
+
+        if (backup.qr) {
+          for (
+            const type of
+            ["jko","transfer","linepay"]
+          ) {
+            if (
+              backup.qr[type]
+            ) {
+              await putQr(
+                qrKey(type),
+                dataUrlToBlob(
+                  backup.qr[type]
+                )
+              );
+            } else {
+              await deleteQr(
+                qrKey(type)
+              );
+            }
+          }
+        }
+
+        alert(
+          "備份已還原，頁面將重新載入。"
+        );
+
+        location.reload();
+
+      } catch (error) {
+        console.error(error);
+
+        alert(
+          "備份還原失敗，請確認檔案是否為本收銀機匯出的 JSON。"
+        );
+      } finally {
+        const input =
+          document.getElementById(
+            "backupRestoreInput"
+          );
+
+        if (input) {
+          input.value =
+            "";
+        }
+      }
+    }
+
+    function getCurrentSessionSummary() {
+      const orders =
+        getOrders();
+
+      const payments = {};
+      let revenue = 0;
+      let items = 0;
+
+      for (const order of orders) {
+        revenue +=
+          Number(
+            order.total || 0
+          );
+
+        payments[order.payment] =
+          (
+            payments[order.payment] || 0
+          ) +
+          Number(
+            order.total || 0
+          );
+
+        for (const item of order.items || []) {
+          items +=
+            Number(
+              item.quantity || 0
+            );
+        }
+      }
+
+      return {
+        revenue,
+        orders:
+          orders.length,
+        items,
+        payments
+      };
+    }
+
+    function openShiftCloseModal() {
+      const s =
+        getCurrentSessionSummary();
+
+      const session =
+        getCurrentSession();
+
+      document.getElementById(
+        "shiftSummary"
+      ).innerHTML =
+        `
+          <div class="shift-summary-row"><span>場次</span><strong>${esc(session?.name || "—")}</strong></div>
+          <div class="shift-summary-row"><span>營業額</span><strong>NT$ ${money(s.revenue)}</strong></div>
+          <div class="shift-summary-row"><span>訂單</span><strong>${s.orders} 筆</strong></div>
+          <div class="shift-summary-row"><span>售出數量</span><strong>${s.items}</strong></div>
+          <div class="shift-summary-row"><span>現金</span><strong>NT$ ${money(s.payments["現金"] || 0)}</strong></div>
+          <div class="shift-summary-row"><span>街口</span><strong>NT$ ${money(s.payments["街口"] || 0)}</strong></div>
+          <div class="shift-summary-row"><span>轉帳</span><strong>NT$ ${money(s.payments["轉帳"] || 0)}</strong></div>
+          <div class="shift-summary-row"><span>LINE Pay</span><strong>NT$ ${money(s.payments["LINE Pay"] || 0)}</strong></div>
+        `;
+
+      document.getElementById(
+        "shiftCloseModal"
+      ).classList.remove(
+        "hidden"
+      );
+    }
+
+    function finishShift() {
+      const auction =
+        getAuctionSettings();
+
+      if (auction.enabled) {
+        recordAuctionIfNeeded(
+          auction
+        );
+
+        const settings =
+          getSettings();
+
+        settings.auction =
+          getResetAuctionState();
+
+        saveSettings(
+          settings
+        );
+      }
+
+      closeModal(
+        "shiftCloseModal"
+      );
+
+      renderAuctionBanner();
+      renderLibrary();
+
+      alert(
+        "已完成收攤。建議確認 CSV 與備份檔已下載。"
+      );
+    }
+
 
     /* -------------------- STATS -------------------- */
     function renderStats() {
@@ -4814,6 +6398,11 @@
       document.getElementById("statsYaki").textContent = money(owners["麻糬燒 Yaki"]||0);
       document.getElementById("statsAyami").textContent = money(owners["阿芽咪 Ayami"]||0);
       document.getElementById("statsDuo").textContent = money(owners["雙人"]||0);
+
+      document.getElementById("payCardCash").textContent = money(payments["現金"]?.revenue || 0);
+      document.getElementById("payCardJko").textContent = money(payments["街口"]?.revenue || 0);
+      document.getElementById("payCardTransfer").textContent = money(payments["轉帳"]?.revenue || 0);
+      document.getElementById("payCardLinePay").textContent = money(payments["LINE Pay"]?.revenue || 0);
 
       const payBody = document.getElementById("paymentStatsBody");
       payBody.innerHTML = "";
@@ -4858,6 +6447,53 @@
       renderMainProducts();
       renderLibrary();
     }
+
+    function duplicateLastOrder() {
+      const orders =
+        getOrders();
+
+      if (!orders.length) {
+        alert(
+          "目前沒有上一筆訂單"
+        );
+        return;
+      }
+
+      const last =
+        orders[
+          orders.length - 1
+        ];
+
+      const copied =
+        deepCopy(
+          last.items || []
+        );
+
+      if (!copied.length) {
+        alert(
+          "上一筆訂單沒有商品"
+        );
+        return;
+      }
+
+      cart =
+        copied;
+
+      cartExpanded =
+        true;
+
+      document.getElementById(
+        "orderNote"
+      ).value =
+        last.note || "";
+
+      renderCart();
+      renderMainProducts();
+      showPage(
+        "posPage"
+      );
+    }
+
 
     function undoLastOrder() {
       const orders = getOrders();
@@ -5092,3 +6728,9 @@
   </script>
 </body>
 </html>
+  <div id="checkoutToast" class="checkout-toast">
+    結帳完成
+    <small id="checkoutToastDetail"></small>
+  </div>
+
+

@@ -2253,6 +2253,51 @@
         grid-template-columns: 1fr;
       }
     }
+
+    .auction-current-history {
+      overflow: hidden;
+    }
+
+    .auction-history-head {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 10px !important;
+      margin-bottom: 10px !important;
+    }
+
+    .auction-history-head h4 {
+      margin: 0 !important;
+      min-width: 0;
+    }
+
+    .auction-history-clear {
+      flex: 0 0 auto;
+      margin: 0 !important;
+      white-space: nowrap;
+    }
+
+    .auction-bid-history {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .auction-bid-history table {
+      width: 100%;
+      min-width: 420px;
+      table-layout: auto;
+    }
+
+    @media (max-width: 620px) {
+      .auction-history-head {
+        align-items: center !important;
+      }
+
+      .auction-history-clear {
+        padding: 6px 10px !important;
+      }
+    }
 </style>
 </head>
 
@@ -2392,7 +2437,7 @@
     <h3>商品銷售</h3>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>商品</th><th>歸屬</th><th>數量</th><th>營業額</th></tr></thead>
+        <thead><tr><th>商品</th><th>成員</th><th>數量</th><th>營業額</th></tr></thead>
         <tbody id="productStatsBody"></tbody>
       </table>
     </div>
@@ -2455,23 +2500,23 @@
     <section class="library-section">
       <div class="library-section-head">
         <div>
-          <h3>活動歸屬／成員</h3>
+          <h3>成員設定</h3>
           <div class="library-section-note">這裡就是管理本場有哪些人／分組。可新增、改名、開關或刪除。</div>
         </div>
       </div>
 
       <div class="owner-settings-help">
-        想新增其他人：按表格最下面的「＋ 新增其他人／分組」。<br>
+        想新增其他人：按表格最下面的「＋ 新增成員」。<br>
         想拔掉某個人：按該列「刪除」；若只是這場不想顯示在統計，關閉「統計顯示」即可。
       </div>
 
       <div class="table-wrap">
         <table>
-          <thead><tr><th>歸屬名稱</th><th>統計顯示</th><th>操作</th></tr></thead>
+          <thead><tr><th>成員名稱</th><th>統計顯示</th><th>操作</th></tr></thead>
           <tbody id="ownerSettingsBody"></tbody>
           <tfoot>
             <tr class="library-add-row">
-              <td colspan="3"><button class="library-inline-add" onclick="addOwnerSetting()">＋ 新增歸屬</button></td>
+              <td colspan="3"><button class="library-inline-add" onclick="addOwnerSetting()">＋ 新增成員</button></td>
             </tr>
           </tfoot>
         </table>
@@ -2489,7 +2534,7 @@
 
       <div class="table-wrap">
         <table>
-          <thead><tr><th>商品</th><th>價格</th><th>歸屬</th><th>庫存</th><th>狀態</th><th>操作</th></tr></thead>
+          <thead><tr><th>商品</th><th>價格</th><th>成員</th><th>庫存</th><th>狀態</th><th>操作</th></tr></thead>
           <tbody id="libraryBody"></tbody>
           <tfoot>
             <tr class="library-add-row">
@@ -2523,7 +2568,7 @@
 
       <div class="table-wrap">
         <table>
-          <thead><tr><th>款式</th><th>價格</th><th>歸屬</th><th>已售</th><th>剩餘</th><th>操作</th></tr></thead>
+          <thead><tr><th>款式</th><th>價格</th><th>成員</th><th>已售</th><th>剩餘</th><th>操作</th></tr></thead>
           <tbody id="photoStockBody"></tbody>
           <tfoot>
             <tr class="library-add-row">
@@ -2550,7 +2595,7 @@
 
       <div class="table-wrap">
         <table>
-          <thead><tr><th>名字</th><th>價格</th><th>歸屬</th><th>已售</th><th>剩餘</th><th>狀態</th><th>操作</th></tr></thead>
+          <thead><tr><th>名字</th><th>價格</th><th>成員</th><th>已售</th><th>剩餘</th><th>狀態</th><th>操作</th></tr></thead>
           <tbody id="polaroidLibraryBody"></tbody>
           <tfoot>
             <tr class="library-add-row">
@@ -2693,11 +2738,12 @@
         </div>
       </div>
 
-      <div class="library-subsection">
-        <div class="library-subsection-head">
+            <div class="library-subsection auction-current-history">
+        <div class="library-subsection-head auction-history-head">
           <h4>目前出價紀錄</h4>
-          <button class="small-btn danger-btn" onclick="clearActiveBidHistory()">清除</button>
+          <button class="small-btn danger-btn auction-history-clear" onclick="clearActiveBidHistory()">清除</button>
         </div>
+
         <div class="table-wrap auction-bid-history">
           <table>
             <thead><tr><th>時間</th><th>署名</th><th>金額</th></tr></thead>
@@ -2840,7 +2886,7 @@
         <input id="customQty" type="number" inputmode="numeric" min="1" value="1">
       </div>
 
-      <label for="customOwner">歸屬</label>
+      <label for="customOwner">成員</label>
       <select id="customOwner"></select>
 
       <label id="customPermanentRow" class="checkbox-row">
@@ -2877,7 +2923,7 @@
       <label for="otherPolaroidPrice">單價</label>
       <input id="otherPolaroidPrice" type="number" inputmode="numeric" value="200">
 
-      <label>歸屬（可複選）</label>
+      <label>成員（可複選）</label>
       <div id="otherPolaroidOwnerChecks" class="owner-check-grid"></div>
 
       <label id="otherPolaroidPermanentRow" class="checkbox-row">
@@ -2906,8 +2952,8 @@
   <!-- POLAROID MULTI OWNER -->
   <div id="polaroidOwnerModal" class="modal hidden">
     <div class="modal-box">
-      <h2 id="polaroidOwnerModalTitle">設定拍立得歸屬</h2>
-      <div class="modal-note">可複選。場次統計會把這筆拍立得金額平均分配給所選歸屬，避免重複計算營業額。</div>
+      <h2 id="polaroidOwnerModalTitle">設定拍立得成員</h2>
+      <div class="modal-note">可複選。場次統計會把這筆拍立得金額平均分配給所選成員，避免重複計算營業額。</div>
 
       <div id="polaroidOwnerChecks" class="owner-check-grid"></div>
 
@@ -3420,7 +3466,7 @@
         ]);
 
       if (currentSessionId) {
-        /* 活動歸屬名單：移除舊版三個內建人員 */
+        /* 活動成員名單：移除舊版三個內建人員 */
         const settingsKey =
           sessionDataKey(
             "settings"
@@ -3448,7 +3494,7 @@
             );
         }
 
-        /* 生寫真歸屬：舊內建值清空 */
+        /* 生寫真成員：舊內建值清空 */
         if (
           saved.photoOwners &&
           typeof saved.photoOwners ===
@@ -3479,7 +3525,7 @@
           saved
         );
 
-        /* 一般商品：保留商品，只清除舊版內建歸屬 */
+        /* 一般商品：保留商品，只清除舊版內建成員 */
         const productKey =
           sessionDataKey(
             "products"
@@ -3508,7 +3554,7 @@
           products
         );
 
-        /* 拍立得：保留使用者建立的選項，只清除舊內建歸屬。
+        /* 拍立得：保留使用者建立的選項，只清除舊內建成員。
            舊版自帶的三個拍立得選項則直接移除。 */
         const polaroidKey =
           sessionDataKey(
@@ -5621,7 +5667,7 @@
     }
 
     function toggleCustomOtherOwner() {
-      /* 歸屬改由後台統一管理，保留函式避免舊事件失效。 */
+      /* 成員改由後台統一管理，保留函式避免舊事件失效。 */
     }
 
     function toggleCustomStockArea() {
@@ -5645,7 +5691,7 @@
       if (!name) return alert("請輸入品項");
       if (!Number.isFinite(price) || price<=0) return alert("請輸入正確單價");
       if (!Number.isInteger(qty) || qty<=0) return alert("請輸入正確數量");
-      if (!owner) return alert("請輸入歸屬");
+      if (!owner) return alert("請輸入成員");
       if (permanent && !unlimited && (!Number.isInteger(stock) || stock<qty)) return alert("初始庫存不能小於加入購物車的數量");
 
       const id = `custom-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
@@ -5717,7 +5763,7 @@
 
       if (!name) return alert("請輸入名字");
       if (!Number.isFinite(price) || price<=0) return alert("請輸入正確金額");
-      if (!owners.length) return alert("請至少選擇一個歸屬");
+      if (!owners.length) return alert("請至少選擇一個成員");
       if (permanent && !unlimited && (!Number.isInteger(stock) || stock<0)) return alert("請輸入正確初始數量");
 
       const p = {
@@ -5852,7 +5898,7 @@
         d.innerHTML = `
           <div class="cart-item-title">${esc(item.name)}</div>
           ${item.signature ? `<div class="cart-item-meta">署名：${esc(item.signature)}</div>`:""}
-          <div class="cart-item-meta">歸屬：${esc(item.owner)}</div>
+          <div class="cart-item-meta">成員：${esc(item.owner)}</div>
           <div class="cart-item-row">
             <span>$${money(item.price)} × ${item.quantity}</span>
             <div class="qty">
@@ -7582,7 +7628,7 @@
         );
 
       if (!items.length) {
-        return `<option value="">請先新增歸屬</option>`;
+        return `<option value="">請先新增成員</option>`;
       }
 
       const validCurrent =
@@ -7593,7 +7639,7 @@
           : "";
 
       return [
-        `<option value="" ${validCurrent ? "" : "selected"}>未指定</option>`,
+        `<option value="" ${validCurrent ? "" : "selected"}>未指定成員</option>`,
         ...items.map(
           item =>
             `<option value="${esc(item.name)}" ${item.name===validCurrent?"selected":""}>${esc(item.name)}${item.enabled?"":"（未開啟）"}</option>`
@@ -7620,7 +7666,7 @@
 
       const name =
         prompt(
-          "輸入新的歸屬名稱"
+          "輸入新的成員名稱"
         )?.trim();
 
       if (!name) return;
@@ -7638,7 +7684,7 @@
         )
       ) {
         alert(
-          "這個歸屬已經存在"
+          "這個成員已經存在"
         );
         return;
       }
@@ -7688,7 +7734,7 @@
 
       const name =
         prompt(
-          "修改歸屬名稱",
+          "修改成員名稱",
           oldName
         )?.trim();
 
@@ -7707,7 +7753,7 @@
         )
       ) {
         alert(
-          "這個歸屬名稱已經存在"
+          "這個成員名稱已經存在"
         );
         return;
       }
@@ -7825,7 +7871,7 @@
 
       if (
         !confirmDanger(
-          `確定刪除歸屬「${target.name}」嗎？已存在商品不會被刪除，但之後請重新指定歸屬。`
+          `確定刪除成員「${target.name}」嗎？已存在商品不會被刪除，但之後請重新指定成員。`
         )
       ) {
         return;
@@ -7931,7 +7977,7 @@
 
       if (!owners.length) {
         area.innerHTML =
-          `<div class="subtle">尚未設定歸屬，請先到商品庫最上方「活動歸屬／成員」新增。</div>`;
+          `<div class="subtle">尚未設定成員，請先到商品庫最上方「成員設定」新增。</div>`;
         return;
       }
 
@@ -7996,7 +8042,7 @@
       document.getElementById(
         "polaroidOwnerModalTitle"
       ).textContent =
-        `設定歸屬｜${item.name}`;
+        `設定成員｜${item.name}`;
 
       renderOwnerCheckboxes(
         "polaroidOwnerChecks",
@@ -8022,7 +8068,7 @@
 
       if (!owners.length) {
         alert(
-          "請至少選擇一個歸屬"
+          "請至少選擇一個成員"
         );
         return;
       }
@@ -8111,7 +8157,7 @@
 
       if (!owners.length) {
         body.innerHTML =
-          `<tr><td colspan="3"><span class="subtle">目前沒有預設成員。請按下方「＋ 新增其他人／分組」建立本場歸屬。</span></td></tr>`;
+          `<tr><td colspan="3"><span class="subtle">目前沒有預設成員。請按下方「＋ 新增成員」建立本場成員。</span></td></tr>`;
         return;
       }
 
@@ -8455,7 +8501,7 @@
           <td>
             <div class="owner-chip-wrap">
               ${normalizeOwnerList(p).map(name=>`<span class="owner-chip">${esc(name)}</span>`).join("") || '<span class="subtle">未設定</span>'}
-              <button class="small-btn" onclick="openPolaroidOwnerModal('${p.id}')">設定歸屬</button>
+              <button class="small-btn" onclick="openPolaroidOwnerModal('${p.id}')">設定成員</button>
             </div>
           </td>
           <td>${sold}</td>
@@ -11071,7 +11117,7 @@
 
     /* -------------------- CSV -------------------- */
     function exportCSV() {
-      const rows = [["日期","場次名稱","時間","付款方式","商品","歸屬","署名","單價","數量","小計","訂單總額","訂單備註"]];
+      const rows = [["日期","場次名稱","時間","付款方式","商品","成員","署名","單價","數量","小計","訂單總額","訂單備註"]];
 
       for (const s of sortSessions(getSessions())) {
         for (const o of getOrders(s.id)) {

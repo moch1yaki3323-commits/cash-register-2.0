@@ -1738,6 +1738,521 @@
         font-size: 11px !important;
       }
     }
+
+    .photo-price-settings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .photo-price-settings-grid input {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 620px) {
+      .photo-price-settings-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== 商品庫整理 ===== */
+    .library-page-head {
+      margin-bottom: 14px;
+    }
+
+    .library-page-head h2 {
+      margin-bottom: 4px;
+    }
+
+    .library-section {
+      margin: 14px 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      box-shadow: 0 4px 18px rgba(72,58,58,.035);
+    }
+
+    .library-section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .library-section-head h3 {
+      margin: 0 0 3px;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .library-section-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .library-add-btn {
+      flex: 0 0 auto;
+      min-width: 78px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: var(--soft);
+      color: var(--text);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .library-inline-settings {
+      margin-bottom: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: var(--soft);
+    }
+
+    .library-inline-settings.compact {
+      margin-bottom: 12px;
+    }
+
+    .library-setting-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .library-setting-label {
+      margin-bottom: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .library-setting-value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .library-subsection {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .library-subsection-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .library-subsection-head h4 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .library-settings-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .payment-toggle-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin-bottom: 12px;
+    }
+
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: 1.2fr .65fr 1.5fr;
+      gap: 8px;
+    }
+
+    .form-grid-3 input {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .library-section .table-wrap {
+      margin-top: 0;
+    }
+
+    .library-section table {
+      width: 100%;
+      table-layout: auto;
+    }
+
+    .library-section th {
+      white-space: nowrap;
+    }
+
+    .library-section td {
+      vertical-align: middle;
+    }
+
+    @media (max-width: 760px) {
+      .library-section {
+        padding: 13px;
+      }
+
+      .library-section-head {
+        align-items: center;
+      }
+
+      .library-section-note {
+        display: none;
+      }
+
+      .library-settings-two-col,
+      .form-grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .library-setting-line {
+        align-items: flex-start;
+      }
+
+      .library-section .table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .library-section table {
+        min-width: 620px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .library-section-head h3 {
+        font-size: 16px;
+      }
+
+      .library-add-btn {
+        min-width: auto;
+        padding: 7px 10px;
+      }
+    }
+
+    .library-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .library-title-row h3 {
+      margin: 0;
+    }
+
+    .mini-unified-price {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 400;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .mini-unified-price input {
+      width: 14px !important;
+      height: 14px;
+      margin: 0;
+      accent-color: currentColor;
+    }
+
+    .inline-price-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 92px;
+    }
+
+    .inline-price-prefix {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .inline-price-input {
+      width: 78px !important;
+      min-width: 64px !important;
+      max-width: 96px !important;
+      padding: 6px 7px !important;
+      border-radius: 8px !important;
+      box-sizing: border-box;
+      font-size: 13px !important;
+      text-align: right;
+    }
+
+    .inline-price-input:disabled {
+      opacity: .62;
+      cursor: not-allowed;
+    }
+
+    .photo-addon-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .photo-addon-row label,
+    .lottery-price-edit label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .lottery-inline-settings {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .lottery-price-edit {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    @media (max-width: 620px) {
+      .inline-price-input {
+        width: 70px !important;
+      }
+
+      .lottery-price-edit {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+
+    .library-add-row td {
+      padding-top: 9px;
+      padding-bottom: 9px;
+      border-bottom: 0;
+    }
+
+    .library-inline-add {
+      padding: 7px 10px;
+      border-radius: 9px;
+      background: var(--soft);
+      color: var(--text);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .product-reorder {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      display: flex;
+      gap: 4px;
+      z-index: 3;
+    }
+
+    .product-reorder button {
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border-radius: 8px;
+      background: rgba(247,244,244,.96);
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .stats-auction-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 620px) {
+      .stats-auction-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    .session-day-badge {
+      display: inline-block;
+      margin-left: 7px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .product-search-row{margin:0 0 12px}
+    .product-search-input{width:min(360px,100%);padding:9px 12px;border:1px solid var(--line);border-radius:11px;background:var(--panel);box-sizing:border-box}
+    .voided-order{opacity:.52;text-decoration:line-through}
+    .voided-label{margin-top:2px;color:var(--danger);font-size:10px;text-decoration:none}
+    .sortable-product{cursor:grab}.sortable-product.dragging{opacity:.45}
+
+    .library-owner-select {
+      min-width: 120px;
+      max-width: 190px;
+      padding: 6px 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--text);
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+
+    #ownerStatsGrid:empty,
+    #paymentCardGrid:empty {
+      display: none;
+    }
+
+    /* 後台內層設定統一加框 */
+    .library-section > .library-inline-settings,
+    .library-section > .table-wrap,
+    .library-subsection,
+    .transfer-account-settings,
+    .data-management-grid {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+
+    .library-section > .table-wrap {
+      overflow: hidden;
+    }
+
+    .library-section > .table-wrap table {
+      margin: 0;
+    }
+
+    .library-section > .table-wrap tfoot td {
+      background: var(--soft);
+    }
+
+    .owner-settings-help {
+      margin: 0 0 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .owner-check-grid {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 8px;
+      margin-top: 7px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--soft);
+    }
+
+    .owner-check-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+      font-size: 13px;
+    }
+
+    .owner-check-item input {
+      width: 16px !important;
+      height: 16px;
+      margin: 0;
+      flex: 0 0 auto;
+    }
+
+    .owner-chip-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .owner-chip {
+      display: inline-flex;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: var(--soft);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    @media (max-width:620px) {
+      .owner-check-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .setting-action-card {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      box-sizing: border-box;
+    }
+
+    .setting-action-title {
+      margin-bottom: 4px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .setting-action-card > button {
+      margin-top: 10px;
+    }
+
+    .data-management-grid {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 10px;
+      border: 0 !important;
+      border-radius: 0 !important;
+    }
+
+    .lottery-setting-cards {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .lottery-setting-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 76px;
+    }
+
+    @media (max-width:620px) {
+      .data-management-grid,
+      .lottery-setting-cards {
+        grid-template-columns: 1fr;
+      }
+    }
 </style>
 </head>
 
@@ -1809,6 +2324,9 @@
           <button id="manageToggle" class="manage-toggle" onclick="toggleManageMode()">管理</button>
         </div>
 
+        <div class="product-search-row">
+          <input id="productSearchInput" class="product-search-input" type="search" placeholder="搜尋商品" oninput="renderMainProducts()">
+        </div>
         <div id="mainProductGrid" class="main-grid"></div>
       </div>
 
@@ -1858,20 +2376,11 @@
       <div class="card">已售數量<div class="number"><span id="statsItems">0</span></div></div>
     </div>
 
-    <div class="owner-grid">
-      <div class="card">麻糬燒 Yaki<div class="number">NT$ <span id="statsYaki">0</span></div></div>
-      <div class="card">阿芽咪 Ayami<div class="number">NT$ <span id="statsAyami">0</span></div></div>
-      <div class="card">雙人<div class="number">NT$ <span id="statsDuo">0</span></div></div>
-    </div>
+    <div id="ownerStatsGrid" class="owner-grid"></div>
 
     <h3>付款方式</h3>
 
-    <div class="payment-card-grid">
-      <div class="payment-mini-card">現金<div class="amount">NT$ <span id="payCardCash">0</span></div></div>
-      <div class="payment-mini-card">街口<div class="amount">NT$ <span id="payCardJko">0</span></div></div>
-      <div class="payment-mini-card">轉帳<div class="amount">NT$ <span id="payCardTransfer">0</span></div></div>
-      <div class="payment-mini-card">LINE Pay<div class="amount">NT$ <span id="payCardLinePay">0</span></div></div>
-    </div>
+    <div id="paymentCardGrid" class="payment-card-grid"></div>
 
     <div class="table-wrap">
       <table>
@@ -1895,6 +2404,13 @@
         <tbody id="orderBody"></tbody>
       </table>
     </div>
+
+    <h3>競標紀錄</h3>
+    <div class="stats-auction-head">
+      <div class="subtle">只顯示目前場次的競標紀錄。</div>
+      <button class="small-btn danger-btn" onclick="clearCurrentSessionAuctionHistory()">清除此場競標紀錄</button>
+    </div>
+    <div id="statsAuctionHistoryGroups"></div>
 
     <div class="page-actions">
       <button onclick="duplicateLastOrder()">複製上一筆到購物車</button>
@@ -1929,152 +2445,292 @@
 
   <!-- LIBRARY -->
   <section id="libraryPage" class="page hidden">
-    <h2>商品庫</h2>
-    <div class="subtle">實體庫存由所有場次共用。完成結帳才扣除；刪除／撤銷訂單會自動補回。</div>
-
-    <h3>一般商品</h3>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>商品</th><th>價格</th><th>歸屬</th><th>庫存</th><th>狀態</th><th>操作</th></tr></thead>
-        <tbody id="libraryBody"></tbody>
-      </table>
-    </div>
-
-    <h3>生寫真庫存</h3>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>款式</th><th>已售</th><th>剩餘</th><th>操作</th></tr></thead>
-        <tbody id="photoStockBody"></tbody>
-      </table>
-    </div>
-
-    <h3>拍立得選項</h3>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>名字</th><th>價格</th><th>已售</th><th>剩餘</th><th>狀態</th><th>操作</th></tr></thead>
-        <tbody id="polaroidLibraryBody"></tbody>
-      </table>
-    </div>
-
-    <h3>抽抽樂設定</h3>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>每場次起始抽數</th><th>操作</th></tr></thead>
-        <tbody>
-          <tr>
-            <td id="lotteryMaxText">60</td>
-            <td><button class="small-btn" onclick="openLotterySetting()">修改</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>庫存提醒設定</h3>
-    <div class="auction-setting-row">
-      <div class="subtle" style="margin-bottom:8px">預設低庫存警示門檻，可在每個商品的「庫存」視窗另外覆寫。</div>
-      <div class="datetime-row">
-        <input id="defaultStockWarningInput" type="number" min="1" inputmode="numeric" value="5">
-        <button class="small-btn" onclick="saveDefaultStockWarning()">儲存</button>
+    <div class="library-page-head">
+      <div>
+        <h2>商品庫</h2>
+        <div class="subtle">目前場次的商品、價格、庫存與選項會獨立保存。</div>
       </div>
     </div>
 
-    <h3>資料管理</h3>
-    <div class="auction-setting-row">
-      <div class="subtle" style="margin-bottom:10px">備份包含商品、庫存、場次、訂單、競標紀錄與付款 QR。</div>
-      <div class="data-management-grid">
-        <button onclick="exportFullBackup()">完整備份 JSON</button>
-        <button onclick="document.getElementById('backupRestoreInput').click()">還原備份</button>
-      </div>
-      <input id="backupRestoreInput" class="hidden" type="file" accept=".json,application/json" onchange="restoreFullBackup(this.files[0])">
-    </div>
-
-    <h3>付款方式設定</h3>
-    <div class="auction-setting-row">
-      <div class="subtle" style="margin-bottom:10px">現金固定開啟；街口、轉帳、LINE Pay 可自行決定是否顯示。</div>
-
-      <label class="checkbox-row">
-        <input id="enableJko" type="checkbox" onchange="savePaymentMethodSettings()">
-        <span>開啟街口</span>
-      </label>
-
-      <label class="checkbox-row">
-        <input id="enableTransfer" type="checkbox" onchange="savePaymentMethodSettings()">
-        <span>開啟轉帳</span>
-      </label>
-
-      <div class="transfer-account-settings">
-        <label for="transferBankNameInput">銀行名稱</label>
-        <input id="transferBankNameInput" type="text" placeholder="例如：彰化銀行" oninput="saveTransferAccountSettings()">
-
-        <label for="transferBankCodeInput">銀行代碼</label>
-        <input id="transferBankCodeInput" type="text" inputmode="numeric" maxlength="3" placeholder="例如：009" oninput="saveTransferAccountSettings()">
-
-        <label for="transferAccountInput">轉帳帳號</label>
-        <input id="transferAccountInput" type="text" inputmode="numeric" placeholder="輸入帳號" oninput="saveTransferAccountSettings()">
-
-        <div id="transferAccountPreview" class="transfer-account-preview subtle">尚未設定轉帳帳號</div>
+    <section class="library-section">
+      <div class="library-section-head">
+        <div>
+          <h3>活動歸屬／成員</h3>
+          <div class="library-section-note">這裡就是管理本場有哪些人／分組。可新增、改名、開關或刪除。</div>
+        </div>
       </div>
 
-      <label class="checkbox-row">
-        <input id="enableLinePay" type="checkbox" onchange="savePaymentMethodSettings()">
-        <span>開啟 LINE Pay</span>
-      </label>
-    </div>
-
-    <h3>抽抽樂獎項管理</h3>
-    <div class="auction-setting-row">
-      <div class="subtle" style="margin-bottom:10px">
-        可手動管理各獎項剩餘數量。剩餘 0 或手動標記完售時，收銀頁的抽抽樂會顯示提醒。
+      <div class="owner-settings-help">
+        想新增其他人：按表格最下面的「＋ 新增其他人／分組」。<br>
+        想拔掉某個人：按該列「刪除」；若只是這場不想顯示在統計，關閉「統計顯示」即可。
       </div>
 
-      <div class="page-actions" style="margin:0 0 10px">
-        <button onclick="openLotteryPrizeModal()">＋ 新增獎項</button>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>歸屬名稱</th><th>統計顯示</th><th>操作</th></tr></thead>
+          <tbody id="ownerSettingsBody"></tbody>
+          <tfoot>
+            <tr class="library-add-row">
+              <td colspan="3"><button class="library-inline-add" onclick="addOwnerSetting()">＋ 新增歸屬</button></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- 商品分類 -->
+    <section class="library-section">
+      <div class="library-section-head">
+        <div>
+          <h3>一般商品</h3>
+          <div class="library-section-note">管理主頁上的一般商品、價格、庫存與顯示狀態。</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>商品</th><th>價格</th><th>歸屬</th><th>庫存</th><th>狀態</th><th>操作</th></tr></thead>
+          <tbody id="libraryBody"></tbody>
+          <tfoot>
+            <tr class="library-add-row">
+              <td colspan="6"><button class="library-inline-add" onclick="openLibraryCustomModal()">＋ 新增一般商品</button></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <section class="library-section">
+      <div class="library-section-head">
+        <div>
+          <div class="library-title-row">
+            <h3>生寫真</h3>
+            <label class="mini-unified-price">
+              <input id="photoUnifiedPriceEnabled" type="checkbox" onchange="togglePhotoUnifiedPrice()">
+              <span>統一價格</span>
+            </label>
+          </div>
+          <div class="library-section-note">公式服固定保留，其餘款式可自由新增、刪除與調整價格。</div>
+        </div>
+      </div>
+
+      <div class="library-inline-settings compact">
+        <div class="photo-addon-row">
+          <label for="photoDigitalAddonInput">電子檔加購</label>
+          <input id="photoDigitalAddonInput" class="inline-price-input" type="number" min="0" inputmode="numeric" onchange="savePhotoDigitalAddon(this.value)">
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>款式</th><th>價格</th><th>歸屬</th><th>已售</th><th>剩餘</th><th>操作</th></tr></thead>
+          <tbody id="photoStockBody"></tbody>
+          <tfoot>
+            <tr class="library-add-row">
+              <td colspan="6"><button class="library-inline-add" onclick="openPhotoStyleModal()">＋ 新增生寫真款式</button></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <section class="library-section">
+      <div class="library-section-head">
+        <div>
+          <div class="library-title-row">
+            <h3>拍立得</h3>
+            <label class="mini-unified-price">
+              <input id="polaroidUnifiedPriceEnabled" type="checkbox" onchange="togglePolaroidUnifiedPrice()">
+              <span>統一價格</span>
+            </label>
+          </div>
+          <div class="library-section-note">管理常駐拍立得選項、價格與庫存。</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>名字</th><th>價格</th><th>歸屬</th><th>已售</th><th>剩餘</th><th>狀態</th><th>操作</th></tr></thead>
+          <tbody id="polaroidLibraryBody"></tbody>
+          <tfoot>
+            <tr class="library-add-row">
+              <td colspan="7"><button class="library-inline-add" onclick="openLibraryPolaroidModal()">＋ 新增拍立得選項</button></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <section class="library-section">
+      <div class="library-section-head">
+        <div>
+          <h3>抽抽樂</h3>
+          <div class="library-section-note">設定每場次抽數、每抽價格，並管理獎項與剩餘數量。</div>
+        </div>
+      </div>
+
+      <div class="lottery-setting-cards">
+        <div class="setting-action-card lottery-setting-card">
+          <div>
+            <div class="library-setting-label">每場次起始抽數</div>
+            <div class="library-setting-value"><span id="lotteryMaxText">60</span> 抽</div>
+          </div>
+          <button class="small-btn" onclick="openLotterySetting()">修改抽數</button>
+        </div>
+
+        <div class="setting-action-card lottery-setting-card">
+          <div class="library-setting-label">每抽價格</div>
+          <div class="inline-price-wrap">
+            <span class="inline-price-prefix">$</span>
+            <input id="lotteryUnitPriceInput" class="inline-price-input" type="number" min="0" inputmode="numeric" onchange="saveLotteryUnitPrice(this.value)">
+          </div>
+        </div>
       </div>
 
       <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>獎項</th>
-              <th>剩餘</th>
-              <th>提醒門檻</th>
-              <th>狀態</th>
-              <th>操作</th>
-            </tr>
+            <tr><th>獎項</th><th>剩餘</th><th>提醒門檻</th><th>狀態</th><th>操作</th></tr>
           </thead>
           <tbody id="lotteryPrizeBody"></tbody>
+          <tfoot>
+            <tr class="library-add-row">
+              <td colspan="5"><button class="library-inline-add" onclick="openLotteryPrizeModal()">＋ 新增抽抽樂獎項</button></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
-    </div>
+    </section>
 
-    <h3>掛軸競標</h3>
-    <div class="auction-setting-row">
-      <div id="auctionLibraryStatus">未開啟</div>
-      <div class="subtle" id="auctionLibraryDetail" style="margin-top:4px">開啟後會固定顯示在收銀機上方。</div>
-      <div class="page-actions" style="margin-top:10px">
-        <button onclick="openAuctionSetting()">設定競標</button>
-        <button id="auctionCloseButton" class="auction-close-button hidden" onclick="closeAuctionManually()">關閉競標</button>
+    <!-- 營運設定 -->
+
+
+    <section class="library-section">
+      <div class="library-section-head">
+        <div>
+          <h3>庫存提醒</h3>
+          <div class="library-section-note">設定預設低庫存警示門檻。</div>
+        </div>
       </div>
-    </div>
 
-    <h3>目前競標出價紀錄</h3>
-    <div class="page-actions" style="margin:0 0 10px">
-      <button class="danger-btn" onclick="clearActiveBidHistory()">清除目前出價紀錄</button>
-    </div>
-    <div class="table-wrap auction-bid-history">
-      <table>
-        <thead><tr><th>時間</th><th>署名</th><th>金額</th></tr></thead>
-        <tbody id="activeBidHistoryBody"></tbody>
-      </table>
-    </div>
+      <div class="library-inline-settings compact">
+        <div class="library-setting-label">預設低庫存警示門檻</div>
+        <div class="datetime-row">
+          <input id="defaultStockWarningInput" type="number" min="1" inputmode="numeric" value="5">
+          <button class="small-btn" onclick="saveDefaultStockWarning()">儲存</button>
+        </div>
+      </div>
+    </section>
 
-    <h3>競標紀錄</h3>
+    <section class="library-section">
+      <div class="library-section-head">
+        <div>
+          <h3>付款方式</h3>
+          <div class="library-section-note">付款方式可依每個場次自由開啟；只有開啟的方式會出現在結帳與場次統計。</div>
+        </div>
+      </div>
 
-    <div class="page-actions" style="margin:0 0 10px">
-      <button class="danger-btn" onclick="clearAuctionHistory()">清除競標歷史</button>
-    </div>
+      <div class="library-inline-settings">
+        <div class="payment-toggle-grid">
+          <label class="checkbox-row">
+            <input id="enableCash" type="checkbox" onchange="savePaymentMethodSettings()">
+            <span>現金</span>
+          </label>
 
-    <div id="auctionHistoryGroups"></div>
+          <label class="checkbox-row">
+            <input id="enableJko" type="checkbox" onchange="savePaymentMethodSettings()">
+            <span>街口</span>
+          </label>
+
+          <label class="checkbox-row">
+            <input id="enableTransfer" type="checkbox" onchange="savePaymentMethodSettings()">
+            <span>轉帳</span>
+          </label>
+
+          <label class="checkbox-row">
+            <input id="enableLinePay" type="checkbox" onchange="savePaymentMethodSettings()">
+            <span>LINE Pay</span>
+          </label>
+        </div>
+
+        <div class="transfer-account-settings">
+          <div class="library-setting-label">轉帳帳戶</div>
+          <div class="form-grid-3">
+            <div>
+              <label for="transferBankNameInput">銀行名稱</label>
+              <input id="transferBankNameInput" type="text" placeholder="例如：彰化銀行" oninput="saveTransferAccountSettings()">
+            </div>
+            <div>
+              <label for="transferBankCodeInput">銀行代碼</label>
+              <input id="transferBankCodeInput" type="text" inputmode="numeric" maxlength="3" placeholder="009" oninput="saveTransferAccountSettings()">
+            </div>
+            <div>
+              <label for="transferAccountInput">帳號</label>
+              <input id="transferAccountInput" type="text" inputmode="numeric" placeholder="輸入帳號" oninput="saveTransferAccountSettings()">
+            </div>
+          </div>
+          <div id="transferAccountPreview" class="transfer-account-preview subtle">尚未設定轉帳帳號</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="library-section">
+      <div class="library-section-head">
+        <div>
+          <h3>競標</h3>
+          <div class="library-section-note">設定目前競標；歷史紀錄改到「場次統計」查看。</div>
+        </div>
+        <button class="small-btn" onclick="openAuctionSetting()">設定競標</button>
+      </div>
+
+      <div class="library-inline-settings compact">
+        <div class="library-setting-line">
+          <div>
+            <div id="auctionLibraryStatus">未開啟</div>
+            <div class="subtle" id="auctionLibraryDetail" style="margin-top:4px">開啟後會固定顯示在收銀機上方。</div>
+          </div>
+          <button id="auctionCloseButton" class="auction-close-button hidden" onclick="closeAuctionManually()">關閉競標</button>
+        </div>
+      </div>
+
+      <div class="library-subsection">
+        <div class="library-subsection-head">
+          <h4>目前出價紀錄</h4>
+          <button class="small-btn danger-btn" onclick="clearActiveBidHistory()">清除</button>
+        </div>
+        <div class="table-wrap auction-bid-history">
+          <table>
+            <thead><tr><th>時間</th><th>署名</th><th>金額</th></tr></thead>
+            <tbody id="activeBidHistoryBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 最後：資料管理 -->
+    <section class="library-section">
+      <div class="library-section-head">
+        <div>
+          <h3>資料管理</h3>
+          <div class="library-section-note">備份或還原商品、場次、訂單、競標與付款資料。</div>
+        </div>
+      </div>
+
+      <div class="data-management-grid">
+        <div class="setting-action-card">
+          <div class="setting-action-title">完整備份 JSON</div>
+          <div class="subtle">下載目前所有場次、商品、訂單、競標與設定資料。</div>
+          <button onclick="exportFullBackup()">下載備份</button>
+        </div>
+
+        <div class="setting-action-card">
+          <div class="setting-action-title">還原備份</div>
+          <div class="subtle">選擇之前匯出的 JSON 備份檔還原資料。</div>
+          <button onclick="document.getElementById('backupRestoreInput').click()">選擇備份檔</button>
+        </div>
+      </div>
+      <input id="backupRestoreInput" class="hidden" type="file" accept=".json,application/json" onchange="restoreFullBackup(this.files[0])">
+    </section>
   </section>
 
   <!-- SESSION MODAL -->
@@ -2094,6 +2750,23 @@
       <label for="sessionName">場次名稱</label>
       <input id="sessionName" type="text" placeholder="例如：FF46">
 
+      <label for="sessionDay">Day</label>
+      <select id="sessionDay">
+        <option value="">不設定</option>
+        <option value="Day 1">Day 1</option>
+        <option value="Day 2">Day 2</option>
+        <option value="Day 3">Day 3</option>
+        <option value="Day 4">Day 4</option>
+        <option value="Day 5">Day 5</option>
+      </select>
+
+      <label for="sessionStatus">場次狀態</label>
+      <select id="sessionStatus">
+        <option value="upcoming">未開始</option>
+        <option value="active">進行中</option>
+        <option value="ended">已結束</option>
+      </select>
+
       <button id="sessionDelete" class="session-delete" onclick="deleteEditingSession()">刪除此場次</button>
 
       <div class="modal-actions">
@@ -2109,6 +2782,9 @@
       <h2>新增生寫真款式</h2>
       <label for="photoStyleName">款式名稱</label>
       <input id="photoStyleName" type="text" placeholder="例如：女僕服">
+      <label for="photoStylePrice">價格</label>
+      <input id="photoStylePrice" type="number" min="0" inputmode="numeric" placeholder="留空＝目前統一價格">
+
       <label for="photoStyleStock">庫存</label>
       <input id="photoStyleStock" type="number" min="0" inputmode="numeric" placeholder="留空＝不限量">
       <div class="modal-actions">
@@ -2123,8 +2799,8 @@
     <div class="modal-box">
       <h2 id="photoChoiceTitle">生寫真套組</h2>
       <div class="payment-grid">
-        <button class="payment-choice" onclick="confirmPhotoChoice(false)">不用加購<small>NT$350</small></button>
-        <button class="payment-choice" onclick="confirmPhotoChoice(true)">＋電子檔<small>NT$450</small></button>
+        <button id="photoNormalChoiceButton" class="payment-choice" onclick="confirmPhotoChoice(false)">不用加購<small>NT$350</small></button>
+        <button id="photoDigitalChoiceButton" class="payment-choice" onclick="confirmPhotoChoice(true)">＋電子檔<small>NT$450</small></button>
       </div>
       <div class="modal-actions" style="grid-template-columns:1fr">
         <button class="cancel" onclick="closeModal('photoChoiceModal')">取消</button>
@@ -2151,7 +2827,7 @@
   <!-- CUSTOM PRODUCT -->
   <div id="customModal" class="modal hidden">
     <div class="modal-box">
-      <h2>新增品項</h2>
+      <h2 id="customModalTitle">新增品項</h2>
 
       <label for="customName">品項</label>
       <input id="customName" type="text" placeholder="大便">
@@ -2159,23 +2835,15 @@
       <label for="customPrice">單價</label>
       <input id="customPrice" type="number" inputmode="numeric">
 
-      <label for="customQty">數量</label>
-      <input id="customQty" type="number" inputmode="numeric" min="1" value="1">
-
-      <label for="customOwner">歸屬</label>
-      <select id="customOwner" onchange="toggleCustomOtherOwner()">
-        <option value="麻糬燒 Yaki">麻糬燒 Yaki</option>
-        <option value="阿芽咪 Ayami">阿芽咪 Ayami</option>
-        <option value="雙人">雙人</option>
-        <option value="__other__">＋ 其他</option>
-      </select>
-
-      <div id="customOtherArea" class="hidden">
-        <label for="customOther">其他</label>
-        <input id="customOther" type="text">
+      <div id="customQtyArea">
+        <label for="customQty">數量</label>
+        <input id="customQty" type="number" inputmode="numeric" min="1" value="1">
       </div>
 
-      <label class="checkbox-row">
+      <label for="customOwner">歸屬</label>
+      <select id="customOwner"></select>
+
+      <label id="customPermanentRow" class="checkbox-row">
         <input id="customPermanent" type="checkbox" onchange="toggleCustomStockArea()">
         <span>加入常駐商品</span>
       </label>
@@ -2193,7 +2861,7 @@
 
       <div class="modal-actions">
         <button class="cancel" onclick="closeModal('customModal')">取消</button>
-        <button class="confirm" onclick="saveCustomProduct()">加入購物車</button>
+        <button id="customSaveButton" class="confirm" onclick="saveCustomProduct()">加入購物車</button>
       </div>
     </div>
   </div>
@@ -2201,7 +2869,7 @@
   <!-- OTHER POLAROID -->
   <div id="otherPolaroidModal" class="modal hidden">
     <div class="modal-box">
-      <h2>新增拍立得</h2>
+      <h2 id="otherPolaroidModalTitle">新增拍立得</h2>
 
       <label for="otherPolaroidName">名字</label>
       <input id="otherPolaroidName" type="text">
@@ -2209,7 +2877,10 @@
       <label for="otherPolaroidPrice">單價</label>
       <input id="otherPolaroidPrice" type="number" inputmode="numeric" value="200">
 
-      <label class="checkbox-row">
+      <label>歸屬（可複選）</label>
+      <div id="otherPolaroidOwnerChecks" class="owner-check-grid"></div>
+
+      <label id="otherPolaroidPermanentRow" class="checkbox-row">
         <input id="otherPolaroidPermanent" type="checkbox" onchange="toggleOtherPolaroidStockArea()">
         <span>加入常駐選項</span>
       </label>
@@ -2227,7 +2898,22 @@
 
       <div class="modal-actions">
         <button class="cancel" onclick="closeModal('otherPolaroidModal')">取消</button>
-        <button class="confirm" onclick="saveOtherPolaroid()">下一步</button>
+        <button id="otherPolaroidSaveButton" class="confirm" onclick="saveOtherPolaroid()">下一步</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POLAROID MULTI OWNER -->
+  <div id="polaroidOwnerModal" class="modal hidden">
+    <div class="modal-box">
+      <h2 id="polaroidOwnerModalTitle">設定拍立得歸屬</h2>
+      <div class="modal-note">可複選。場次統計會把這筆拍立得金額平均分配給所選歸屬，避免重複計算營業額。</div>
+
+      <div id="polaroidOwnerChecks" class="owner-check-grid"></div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('polaroidOwnerModal')">取消</button>
+        <button class="confirm" onclick="savePolaroidOwnerMulti()">儲存</button>
       </div>
     </div>
   </div>
@@ -2240,6 +2926,21 @@
       <div id="manageProductActions" class="cart-actions"></div>
       <div class="modal-actions" style="grid-template-columns:1fr">
         <button class="cancel" onclick="closeModal('manageProductModal')">關閉</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICE EDIT -->
+  <div id="priceModal" class="modal hidden">
+    <div class="modal-box">
+      <h2 id="priceModalTitle">修改價格</h2>
+
+      <label for="priceModalInput">價格</label>
+      <input id="priceModalInput" type="number" min="0" inputmode="numeric">
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('priceModal')">取消</button>
+        <button class="confirm" onclick="savePriceEdit()">儲存</button>
       </div>
     </div>
   </div>
@@ -2302,7 +3003,7 @@
       <div class="payment-total">應付 NT$ <span id="chooserTotal">0</span></div>
 
       <div class="payment-grid">
-        <button class="payment-choice" onclick="choosePayment('cash')">現金<small>計算找零</small></button>
+        <button class="payment-choice" onclick="choosePayment('cash')" id="paymentChoiceCash">現金<small>計算找零</small></button>
         <button id="paymentChoiceJko" class="payment-choice" onclick="choosePayment('jko')">街口<small>顯示你的 QR</small></button>
         <button id="paymentChoiceTransfer" class="payment-choice" onclick="choosePayment('transfer')">轉帳<small>顯示你的 QR</small></button>
         <button id="paymentChoiceLinePay" class="payment-choice" onclick="choosePayment('linepay')">LINE Pay<small>顯示你的 QR</small></button>
@@ -2610,8 +3311,6 @@
     "use strict";
 
     /* -------------------- CONSTANTS -------------------- */
-    const OWNERS = ["麻糬燒 Yaki", "阿芽咪 Ayami", "雙人"];
-
     const KEYS = {
       products: "cash-register-products-v3",
       polaroids: "cash-register-polaroids-v3",
@@ -2624,17 +3323,13 @@
     };
 
     const DEFAULT_PRODUCTS = [
-      { id:"photoset", name:"生寫真套組", price:350, displayPrice:"$350", owner:"雙人", type:"photoset", visible:true, custom:false, stock:null },
-      { id:"ultimate", name:"終極大全套", price:1000, displayPrice:"$1,000", owner:"雙人", type:"simple", visible:true, custom:false, stock:null },
-      { id:"lottery-main", name:"抽抽樂", price:50, displayPrice:"$50", owner:"雙人", type:"lottery", visible:true, custom:false, stock:null },
-      { id:"polaroid-main", name:"拍立得", price:200, displayPrice:"$200 起", owner:"雙人", type:"polaroid", visible:true, custom:false, stock:null }
+      { id:"photoset", name:"生寫真套組", price:350, displayPrice:"$350", owner:"", type:"photoset", visible:true, custom:false, stock:null },
+      { id:"ultimate", name:"終極大全套", price:1000, displayPrice:"$1,000", owner:"", type:"simple", visible:true, custom:false, stock:null },
+      { id:"lottery-main", name:"抽抽樂", price:50, displayPrice:"$50", owner:"", type:"lottery", visible:true, custom:false, stock:null },
+      { id:"polaroid-main", name:"拍立得", price:200, displayPrice:"$200 起", owner:"", type:"polaroid", visible:true, custom:false, stock:null }
     ];
 
-    const DEFAULT_POLAROIDS = [
-      { id:"polaroid-yaki", name:"麻糬燒 Yaki", price:200, owner:"麻糬燒 Yaki", visible:true, custom:false, stock:null },
-      { id:"polaroid-ayami", name:"阿芽咪 Ayami", price:200, owner:"阿芽咪 Ayami", visible:true, custom:false, stock:null },
-      { id:"polaroid-duo", name:"雙人", price:400, owner:"雙人", visible:true, custom:false, stock:null }
-    ];
+    const DEFAULT_POLAROIDS = [];
 
     const DEFAULT_PHOTO_STOCK = {
       "公式服": null
@@ -2705,6 +3400,191 @@
       localStorage.setItem(key, JSON.stringify(value));
     }
 
+    function migrateLegacyDefaultPeople() {
+      const migrationKey =
+        "cash-register-v42-no-legacy-ownership-migrated";
+
+      if (
+        localStorage.getItem(
+          migrationKey
+        ) === "1"
+      ) {
+        return;
+      }
+
+      const legacyNames =
+        new Set([
+          "麻糬燒 Yaki",
+          "阿芽咪 Ayami",
+          "雙人"
+        ]);
+
+      if (currentSessionId) {
+        /* 活動歸屬名單：移除舊版三個內建人員 */
+        const settingsKey =
+          sessionDataKey(
+            "settings"
+          );
+
+        const saved =
+          loadJSON(
+            settingsKey,
+            {}
+          );
+
+        if (
+          Array.isArray(
+            saved.owners
+          )
+        ) {
+          saved.owners =
+            saved.owners.filter(
+              owner =>
+                !legacyNames.has(
+                  String(
+                    owner?.name || ""
+                  ).trim()
+                )
+            );
+        }
+
+        /* 生寫真歸屬：舊內建值清空 */
+        if (
+          saved.photoOwners &&
+          typeof saved.photoOwners ===
+            "object"
+        ) {
+          for (
+            const theme of
+            Object.keys(
+              saved.photoOwners
+            )
+          ) {
+            if (
+              legacyNames.has(
+                String(
+                  saved.photoOwners[theme] || ""
+                ).trim()
+              )
+            ) {
+              delete saved.photoOwners[
+                theme
+              ];
+            }
+          }
+        }
+
+        saveJSON(
+          settingsKey,
+          saved
+        );
+
+        /* 一般商品：保留商品，只清除舊版內建歸屬 */
+        const productKey =
+          sessionDataKey(
+            "products"
+          );
+
+        const products =
+          loadJSON(
+            productKey,
+            []
+          ).map(
+            item => ({
+              ...item,
+              owner:
+                legacyNames.has(
+                  String(
+                    item?.owner || ""
+                  ).trim()
+                )
+                  ? ""
+                  : item.owner
+            })
+          );
+
+        saveJSON(
+          productKey,
+          products
+        );
+
+        /* 拍立得：保留使用者建立的選項，只清除舊內建歸屬。
+           舊版自帶的三個拍立得選項則直接移除。 */
+        const polaroidKey =
+          sessionDataKey(
+            "polaroids"
+          );
+
+        const legacyIds =
+          new Set([
+            "polaroid-yaki",
+            "polaroid-ayami",
+            "polaroid-duo"
+          ]);
+
+        const polaroids =
+          loadJSON(
+            polaroidKey,
+            []
+          )
+            .filter(
+              item =>
+                !legacyIds.has(
+                  item.id
+                )
+            )
+            .map(
+              item => {
+                const owners =
+                  Array.isArray(
+                    item.owners
+                  )
+                    ? item.owners.filter(
+                        name =>
+                          !legacyNames.has(
+                            String(
+                              name || ""
+                            ).trim()
+                          )
+                      )
+                    : [];
+
+                const legacyOwner =
+                  String(
+                    item.owner || ""
+                  ).trim();
+
+                return {
+                  ...item,
+                  owners,
+                  owner:
+                    legacyNames.has(
+                      legacyOwner
+                    )
+                      ? ""
+                      : (
+                          owners.length
+                            ? ownerListLabel(
+                                owners
+                              )
+                            : legacyOwner
+                        )
+                };
+              }
+            );
+
+        saveJSON(
+          polaroidKey,
+          polaroids
+        );
+      }
+
+      localStorage.setItem(
+        migrationKey,
+        "1"
+      );
+    }
+
     function getSettings() {
       const globalSaved =
         loadJSON(
@@ -2731,7 +3611,35 @@
           ? saved.lotteryPrizes
           : [],
 
+        photoPricing: {
+          unified: true,
+          unifiedPrice: 350,
+          digitalAddon: 100,
+          prices: {},
+          ...(saved.photoPricing || {})
+        },
+
+        polaroidPricing: {
+          unified: false,
+          unifiedPrice: 200,
+          ...(saved.polaroidPricing || {})
+        },
+
+        deletedProductIds: Array.isArray(saved.deletedProductIds) ? saved.deletedProductIds : [],
+        deletedPolaroidIds: Array.isArray(saved.deletedPolaroidIds) ? saved.deletedPolaroidIds : [],
+        deletedPhotoThemes: Array.isArray(saved.deletedPhotoThemes) ? saved.deletedPhotoThemes : [],
+
+        owners:
+          Array.isArray(saved.owners)
+            ? saved.owners
+            : [],
+
+        photoOwners: {
+          ...(saved.photoOwners || {})
+        },
+
         payments: {
+          cash: true,
           jko: true,
           transfer: true,
           linepay: true,
@@ -2809,6 +3717,24 @@
       );
     }
 
+    function sessionStatusLabel(status) {
+      return status === "upcoming" ? "未開始" : status === "ended" ? "已結束" : "進行中";
+    }
+
+    function isCurrentSessionEnded() {
+      return getCurrentSession()?.status === "ended";
+    }
+
+    function requireEditableSession() {
+      if (!isCurrentSessionEnded()) return true;
+      alert("此場次已結束，目前為唯讀狀態。若要修改，請先到場次設定改回進行中。");
+      return false;
+    }
+
+    function confirmDanger(message) {
+      return prompt(`${message}\n\n請輸入「確認」後繼續。`) === "確認";
+    }
+
     function getProducts() {
       let items = loadJSON(
         currentSessionId
@@ -2816,8 +3742,9 @@
           : KEYS.products,
         []
       );
+      const deletedIds = new Set(getSettings().deletedProductIds || []);
       for (const d of DEFAULT_PRODUCTS) {
-        if (!items.some(x => x.id === d.id)) items.push(deepCopy(d));
+        if (!deletedIds.has(d.id) && !items.some(x => x.id === d.id)) items.push(deepCopy(d));
       }
       items = items.map(x => {
         const item = {
@@ -2841,7 +3768,7 @@
       });
 
       saveJSON(
-        KEYS.products,
+        currentSessionId ? sessionDataKey("products") : KEYS.products,
         items
       );
 
@@ -2864,10 +3791,33 @@
           : KEYS.polaroids,
         []
       );
+      const deletedIds = new Set(getSettings().deletedPolaroidIds || []);
       for (const d of DEFAULT_POLAROIDS) {
-        if (!items.some(x => x.id === d.id)) items.push(deepCopy(d));
+        if (!deletedIds.has(d.id) && !items.some(x => x.id === d.id)) items.push(deepCopy(d));
       }
-      items = items.map(x => ({...x, stock:x.stock === undefined ? null : x.stock}));
+      items = items.map(x => {
+        const owners =
+          Array.isArray(x.owners)
+            ? x.owners.filter(Boolean)
+            : (
+                x.owner
+                  ? [x.owner]
+                  : []
+              );
+
+        return {
+          ...x,
+          owners,
+          owner:
+            ownerListLabel(
+              owners
+            ),
+          stock:
+            x.stock === undefined
+              ? null
+              : x.stock
+        };
+      });
       saveJSON(
         currentSessionId
           ? sessionDataKey("polaroids")
@@ -2918,10 +3868,12 @@
         );
       }
 
-      return {
-        ...DEFAULT_PHOTO_STOCK,
-        ...saved
-      };
+      const deletedThemes = new Set(getSettings().deletedPhotoThemes || []);
+      const defaults = {};
+      for (const [theme,stock] of Object.entries(DEFAULT_PHOTO_STOCK)) {
+        if (!deletedThemes.has(theme)) defaults[theme] = stock;
+      }
+      return {...defaults,...saved};
     }
 
     function savePhotoStock(v) {
@@ -3044,7 +3996,7 @@
       let sessions = getSessions();
 
       if (!sessions.length) {
-        const s = { id:createSessionId(), date:todayISO(), name:"今日場次", createdAt:Date.now() };
+        const s = { id:createSessionId(), date:todayISO(), name:"今日場次", day:"", status:"active", createdAt:Date.now() };
         sessions = [s];
         saveSessions(sessions);
         currentSessionId = s.id;
@@ -3085,10 +4037,13 @@
       if (!s) return;
 
       document.getElementById("headerSessionDate").textContent = prettyDate(s.date);
-      document.getElementById("headerSessionName").textContent = s.name || "未命名場次";
-      document.getElementById("currentSessionLabel").textContent = `目前場次：${prettyDate(s.date)}｜${s.name || "未命名場次"}`;
-      document.getElementById("statsSessionName").textContent = s.name || "未命名場次";
-      document.getElementById("statsSessionDate").textContent = prettyDate(s.date);
+      document.getElementById("headerSessionName").textContent =
+        `${s.name || "未命名場次"}${s.day ? "｜" + s.day : ""}｜${sessionStatusLabel(s.status || "active")}`;
+      document.getElementById("currentSessionLabel").textContent =
+        `目前場次：${prettyDate(s.date)}｜${s.name || "未命名場次"}${s.day ? "｜" + s.day : ""}｜${sessionStatusLabel(s.status || "active")}`;
+      document.getElementById("statsSessionName").textContent =
+        `${s.name || "未命名場次"}${s.day ? "｜" + s.day : ""}`;
+      document.getElementById("statsSessionDate").textContent = `${prettyDate(s.date)}｜${sessionStatusLabel(s.status || "active")}`;
     }
 
     function openSessionModal() {
@@ -3112,7 +4067,7 @@
       for (const s of sortSessions(getSessions())) {
         const opt = document.createElement("option");
         opt.value = s.id;
-        opt.textContent = `${prettyDate(s.date)}｜${s.name || "未命名場次"}`;
+        opt.textContent = `${prettyDate(s.date)}｜${s.name || "未命名場次"}${s.day ? "｜" + s.day : ""}`;
         el.appendChild(opt);
       }
     }
@@ -3120,6 +4075,8 @@
     function fillSessionForm(s) {
       document.getElementById("sessionDate").value = s.date || "";
       document.getElementById("sessionName").value = s.name || "";
+      document.getElementById("sessionDay").value = s.day || "";
+      document.getElementById("sessionStatus").value = s.status || "active";
       document.getElementById("sessionDelete").disabled = getSessions().length <= 1;
     }
 
@@ -3135,12 +4092,16 @@
       editingSessionId = null;
       document.getElementById("sessionDate").value = todayISO();
       document.getElementById("sessionName").value = "";
+      document.getElementById("sessionDay").value = "";
+      document.getElementById("sessionStatus").value = "upcoming";
       document.getElementById("sessionDelete").disabled = true;
     }
 
     function saveSession() {
       const date = document.getElementById("sessionDate").value;
       const name = document.getElementById("sessionName").value.trim();
+      const day = document.getElementById("sessionDay").value;
+      const status = document.getElementById("sessionStatus").value || "active";
 
       if (!date) return alert("請選擇日期");
       if (!name) return alert("請輸入場次名稱");
@@ -3150,13 +4111,13 @@
 
       if (id) {
         const idx = sessions.findIndex(x => x.id === id);
-        if (idx >= 0) sessions[idx] = {...sessions[idx],date,name};
+        if (idx >= 0) sessions[idx] = {...sessions[idx],date,name,day,status};
       } else {
         const sourceSessionId =
           currentSessionId;
 
         id = createSessionId();
-        sessions.push({id,date,name,createdAt:Date.now()});
+        sessions.push({id,date,name,day,status,createdAt:Date.now()});
 
         initializeSessionData(
           id,
@@ -3199,7 +4160,7 @@
       const target = sessions.find(x => x.id === editingSessionId);
       if (!target) return;
 
-      if (!confirm(`確定刪除「${target.name}」嗎？\n\n此場次訂單紀錄也會一起刪除。`)) return;
+      if (!confirmDanger(`確定刪除「${target.name}」嗎？此場次訂單紀錄也會一起刪除。`)) return;
 
       sessions = sessions.filter(x => x.id !== editingSessionId);
       localStorage.removeItem(sessionOrderKey(editingSessionId));
@@ -3256,6 +4217,7 @@
     function getSoldByKey(key) {
       let sum = 0;
       for (const order of getAllOrders()) {
+        if (order.voided) continue;
         for (const item of order.items || []) {
           if (item.inventoryKey === key) sum += Number(item.quantity||0);
         }
@@ -3382,11 +4344,45 @@
     }
 
     /* -------------------- PRODUCTS -------------------- */
+    function isMainProductSoldOut(p) {
+      if (p.type==="simple" || p.type==="custom") return stockInfo(p.stock,inventoryKeyForProduct(p.id),true).sold;
+      if (p.type==="lottery") return lotteryRemaining(true)<=0;
+      if (p.type==="photoset") {
+        const stocks=getPhotoStock(), themes=Object.keys(stocks);
+        if (!themes.length) return true;
+        return themes.every(theme=>stocks[theme]!==null && remaining(stocks[theme],inventoryKeyForPhoto(theme),true)<=0);
+      }
+      if (p.type==="polaroid") {
+        const opts=getPolaroids().filter(x=>x.visible);
+        if (!opts.length) return true;
+        return opts.every(x=>x.stock!==null && remaining(x.stock,inventoryKeyForPolaroid(x.id),true)<=0);
+      }
+      return false;
+    }
+
+    let draggedProductId=null;
+    function reorderProductBefore(draggedId,targetId) {
+      if (!draggedId || !targetId || draggedId===targetId) return;
+      const items=getProducts();
+      const from=items.findIndex(x=>x.id===draggedId);
+      const to=items.findIndex(x=>x.id===targetId);
+      if (from<0 || to<0) return;
+      const [moved]=items.splice(from,1);
+      const target=items.findIndex(x=>x.id===targetId);
+      items.splice(target,0,moved);
+      saveProducts(items); renderMainProducts(); renderLibrary();
+    }
+
     function renderMainProducts() {
       const grid = document.getElementById("mainProductGrid");
       grid.innerHTML = "";
 
-      for (const p of getProducts().filter(x => x.visible)) {
+      const query=(document.getElementById("productSearchInput")?.value||"").trim().toLowerCase();
+      const products=getProducts().filter(x=>x.visible).filter(x=>!query || String(x.name||"").toLowerCase().includes(query))
+        .map((product,index)=>({product,index,sold:isMainProductSoldOut(product)}))
+        .sort((a,b)=>Number(a.sold)-Number(b.sold)||a.index-b.index).map(x=>x.product);
+
+      for (const p of products) {
         const wrap = document.createElement("div");
         wrap.className = "product-wrap";
 
@@ -3414,9 +4410,29 @@
           stockLine = `<span class="stock-text">點入查看各選項庫存</span>`;
         }
 
+        sold=isMainProductSoldOut(p);
+        if (sold && !stockLine.includes("SOLD OUT")) stockLine=`<span class="sold-label">SOLD OUT</span>`;
+
+        let shownPrice =
+          p.displayPrice ||
+          "$" +
+          money(p.price);
+
+        if (
+          p.type === "photoset"
+        ) {
+          const pricing =
+            getPhotoPricing();
+
+          shownPrice =
+            pricing.unified
+              ? `$${money(pricing.unifiedPrice)}`
+              : "各款價格";
+        }
+
         btn.innerHTML = sold
           ? `${esc(p.name)}${stockLine}`
-          : `${esc(p.name)}<small>${esc(p.displayPrice || "$"+money(p.price))}</small>${stockLine}`;
+          : `${esc(p.name)}<small>${esc(shownPrice)}</small>${stockLine}`;
 
         if (sold) {
           btn.classList.add("sold-out");
@@ -3428,11 +4444,43 @@
         wrap.appendChild(btn);
 
         if (manageMode) {
+          wrap.draggable=true;
+          wrap.classList.add("sortable-product");
+          wrap.addEventListener("dragstart",()=>{draggedProductId=p.id;wrap.classList.add("dragging");});
+          wrap.addEventListener("dragend",()=>{draggedProductId=null;wrap.classList.remove("dragging");});
+          wrap.addEventListener("dragover",e=>e.preventDefault());
+          wrap.addEventListener("drop",e=>{e.preventDefault();reorderProductBefore(draggedProductId,p.id);});
+
           const m = document.createElement("button");
           m.className = "manage-dot";
           m.textContent = "⋯";
           m.onclick = e => { e.stopPropagation(); openManageProduct(p.id); };
           wrap.appendChild(m);
+
+          const reorder = document.createElement("div");
+          reorder.className = "product-reorder";
+
+          const prev = document.createElement("button");
+          prev.type = "button";
+          prev.textContent = "←";
+          prev.title = "往前移";
+          prev.onclick = e => {
+            e.stopPropagation();
+            moveProductOrder(p.id,-1);
+          };
+
+          const next = document.createElement("button");
+          next.type = "button";
+          next.textContent = "→";
+          next.title = "往後移";
+          next.onclick = e => {
+            e.stopPropagation();
+            moveProductOrder(p.id,1);
+          };
+
+          reorder.appendChild(prev);
+          reorder.appendChild(next);
+          wrap.appendChild(reorder);
         }
 
         grid.appendChild(wrap);
@@ -3457,6 +4505,56 @@
       if (!canAdd(p.stock,key,1)) return alert("這個商品已完售");
       addToCart({id:p.id,inventoryKey:key,name:p.name,price:p.price,owner:p.owner});
     }
+
+    function moveProductOrder(id,direction) {
+      const items = getProducts();
+
+      const visibleIds =
+        items
+          .filter(item => item.visible)
+          .map(item => item.id);
+
+      const currentVisibleIndex =
+        visibleIds.indexOf(id);
+
+      const targetVisibleIndex =
+        currentVisibleIndex +
+        Number(direction);
+
+      if (
+        currentVisibleIndex < 0 ||
+        targetVisibleIndex < 0 ||
+        targetVisibleIndex >= visibleIds.length
+      ) {
+        return;
+      }
+
+      const targetId =
+        visibleIds[targetVisibleIndex];
+
+      const currentIndex =
+        items.findIndex(
+          item => item.id === id
+        );
+
+      const targetIndex =
+        items.findIndex(
+          item => item.id === targetId
+        );
+
+      [
+        items[currentIndex],
+        items[targetIndex]
+      ] = [
+        items[targetIndex],
+        items[currentIndex]
+      ];
+
+      saveProducts(items);
+      renderMainProducts();
+      renderLibrary();
+    }
+
 
     function toggleManageMode() {
       manageMode = !manageMode;
@@ -3505,6 +4603,14 @@
       ).value = "";
 
       document.getElementById(
+        "photoStylePrice"
+      ).value =
+        Number(
+          getPhotoPricing()
+            .unifiedPrice || 0
+        );
+
+      document.getElementById(
         "photoStyleModal"
       ).classList.remove(
         "hidden"
@@ -3515,6 +4621,11 @@
       const name =
         document.getElementById(
           "photoStyleName"
+        ).value.trim();
+
+      const priceText =
+        document.getElementById(
+          "photoStylePrice"
         ).value.trim();
 
       const stockText =
@@ -3551,6 +4662,27 @@
           "這個款式已經存在"
         );
         return;
+      }
+
+      let price =
+        Number(
+          getPhotoPricing()
+            .unifiedPrice || 0
+        );
+
+      if (
+        priceText !== ""
+      ) {
+        price =
+          Number(priceText);
+
+        if (
+          !Number.isInteger(price) ||
+          price < 0
+        ) {
+          alert("請輸入正確價格");
+          return;
+        }
       }
 
       let stock =
@@ -3593,6 +4725,24 @@
         saved
       );
 
+      const settings =
+        getSettings();
+
+      const pricing =
+        getPhotoPricing();
+
+      settings.photoPricing = {
+        ...pricing,
+
+        prices: {
+          ...(pricing.prices || {}),
+          [name]:
+            price
+        }
+      };
+
+      saveSettings(settings);
+
       closeModal(
         "photoStyleModal"
       );
@@ -3602,59 +4752,22 @@
     }
 
     function deletePhotoStyle(theme) {
-      if (
-        theme === "公式服"
-      ) {
-        alert(
-          "公式服是預設款式，不能刪除"
-        );
-        return;
+      if (!requireEditableSession()) return;
+      if (!confirmDanger(`確定刪除生寫真款式「${theme}」嗎？`)) return;
+      const saved=loadJSON(currentSessionId ? sessionDataKey("photo-stock") : KEYS.photoStock,{});
+      delete saved[theme];
+      saveJSON(currentSessionId ? sessionDataKey("photo-stock") : KEYS.photoStock,saved);
+      const settings=getSettings();
+      if (Object.prototype.hasOwnProperty.call(DEFAULT_PHOTO_STOCK,theme)) {
+        settings.deletedPhotoThemes=Array.from(new Set([...(settings.deletedPhotoThemes||[]),theme]));
       }
-
-      if (
-        !confirm(
-          `確定刪除「${theme}」嗎？`
-        )
-      ) {
-        return;
-      }
-
-      const saved =
-        loadJSON(
-          currentSessionId
-            ? sessionDataKey("photo-stock")
-            : KEYS.photoStock,
-          {}
-        );
-
-      delete saved[
-        theme
-      ];
-
-      saveJSON(
-        currentSessionId
-          ? sessionDataKey("photo-stock")
-          : KEYS.photoStock,
-        saved
-      );
-
+      const pricing=getPhotoPricing();
+      const prices={...(pricing.prices||{})}; delete prices[theme];
+      settings.photoPricing={...pricing,prices};
+      saveSettings(settings);
       renderLibrary();
-
-      if (
-        !document.getElementById(
-          "subMenu"
-        ).classList.contains(
-          "hidden"
-        ) &&
-        document.getElementById(
-          "subTitle"
-        ).textContent ===
-          "生寫真套組"
-      ) {
-        openPhotoSet();
-      }
+      if (!document.getElementById("subMenu").classList.contains("hidden") && document.getElementById("subTitle").textContent==="生寫真套組") openPhotoSet();
     }
-
 
     function openPhotoSet() {
       showSub(
@@ -3700,7 +4813,7 @@
 
         addOption(
           theme,
-          "$350",
+          `$${money(getPhotoThemePrice(theme))}`,
           () =>
             openPhotoChoice(
               theme
@@ -3720,8 +4833,36 @@
 
     function openPhotoChoice(theme) {
       pendingPhotoTheme = theme;
-      document.getElementById("photoChoiceTitle").textContent = `生寫真套組｜${theme}`;
-      document.getElementById("photoChoiceModal").classList.remove("hidden");
+
+      const basePrice =
+        getPhotoThemePrice(theme);
+
+      const addon =
+        Number(
+          getPhotoPricing()
+            .digitalAddon || 0
+        );
+
+      document.getElementById(
+        "photoChoiceTitle"
+      ).textContent =
+        `生寫真套組｜${theme}`;
+
+      document.getElementById(
+        "photoNormalChoiceButton"
+      ).innerHTML =
+        `不用加購<small>NT$${money(basePrice)}</small>`;
+
+      document.getElementById(
+        "photoDigitalChoiceButton"
+      ).innerHTML =
+        `＋電子檔<small>NT$${money(basePrice + addon)}</small>`;
+
+      document.getElementById(
+        "photoChoiceModal"
+      ).classList.remove(
+        "hidden"
+      );
     }
 
     function confirmPhotoChoice(digital) {
@@ -3732,12 +4873,30 @@
       const key = inventoryKeyForPhoto(theme);
       if (!canAdd(stocks[theme],key,1)) return alert(`${theme} 已完售`);
 
+      const basePrice =
+        getPhotoThemePrice(theme);
+
+      const addon =
+        Number(
+          getPhotoPricing()
+            .digitalAddon || 0
+        );
+
       addToCart({
         id:`photoset-${theme}-${digital?"digital":"normal"}`,
         inventoryKey:key,
         name:`生寫真套組｜${theme}${digital?"＋電子檔":""}`,
-        price:digital?450:350,
-        owner:"雙人"
+        price:
+          basePrice +
+          (
+            digital
+              ? addon
+              : 0
+          ),
+        owner:
+          getPhotoOwner(
+            theme
+          )
       });
 
       pendingPhotoTheme = null;
@@ -4330,7 +5489,16 @@
         inventoryKey:pendingPolaroid.inventoryKey,
         name:`拍立得｜${pendingPolaroid.name}`,
         price:pendingPolaroid.price,
-        owner:pendingPolaroid.owner,
+        owners:
+          normalizeOwnerList(
+            pendingPolaroid
+          ),
+        owner:
+          ownerListLabel(
+            normalizeOwnerList(
+              pendingPolaroid
+            )
+          ),
         signature
       });
 
@@ -4339,13 +5507,110 @@
       openPolaroid();
     }
 
+    let customLibraryMode =
+      false;
+
+    let polaroidLibraryMode =
+      false;
+
+    function openLibraryCustomModal() {
+      customLibraryMode =
+        true;
+
+      openCustomModal();
+
+      document.getElementById(
+        "customModalTitle"
+      ).textContent =
+        "新增一般商品";
+
+      document.getElementById(
+        "customQtyArea"
+      ).classList.add(
+        "hidden"
+      );
+
+      document.getElementById(
+        "customPermanentRow"
+      ).classList.add(
+        "hidden"
+      );
+
+      document.getElementById(
+        "customPermanent"
+      ).checked =
+        true;
+
+      document.getElementById(
+        "customQty"
+      ).value =
+        "1";
+
+      toggleCustomStockArea();
+
+      document.getElementById(
+        "customSaveButton"
+      ).textContent =
+        "新增商品";
+    }
+
+    function openLibraryPolaroidModal() {
+      polaroidLibraryMode =
+        true;
+
+      openOtherPolaroidModal();
+
+      document.getElementById(
+        "otherPolaroidModalTitle"
+      ).textContent =
+        "新增拍立得選項";
+
+      document.getElementById(
+        "otherPolaroidPermanentRow"
+      ).classList.add(
+        "hidden"
+      );
+
+      document.getElementById(
+        "otherPolaroidPermanent"
+      ).checked =
+        true;
+
+      toggleOtherPolaroidStockArea();
+
+      document.getElementById(
+        "otherPolaroidSaveButton"
+      ).textContent =
+        "新增選項";
+    }
+
+
     /* -------------------- CUSTOM -------------------- */
     function openCustomModal() {
+      if (!customLibraryMode) {
+        document.getElementById("customModalTitle").textContent = "新增品項";
+        document.getElementById("customQtyArea").classList.remove("hidden");
+        document.getElementById("customPermanentRow").classList.remove("hidden");
+        document.getElementById("customSaveButton").textContent = "加入購物車";
+      }
+
+      populateOwnerSelect(
+        "customOwner",
+        getEnabledOwners()[0]?.name ||
+        getOwnerSettings()[0]?.name ||
+        ""
+      );
+
       document.getElementById("customName").value = "";
       document.getElementById("customPrice").value = "";
       document.getElementById("customQty").value = "1";
-      document.getElementById("customOwner").value = "麻糬燒 Yaki";
-      document.getElementById("customOther").value = "";
+      const defaultOwner =
+        getEnabledOwners()[0]?.name ||
+        getOwnerSettings()[0]?.name ||
+        "";
+
+      document.getElementById("customOwner").value =
+        defaultOwner;
       document.getElementById("customPermanent").checked = false;
       document.getElementById("customUnlimited").checked = true;
       document.getElementById("customStock").value = "0";
@@ -4356,7 +5621,7 @@
     }
 
     function toggleCustomOtherOwner() {
-      document.getElementById("customOtherArea").classList.toggle("hidden",document.getElementById("customOwner").value !== "__other__");
+      /* 歸屬改由後台統一管理，保留函式避免舊事件失效。 */
     }
 
     function toggleCustomStockArea() {
@@ -4371,8 +5636,7 @@
       const name = document.getElementById("customName").value.trim();
       const price = Number(document.getElementById("customPrice").value);
       const qty = Number(document.getElementById("customQty").value);
-      let owner = document.getElementById("customOwner").value;
-      if (owner === "__other__") owner = document.getElementById("customOther").value.trim();
+      const owner = document.getElementById("customOwner").value.trim();
 
       const permanent = document.getElementById("customPermanent").checked;
       const unlimited = document.getElementById("customUnlimited").checked;
@@ -4392,6 +5656,14 @@
         saveProducts(products);
       }
 
+      if (customLibraryMode) {
+        customLibraryMode = false;
+        closeModal("customModal");
+        renderMainProducts();
+        renderLibrary();
+        return;
+      }
+
       addToCart({
         id:permanent?id:`temp-${Date.now()}-${Math.random()}`,
         inventoryKey:permanent?inventoryKeyForProduct(id):null,
@@ -4403,6 +5675,17 @@
     }
 
     function openOtherPolaroidModal() {
+      if (!polaroidLibraryMode) {
+        document.getElementById("otherPolaroidModalTitle").textContent = "新增拍立得";
+        document.getElementById("otherPolaroidPermanentRow").classList.remove("hidden");
+        document.getElementById("otherPolaroidSaveButton").textContent = "下一步";
+      }
+
+      renderOwnerCheckboxes(
+        "otherPolaroidOwnerChecks",
+        []
+      );
+
       document.getElementById("otherPolaroidName").value = "";
       document.getElementById("otherPolaroidPrice").value = "200";
       document.getElementById("otherPolaroidPermanent").checked = false;
@@ -4427,14 +5710,25 @@
       const permanent = document.getElementById("otherPolaroidPermanent").checked;
       const unlimited = document.getElementById("otherPolaroidUnlimited").checked;
       const stock = unlimited ? null : Number(document.getElementById("otherPolaroidStock").value);
+      const owners =
+        getCheckedOwners(
+          "otherPolaroidOwnerChecks"
+        );
 
       if (!name) return alert("請輸入名字");
       if (!Number.isFinite(price) || price<=0) return alert("請輸入正確金額");
+      if (!owners.length) return alert("請至少選擇一個歸屬");
       if (permanent && !unlimited && (!Number.isInteger(stock) || stock<0)) return alert("請輸入正確初始數量");
 
       const p = {
         id:permanent?`polaroid-custom-${Date.now()}-${Math.random().toString(36).slice(2,7)}`:`polaroid-temp-${Date.now()}-${Math.random()}`,
-        name,price,owner:name,visible:permanent,custom:true,stock:permanent?stock:null
+        name,
+        price,
+        owners,
+        owner:ownerListLabel(owners),
+        visible:permanent,
+        custom:true,
+        stock:permanent?stock:null
       };
 
       if (permanent) {
@@ -4444,6 +5738,14 @@
       }
 
       closeModal("otherPolaroidModal");
+
+      if (polaroidLibraryMode) {
+        polaroidLibraryMode = false;
+        renderMainProducts();
+        renderLibrary();
+        return;
+      }
+
       preparePolaroid(p);
     }
 
@@ -4586,6 +5888,7 @@
         getSettings();
 
       return {
+        cash: true,
         jko: true,
         transfer: true,
         linepay: true,
@@ -4788,6 +6091,11 @@
       const payments =
         getPaymentMethodSettings();
 
+      const cash =
+        document.getElementById(
+          "enableCash"
+        );
+
       const jko =
         document.getElementById(
           "enableJko"
@@ -4802,6 +6110,13 @@
         document.getElementById(
           "enableLinePay"
         );
+
+      if (cash) {
+        cash.checked =
+          Boolean(
+            payments.cash
+          );
+      }
 
       if (jko) {
         jko.checked =
@@ -4865,6 +6180,11 @@
         getSettings();
 
       settings.payments = {
+        cash:
+          document.getElementById(
+            "enableCash"
+          ).checked,
+
         jko:
           document.getElementById(
             "enableJko"
@@ -4893,6 +6213,9 @@
         getPaymentMethodSettings();
 
       const map = {
+        paymentChoiceCash:
+          payments.cash,
+
         paymentChoiceJko:
           payments.jko,
 
@@ -5617,6 +6940,1211 @@
       await loadQrToUI(type);
     }
 
+    let priceEditContext = null;
+
+    function getPolaroidPricing() {
+      const settings =
+        getSettings();
+
+      return {
+        unified: false,
+        unifiedPrice: 200,
+        ...(settings.polaroidPricing || {})
+      };
+    }
+
+    function togglePhotoUnifiedPrice() {
+      const settings =
+        getSettings();
+
+      const pricing =
+        getPhotoPricing();
+
+      const enabled =
+        Boolean(
+          document.getElementById(
+            "photoUnifiedPriceEnabled"
+          )?.checked
+        );
+
+      if (
+        enabled &&
+        !pricing.unified
+      ) {
+        const themes =
+          Object.keys(
+            getPhotoStock()
+          );
+
+        const firstTheme =
+          themes[0];
+
+        const base =
+          firstTheme
+            ? getPhotoThemePrice(
+                firstTheme
+              )
+            : Number(
+                pricing.unifiedPrice || 350
+              );
+
+        pricing.unifiedPrice =
+          Number(base || 0);
+      }
+
+      pricing.unified =
+        enabled;
+
+      settings.photoPricing =
+        pricing;
+
+      saveSettings(
+        settings
+      );
+
+      renderLibrary();
+      renderMainProducts();
+    }
+
+    function savePhotoInlinePrice(theme,value) {
+      const price =
+        Number(value);
+
+      if (
+        !Number.isInteger(price) ||
+        price < 0
+      ) {
+        alert(
+          "請輸入正確價格"
+        );
+
+        renderLibrary();
+        return;
+      }
+
+      const settings =
+        getSettings();
+
+      const pricing =
+        getPhotoPricing();
+
+      if (pricing.unified) {
+        pricing.unifiedPrice =
+          price;
+      } else {
+        pricing.prices = {
+          ...(pricing.prices || {}),
+          [theme]:
+            price
+        };
+      }
+
+      settings.photoPricing =
+        pricing;
+
+      saveSettings(
+        settings
+      );
+
+      renderLibrary();
+      renderMainProducts();
+
+      if (
+        !document.getElementById(
+          "subMenu"
+        ).classList.contains(
+          "hidden"
+        ) &&
+        document.getElementById(
+          "subTitle"
+        ).textContent ===
+          "生寫真套組"
+      ) {
+        openPhotoSet();
+      }
+    }
+
+    function savePhotoDigitalAddon(value) {
+      const amount =
+        Number(value);
+
+      if (
+        !Number.isInteger(amount) ||
+        amount < 0
+      ) {
+        alert(
+          "請輸入正確加購金額"
+        );
+
+        renderLibrary();
+        return;
+      }
+
+      const settings =
+        getSettings();
+
+      settings.photoPricing = {
+        ...getPhotoPricing(),
+        digitalAddon:
+          amount
+      };
+
+      saveSettings(
+        settings
+      );
+
+      renderLibrary();
+    }
+
+    function togglePolaroidUnifiedPrice() {
+      const settings =
+        getSettings();
+
+      const pricing =
+        getPolaroidPricing();
+
+      const enabled =
+        Boolean(
+          document.getElementById(
+            "polaroidUnifiedPriceEnabled"
+          )?.checked
+        );
+
+      if (
+        enabled &&
+        !pricing.unified
+      ) {
+        const items =
+          getPolaroids();
+
+        const firstPrice =
+          Number(
+            items[0]?.price ??
+            pricing.unifiedPrice ??
+            200
+          );
+
+        pricing.unifiedPrice =
+          firstPrice;
+
+        for (
+          const item of items
+        ) {
+          item.price =
+            firstPrice;
+        }
+
+        savePolaroids(
+          items
+        );
+      }
+
+      pricing.unified =
+        enabled;
+
+      settings.polaroidPricing =
+        pricing;
+
+      saveSettings(
+        settings
+      );
+
+      renderLibrary();
+
+      if (
+        !document.getElementById(
+          "subMenu"
+        ).classList.contains(
+          "hidden"
+        ) &&
+        document.getElementById(
+          "subTitle"
+        ).textContent ===
+          "拍立得"
+      ) {
+        openPolaroid();
+      }
+    }
+
+    function savePolaroidInlinePrice(id,value) {
+      const price =
+        Number(value);
+
+      if (
+        !Number.isInteger(price) ||
+        price < 0
+      ) {
+        alert(
+          "請輸入正確價格"
+        );
+
+        renderLibrary();
+        return;
+      }
+
+      const settings =
+        getSettings();
+
+      const pricing =
+        getPolaroidPricing();
+
+      const items =
+        getPolaroids();
+
+      if (pricing.unified) {
+        pricing.unifiedPrice =
+          price;
+
+        for (
+          const item of items
+        ) {
+          item.price =
+            price;
+        }
+
+        settings.polaroidPricing =
+          pricing;
+
+        saveSettings(
+          settings
+        );
+
+      } else {
+        const index =
+          items.findIndex(
+            item =>
+              item.id === id
+          );
+
+        if (index >= 0) {
+          items[index].price =
+            price;
+        }
+      }
+
+      savePolaroids(
+        items
+      );
+
+      renderLibrary();
+
+      if (
+        !document.getElementById(
+          "subMenu"
+        ).classList.contains(
+          "hidden"
+        ) &&
+        document.getElementById(
+          "subTitle"
+        ).textContent ===
+          "拍立得"
+      ) {
+        openPolaroid();
+      }
+    }
+
+    function saveProductInlinePrice(id,value) {
+      const price =
+        Number(value);
+
+      if (
+        !Number.isInteger(price) ||
+        price < 0
+      ) {
+        alert(
+          "請輸入正確價格"
+        );
+
+        renderLibrary();
+        return;
+      }
+
+      const items =
+        getProducts();
+
+      const index =
+        items.findIndex(
+          item =>
+            item.id === id
+        );
+
+      if (index < 0) {
+        return;
+      }
+
+      items[index].price =
+        price;
+
+      if (
+        items[index].type ===
+          "polaroid"
+      ) {
+        items[index].displayPrice =
+          `$${money(price)} 起`;
+      } else {
+        items[index].displayPrice =
+          `$${money(price)}`;
+      }
+
+      saveProducts(
+        items
+      );
+
+      renderMainProducts();
+      renderLibrary();
+    }
+
+    function saveLotteryUnitPrice(value) {
+      const price =
+        Number(value);
+
+      if (
+        !Number.isInteger(price) ||
+        price < 0
+      ) {
+        alert(
+          "請輸入正確價格"
+        );
+
+        renderLibrary();
+        return;
+      }
+
+      saveProductInlinePrice(
+        "lottery-main",
+        price
+      );
+    }
+
+
+    function getPhotoPricing() {
+      const settings = getSettings();
+
+      return {
+        unified: true,
+        unifiedPrice: 350,
+        digitalAddon: 100,
+        prices: {},
+        ...(settings.photoPricing || {})
+      };
+    }
+
+    function getPhotoThemePrice(theme) {
+      const pricing = getPhotoPricing();
+
+      if (pricing.unified) {
+        return Number(pricing.unifiedPrice || 0);
+      }
+
+      const custom =
+        Number(
+          pricing.prices?.[theme]
+        );
+
+      return Number.isFinite(custom)
+        ? custom
+        : Number(pricing.unifiedPrice || 0);
+    }
+
+    function renderPhotoPricingControls() {
+      const pricing =
+        getPhotoPricing();
+
+      const enabled =
+        document.getElementById(
+          "photoUnifiedPriceEnabled"
+        );
+
+      const addonInput =
+        document.getElementById(
+          "photoDigitalAddonInput"
+        );
+
+      if (enabled) {
+        enabled.checked =
+          Boolean(
+            pricing.unified
+          );
+      }
+
+      if (addonInput) {
+        addonInput.value =
+          Number(
+            pricing.digitalAddon || 0
+          );
+      }
+
+      const polaroidEnabled =
+        document.getElementById(
+          "polaroidUnifiedPriceEnabled"
+        );
+
+      if (polaroidEnabled) {
+        polaroidEnabled.checked =
+          Boolean(
+            getPolaroidPricing()
+              .unified
+          );
+      }
+
+      const lotteryInput =
+        document.getElementById(
+          "lotteryUnitPriceInput"
+        );
+
+      if (lotteryInput) {
+        const lottery =
+          getProducts()
+            .find(
+              item =>
+                item.id ===
+                  "lottery-main"
+            );
+
+        lotteryInput.value =
+          Number(
+            lottery?.price || 0
+          );
+      }
+    }
+
+    function savePhotoPricingSettings() {
+      renderPhotoPricingControls();
+    }
+
+    function openPriceEdit(context) {
+      priceEditContext = context;
+
+      document.getElementById(
+        "priceModalTitle"
+      ).textContent =
+        `修改價格｜${context.name}`;
+
+      document.getElementById(
+        "priceModalInput"
+      ).value =
+        Number(context.price || 0);
+
+      document.getElementById(
+        "priceModal"
+      ).classList.remove(
+        "hidden"
+      );
+    }
+
+    function savePriceEdit() {
+      if (!priceEditContext) return;
+
+      const value =
+        Number(
+          document.getElementById(
+            "priceModalInput"
+          ).value
+        );
+
+      if (
+        !Number.isInteger(value) ||
+        value < 0
+      ) {
+        alert("請輸入正確價格");
+        return;
+      }
+
+      if (
+        priceEditContext.type ===
+        "product"
+      ) {
+        const items = getProducts();
+
+        const idx =
+          items.findIndex(
+            x =>
+              x.id ===
+              priceEditContext.id
+          );
+
+        if (idx >= 0) {
+          items[idx].price = value;
+
+          if (
+            items[idx].type ===
+            "polaroid"
+          ) {
+            items[idx].displayPrice =
+              `$${money(value)} 起`;
+          } else {
+            items[idx].displayPrice =
+              `$${money(value)}`;
+          }
+        }
+
+        saveProducts(items);
+
+      } else if (
+        priceEditContext.type ===
+        "polaroid"
+      ) {
+        const items = getPolaroids();
+
+        const idx =
+          items.findIndex(
+            x =>
+              x.id ===
+              priceEditContext.id
+          );
+
+        if (idx >= 0) {
+          items[idx].price = value;
+        }
+
+        savePolaroids(items);
+
+      } else if (
+        priceEditContext.type ===
+        "photo"
+      ) {
+        const settings = getSettings();
+        const pricing = getPhotoPricing();
+
+        settings.photoPricing = {
+          ...pricing,
+
+          prices: {
+            ...(pricing.prices || {}),
+            [priceEditContext.id]:
+              value
+          }
+        };
+
+        saveSettings(settings);
+      }
+
+      priceEditContext = null;
+      closeModal("priceModal");
+
+      renderMainProducts();
+      renderLibrary();
+
+      if (
+        !document.getElementById(
+          "subMenu"
+        ).classList.contains(
+          "hidden"
+        )
+      ) {
+        const title =
+          document.getElementById(
+            "subTitle"
+          ).textContent;
+
+        if (
+          title ===
+          "生寫真套組"
+        ) {
+          openPhotoSet();
+        } else if (
+          title ===
+          "拍立得"
+        ) {
+          openPolaroid();
+        }
+      }
+    }
+
+
+    function getOwnerSettings() {
+      const settings =
+        getSettings();
+
+      return Array.isArray(
+        settings.owners
+      )
+        ? settings.owners
+        : [];
+    }
+
+    function getEnabledOwners() {
+      return getOwnerSettings()
+        .filter(
+          owner =>
+            owner.enabled
+        );
+    }
+
+    function ownerOptionsHtml(currentValue="") {
+      const items =
+        getOwnerSettings();
+
+      const names =
+        items.map(
+          item =>
+            item.name
+        );
+
+      if (!items.length) {
+        return `<option value="">請先新增歸屬</option>`;
+      }
+
+      const validCurrent =
+        names.includes(
+          currentValue
+        )
+          ? currentValue
+          : "";
+
+      return [
+        `<option value="" ${validCurrent ? "" : "selected"}>未指定</option>`,
+        ...items.map(
+          item =>
+            `<option value="${esc(item.name)}" ${item.name===validCurrent?"selected":""}>${esc(item.name)}${item.enabled?"":"（未開啟）"}</option>`
+        )
+      ].join("");
+    }
+
+    function populateOwnerSelect(id,currentValue="") {
+      const select =
+        document.getElementById(
+          id
+        );
+
+      if (!select) return;
+
+      select.innerHTML =
+        ownerOptionsHtml(
+          currentValue
+        );
+    }
+
+    function addOwnerSetting() {
+      if (!requireEditableSession()) return;
+
+      const name =
+        prompt(
+          "輸入新的歸屬名稱"
+        )?.trim();
+
+      if (!name) return;
+
+      const settings =
+        getSettings();
+
+      const owners =
+        getOwnerSettings();
+
+      if (
+        owners.some(
+          owner =>
+            owner.name === name
+        )
+      ) {
+        alert(
+          "這個歸屬已經存在"
+        );
+        return;
+      }
+
+      owners.push({
+        id:
+          "owner-" +
+          Date.now() +
+          "-" +
+          Math.random()
+            .toString(36)
+            .slice(2,6),
+        name,
+        enabled:true
+      });
+
+      settings.owners =
+        owners;
+
+      saveSettings(
+        settings
+      );
+
+      renderLibrary();
+      renderStats();
+    }
+
+    function renameOwnerSetting(id) {
+      if (!requireEditableSession()) return;
+
+      const settings =
+        getSettings();
+
+      const owners =
+        getOwnerSettings();
+
+      const index =
+        owners.findIndex(
+          owner =>
+            owner.id === id
+        );
+
+      if (index < 0) return;
+
+      const oldName =
+        owners[index].name;
+
+      const name =
+        prompt(
+          "修改歸屬名稱",
+          oldName
+        )?.trim();
+
+      if (
+        !name ||
+        name === oldName
+      ) {
+        return;
+      }
+
+      if (
+        owners.some(
+          (owner,i) =>
+            i !== index &&
+            owner.name === name
+        )
+      ) {
+        alert(
+          "這個歸屬名稱已經存在"
+        );
+        return;
+      }
+
+      owners[index] = {
+        ...owners[index],
+        name
+      };
+
+      settings.owners =
+        owners;
+
+      const products =
+        getProducts();
+
+      for (const product of products) {
+        if (
+          product.owner === oldName
+        ) {
+          product.owner =
+            name;
+        }
+      }
+
+      saveProducts(
+        products
+      );
+
+      const polaroids =
+        getPolaroids();
+
+      for (const item of polaroids) {
+        if (
+          item.owner === oldName
+        ) {
+          item.owner =
+            name;
+        }
+      }
+
+      savePolaroids(
+        polaroids
+      );
+
+      const photoOwners = {
+        ...(settings.photoOwners || {})
+      };
+
+      for (
+        const theme of Object.keys(
+          photoOwners
+        )
+      ) {
+        if (
+          photoOwners[theme] ===
+          oldName
+        ) {
+          photoOwners[theme] =
+            name;
+        }
+      }
+
+      settings.photoOwners =
+        photoOwners;
+
+      saveSettings(
+        settings
+      );
+
+      renderLibrary();
+      renderStats();
+      renderMainProducts();
+    }
+
+    function toggleOwnerSetting(id) {
+      if (!requireEditableSession()) return;
+
+      const settings =
+        getSettings();
+
+      settings.owners =
+        getOwnerSettings()
+          .map(
+            owner =>
+              owner.id === id
+                ? {
+                    ...owner,
+                    enabled:
+                      !owner.enabled
+                  }
+                : owner
+          );
+
+      saveSettings(
+        settings
+      );
+
+      renderLibrary();
+      renderStats();
+    }
+
+    function deleteOwnerSetting(id) {
+      if (!requireEditableSession()) return;
+
+      const owners =
+        getOwnerSettings();
+
+      const target =
+        owners.find(
+          owner =>
+            owner.id === id
+        );
+
+      if (!target) return;
+
+      if (
+        !confirmDanger(
+          `確定刪除歸屬「${target.name}」嗎？已存在商品不會被刪除，但之後請重新指定歸屬。`
+        )
+      ) {
+        return;
+      }
+
+      const settings =
+        getSettings();
+
+      settings.owners =
+        owners.filter(
+          owner =>
+            owner.id !== id
+        );
+
+      saveSettings(
+        settings
+      );
+
+      renderLibrary();
+      renderStats();
+    }
+
+    function saveProductOwner(id,value) {
+      if (!requireEditableSession()) return;
+
+      const items =
+        getProducts();
+
+      const index =
+        items.findIndex(
+          item =>
+            item.id === id
+        );
+
+      if (index < 0) return;
+
+      items[index].owner =
+        value;
+
+      saveProducts(
+        items
+      );
+
+      renderLibrary();
+    }
+
+    let editingPolaroidOwnerId =
+      null;
+
+    function normalizeOwnerList(item) {
+      if (
+        Array.isArray(
+          item?.owners
+        )
+      ) {
+        return item.owners
+          .map(
+            value =>
+              String(value || "").trim()
+          )
+          .filter(Boolean);
+      }
+
+      const legacy =
+        String(
+          item?.owner || ""
+        ).trim();
+
+      return legacy
+        ? [legacy]
+        : [];
+    }
+
+    function ownerListLabel(values) {
+      const list =
+        Array.isArray(values)
+          ? values.filter(Boolean)
+          : [];
+
+      return list.length
+        ? list.join("＋")
+        : "未設定";
+    }
+
+    function renderOwnerCheckboxes(containerId,selected=[]) {
+      const area =
+        document.getElementById(
+          containerId
+        );
+
+      if (!area) return;
+
+      const selectedSet =
+        new Set(
+          selected
+        );
+
+      const owners =
+        getOwnerSettings();
+
+      area.innerHTML =
+        "";
+
+      if (!owners.length) {
+        area.innerHTML =
+          `<div class="subtle">尚未設定歸屬，請先到商品庫最上方「活動歸屬／成員」新增。</div>`;
+        return;
+      }
+
+      for (const owner of owners) {
+        const label =
+          document.createElement(
+            "label"
+          );
+
+        label.className =
+          "owner-check-item";
+
+        label.innerHTML =
+          `
+            <input
+              type="checkbox"
+              value="${esc(owner.name)}"
+              ${selectedSet.has(owner.name) ? "checked" : ""}
+            >
+            <span>${esc(owner.name)}${owner.enabled ? "" : "（統計關閉）"}</span>
+          `;
+
+        area.appendChild(
+          label
+        );
+      }
+    }
+
+    function getCheckedOwners(containerId) {
+      const area =
+        document.getElementById(
+          containerId
+        );
+
+      if (!area) return [];
+
+      return Array.from(
+        area.querySelectorAll(
+          'input[type="checkbox"]:checked'
+        )
+      )
+        .map(
+          input =>
+            input.value.trim()
+        )
+        .filter(Boolean);
+    }
+
+    function openPolaroidOwnerModal(id) {
+      editingPolaroidOwnerId =
+        id;
+
+      const item =
+        getPolaroids()
+          .find(
+            option =>
+              option.id === id
+          );
+
+      if (!item) return;
+
+      document.getElementById(
+        "polaroidOwnerModalTitle"
+      ).textContent =
+        `設定歸屬｜${item.name}`;
+
+      renderOwnerCheckboxes(
+        "polaroidOwnerChecks",
+        normalizeOwnerList(
+          item
+        )
+      );
+
+      document.getElementById(
+        "polaroidOwnerModal"
+      ).classList.remove(
+        "hidden"
+      );
+    }
+
+    function savePolaroidOwnerMulti() {
+      if (!requireEditableSession()) return;
+
+      const owners =
+        getCheckedOwners(
+          "polaroidOwnerChecks"
+        );
+
+      if (!owners.length) {
+        alert(
+          "請至少選擇一個歸屬"
+        );
+        return;
+      }
+
+      const items =
+        getPolaroids();
+
+      const index =
+        items.findIndex(
+          item =>
+            item.id ===
+            editingPolaroidOwnerId
+        );
+
+      if (index < 0) return;
+
+      items[index].owners =
+        owners;
+
+      items[index].owner =
+        ownerListLabel(
+          owners
+        );
+
+      savePolaroids(
+        items
+      );
+
+      closeModal(
+        "polaroidOwnerModal"
+      );
+
+      editingPolaroidOwnerId =
+        null;
+
+      renderLibrary();
+    }
+
+
+
+
+    function getPhotoOwner(theme) {
+      const settings =
+        getSettings();
+
+      return (
+        settings.photoOwners?.[theme] ||
+        getEnabledOwners()[0]?.name ||
+        getOwnerSettings()[0]?.name ||
+        ""
+      );
+    }
+
+    function savePhotoOwner(theme,value) {
+      if (!requireEditableSession()) return;
+
+      const settings =
+        getSettings();
+
+      settings.photoOwners = {
+        ...(settings.photoOwners || {}),
+        [theme]:
+          value
+      };
+
+      saveSettings(
+        settings
+      );
+
+      renderLibrary();
+    }
+
+    function renderOwnerSettings() {
+      const body =
+        document.getElementById(
+          "ownerSettingsBody"
+        );
+
+      if (!body) return;
+
+      body.innerHTML =
+        "";
+
+      const owners =
+        getOwnerSettings();
+
+      if (!owners.length) {
+        body.innerHTML =
+          `<tr><td colspan="3"><span class="subtle">目前沒有預設成員。請按下方「＋ 新增其他人／分組」建立本場歸屬。</span></td></tr>`;
+        return;
+      }
+
+      for (const owner of owners) {
+        const tr =
+          document.createElement(
+            "tr"
+          );
+
+        tr.innerHTML =
+          `
+            <td>${esc(owner.name)}</td>
+            <td>
+              <label class="checkbox-row">
+                <input type="checkbox" ${owner.enabled?"checked":""} onchange="toggleOwnerSetting('${owner.id}')">
+                <span>${owner.enabled?"開啟":"關閉"}</span>
+              </label>
+            </td>
+            <td>
+              <div class="library-actions">
+                <button class="small-btn" onclick="renameOwnerSetting('${owner.id}')">改名</button>
+                <button class="small-btn danger-btn" onclick="deleteOwnerSetting('${owner.id}')">刪除</button>
+              </div>
+            </td>
+          `;
+
+        body.appendChild(
+          tr
+        );
+      }
+    }
+
+
     /* -------------------- PRODUCT MANAGEMENT -------------------- */
     function openManageProduct(id) {
       const p = getProducts().find(x => x.id === id);
@@ -5640,6 +8168,33 @@
         renderMainProducts();
       };
       area.appendChild(vis);
+
+      const price =
+        document.createElement(
+          "button"
+        );
+
+      price.className =
+        "clear-cart";
+
+      price.textContent =
+        "修改價格";
+
+      price.onclick =
+        () => {
+          closeModal(
+            "manageProductModal"
+          );
+
+          openPriceEdit({
+            type:"product",
+            id:p.id,
+            name:p.name,
+            price:p.price
+          });
+        };
+
+      area.appendChild(price);
 
       if (p.type === "simple" || p.type === "custom") {
         const stock = document.createElement("button");
@@ -5753,19 +8308,37 @@
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${esc(p.name)}</td>
-          <td>${esc(p.displayPrice || "$"+money(p.price))}</td>
-          <td>${esc(p.owner)}</td>
+          <td>
+            <div class="inline-price-wrap">
+              <span class="inline-price-prefix">$</span>
+              <input
+                class="inline-price-input"
+                type="number"
+                min="0"
+                inputmode="numeric"
+                value="${Number(p.price || 0)}"
+                onchange="saveProductInlinePrice('${p.id}', this.value)"
+              >
+            </div>
+          </td>
+          <td>
+            <select class="library-owner-select" onchange="saveProductOwner('${p.id}',this.value)">
+              ${ownerOptionsHtml(p.owner)}
+            </select>
+          </td>
           <td>${inventory}</td>
           <td><span class="pill">${p.visible?"顯示中":"已隱藏"}</span></td>
           <td>
             <div class="library-actions">
               <button class="small-btn" onclick="toggleProductVisibility('${p.id}')">${p.visible?"隱藏":"顯示"}</button>
               ${stockBtn}
-              ${p.custom?`<button class="small-btn danger-btn" onclick="deleteCustomProduct('${p.id}')">刪除</button>`:""}
+              <button class="small-btn danger-btn" onclick="deleteProductAny(\'${p.id}\')">刪除</button>
             </div>
           </td>`;
         body.appendChild(tr);
       }
+
+      renderPhotoPricingControls();
 
       const photoBody = document.getElementById("photoStockBody");
       photoBody.innerHTML = "";
@@ -5823,12 +8396,30 @@
 
         tr.innerHTML = `
           <td>${esc(theme)}${theme === "公式服" ? ' <span class="pill">預設</span>' : ""}</td>
+          <td>
+            <div class="inline-price-wrap">
+              <span class="inline-price-prefix">$</span>
+              <input
+                class="inline-price-input"
+                type="number"
+                min="0"
+                inputmode="numeric"
+                value="${getPhotoThemePrice(theme)}"
+                onchange="savePhotoInlinePrice(decodeURIComponent('${encodedTheme}'), this.value)"
+              >
+            </div>
+          </td>
+          <td>
+            <select class="library-owner-select" onchange="savePhotoOwner(decodeURIComponent('${encodedTheme}'),this.value)">
+              ${ownerOptionsHtml(getPhotoOwner(theme))}
+            </select>
+          </td>
           <td>${sold}</td>
           <td>${photoStock[theme]==null?'<span class="pill">不限量</span>':`<span class="pill ${r<=getStockWarningThreshold(key)?"low":""}">${r} / ${photoStock[theme]}</span>`}</td>
           <td>
             <div class="lottery-prize-actions">
-              <button class="small-btn" onclick="openStockModal({type:'photo',id:decodeURIComponent('${encodedTheme}'),name:'生寫真｜'+decodeURIComponent('${encodedTheme}'),stock:${photoStock[theme]===null?"null":photoStock[theme]},key:'${key}'})">修改</button>
-              ${theme === "公式服" ? "" : `<button class="danger-btn" onclick="deletePhotoStyle(decodeURIComponent('${encodedTheme}'))">刪除</button>`}
+              <button class="small-btn" onclick="openStockModal({type:'photo',id:decodeURIComponent('${encodedTheme}'),name:'生寫真｜'+decodeURIComponent('${encodedTheme}'),stock:${photoStock[theme]===null?"null":photoStock[theme]},key:'${key}'})">庫存</button>
+              <button class="danger-btn" onclick="deletePhotoStyle(decodeURIComponent(\'${encodedTheme}\'))">刪除</button>
             </div>
           </td>`;
 
@@ -5837,17 +8428,6 @@
         );
       }
 
-      const addPhotoRow =
-        document.createElement(
-          "tr"
-        );
-
-      addPhotoRow.innerHTML =
-        `<td colspan="4"><button class="small-btn" onclick="openPhotoStyleModal()">＋ 新增生寫真款式</button></td>`;
-
-      photoBody.appendChild(
-        addPhotoRow
-      );
 
       const polBody = document.getElementById("polaroidLibraryBody");
       polBody.innerHTML = "";
@@ -5859,7 +8439,25 @@
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${esc(p.name)}</td>
-          <td>$${money(p.price)}</td>
+          <td>
+            <div class="inline-price-wrap">
+              <span class="inline-price-prefix">$</span>
+              <input
+                class="inline-price-input"
+                type="number"
+                min="0"
+                inputmode="numeric"
+                value="${Number(p.price || 0)}"
+                onchange="savePolaroidInlinePrice('${p.id}', this.value)"
+              >
+            </div>
+          </td>
+          <td>
+            <div class="owner-chip-wrap">
+              ${normalizeOwnerList(p).map(name=>`<span class="owner-chip">${esc(name)}</span>`).join("") || '<span class="subtle">未設定</span>'}
+              <button class="small-btn" onclick="openPolaroidOwnerModal('${p.id}')">設定歸屬</button>
+            </div>
+          </td>
           <td>${sold}</td>
           <td>${p.stock==null?'<span class="pill">不限量</span>':`<span class="pill ${r<=getStockWarningThreshold(key)?"low":""}">${r} / ${p.stock}</span>`}</td>
           <td><span class="pill">${p.visible?"顯示中":"已隱藏"}</span></td>
@@ -5867,7 +8465,7 @@
             <div class="library-actions">
               <button class="small-btn" onclick="togglePolaroidVisibility('${p.id}')">${p.visible?"隱藏":"顯示"}</button>
               <button class="small-btn" onclick="openStockModal({type:'polaroid',id:'${p.id}',name:'拍立得｜${esc(p.name)}',stock:${p.stock===null?"null":p.stock},key:'${key}'})">庫存</button>
-              ${p.custom?`<button class="small-btn danger-btn" onclick="deleteCustomPolaroid('${p.id}')">刪除</button>`:""}
+              <button class="small-btn danger-btn" onclick="deletePolaroidAny(\'${p.id}\')">刪除</button>
             </div>
           </td>`;
         polBody.appendChild(tr);
@@ -5885,6 +8483,7 @@
           getDefaultStockWarning();
       }
 
+      renderOwnerSettings();
       renderPaymentMethodSettings();
       renderLotteryPrizeLibrary();
       renderAuctionLibraryStatus();
@@ -5934,6 +8533,32 @@
       saveProducts(items);
       renderLibrary();
       renderMainProducts();
+    }
+
+    function deleteProductAny(id) {
+      if (!requireEditableSession()) return;
+      const p = getProducts().find(x=>x.id===id);
+      if (!p || !confirmDanger(`確定刪除商品「${p.name}」嗎？`)) return;
+      const settings=getSettings();
+      if (DEFAULT_PRODUCTS.some(x=>x.id===id)) {
+        settings.deletedProductIds=Array.from(new Set([...(settings.deletedProductIds||[]),id]));
+        saveSettings(settings);
+      }
+      saveProducts(getProducts().filter(x=>x.id!==id));
+      renderLibrary(); renderMainProducts();
+    }
+
+    function deletePolaroidAny(id) {
+      if (!requireEditableSession()) return;
+      const p=getPolaroids().find(x=>x.id===id);
+      if (!p || !confirmDanger(`確定刪除拍立得選項「${p.name}」嗎？`)) return;
+      const settings=getSettings();
+      if (DEFAULT_POLAROIDS.some(x=>x.id===id)) {
+        settings.deletedPolaroidIds=Array.from(new Set([...(settings.deletedPolaroidIds||[]),id]));
+        saveSettings(settings);
+      }
+      savePolaroids(getPolaroids().filter(x=>x.id!==id));
+      renderLibrary();
     }
 
     function deleteCustomProduct(id) {
@@ -7922,7 +10547,7 @@
 
     function getCurrentSessionSummary() {
       const orders =
-        getOrders();
+        getOrders().filter(order=>!order.voided);
 
       const payments = {};
       let revenue = 0;
@@ -7974,10 +10599,13 @@
           <div class="shift-summary-row"><span>營業額</span><strong>NT$ ${money(s.revenue)}</strong></div>
           <div class="shift-summary-row"><span>訂單</span><strong>${s.orders} 筆</strong></div>
           <div class="shift-summary-row"><span>售出數量</span><strong>${s.items}</strong></div>
-          <div class="shift-summary-row"><span>現金</span><strong>NT$ ${money(s.payments["現金"] || 0)}</strong></div>
-          <div class="shift-summary-row"><span>街口</span><strong>NT$ ${money(s.payments["街口"] || 0)}</strong></div>
-          <div class="shift-summary-row"><span>轉帳</span><strong>NT$ ${money(s.payments["轉帳"] || 0)}</strong></div>
-          <div class="shift-summary-row"><span>LINE Pay</span><strong>NT$ ${money(s.payments["LINE Pay"] || 0)}</strong></div>
+          ${[
+            ["現金",getPaymentMethodSettings().cash],
+            ["街口",getPaymentMethodSettings().jko],
+            ["轉帳",getPaymentMethodSettings().transfer],
+            ["LINE Pay",getPaymentMethodSettings().linepay]
+          ].filter(item=>item[1]).map(([method])=>`<div class="shift-summary-row"><span>${method}</span><strong>NT$ ${money(s.payments[method] || 0)}</strong></div>`).join("")}
+          <div class="shift-summary-row"><span>競標得標金額</span><strong>NT$ ${money(getCurrentSessionAuctionHistory().reduce((sum,item)=>sum+Number(item.finalBid||0),0))}</strong></div>
         `;
 
       document.getElementById(
@@ -8007,26 +10635,182 @@
         );
       }
 
+      const sessions=getSessions();
+      const sessionIndex=sessions.findIndex(x=>x.id===currentSessionId);
+      if (sessionIndex>=0) {
+        sessions[sessionIndex]={...sessions[sessionIndex],status:"ended"};
+        saveSessions(sessions);
+      }
+
       closeModal(
         "shiftCloseModal"
       );
 
+      updateSessionUI();
       renderAuctionBanner();
       renderLibrary();
 
       alert(
-        "已完成收攤。建議確認 CSV 與備份檔已下載。"
+        "已完成收攤，場次已標記為「已結束」。"
       );
     }
 
 
     /* -------------------- STATS -------------------- */
+    function getCurrentSessionAuctionHistory() {
+      const session =
+        getCurrentSession();
+
+      if (!session) {
+        return [];
+      }
+
+      return getAuctionHistory()
+        .filter(
+          item =>
+            item.sessionName === session.name &&
+            item.date === session.date &&
+            (!item.sessionDay || item.sessionDay === (session.day || ""))
+        )
+        .sort(
+          (a,b) =>
+            String(
+              b.endAt || ""
+            ).localeCompare(
+              String(
+                a.endAt || ""
+              )
+            )
+        );
+    }
+
+    function renderStatsAuctionHistory() {
+      const container =
+        document.getElementById(
+          "statsAuctionHistoryGroups"
+        );
+
+      if (!container) {
+        return;
+      }
+
+      const items =
+        getCurrentSessionAuctionHistory();
+
+      container.innerHTML = "";
+
+      if (!items.length) {
+        container.innerHTML =
+          `<div class="auction-history-empty">本場尚無競標紀錄</div>`;
+        return;
+      }
+
+      const wrap =
+        document.createElement(
+          "div"
+        );
+
+      wrap.className =
+        "table-wrap";
+
+      const table =
+        document.createElement(
+          "table"
+        );
+
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>競標品</th>
+            <th>得標署名</th>
+            <th>最終金額</th>
+            <th>結束時間</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      `;
+
+      const body =
+        table.querySelector(
+          "tbody"
+        );
+
+      for (const item of items) {
+        const tr =
+          document.createElement(
+            "tr"
+          );
+
+        tr.innerHTML = `
+          <td>${esc(item.title || "掛軸競標")}</td>
+          <td>${esc(item.winner || "—")}</td>
+          <td>$${money(item.finalBid || 0)}</td>
+          <td>${esc(formatAuctionDateTime(item.endAt || ""))}</td>
+        `;
+
+        body.appendChild(tr);
+      }
+
+      wrap.appendChild(table);
+      container.appendChild(wrap);
+    }
+
+    function clearCurrentSessionAuctionHistory() {
+      const session =
+        getCurrentSession();
+
+      if (!session) return;
+
+      const current =
+        getCurrentSessionAuctionHistory();
+
+      if (!current.length) {
+        alert("本場目前沒有競標紀錄");
+        return;
+      }
+
+      if (
+        !confirmDanger(
+          `確定清除「${session.name}」的競標紀錄嗎？`
+        )
+      ) {
+        return;
+      }
+
+      const removeIds =
+        new Set(
+          current
+            .map(item => item.id)
+            .filter(Boolean)
+        );
+
+      saveAuctionHistory(
+        getAuctionHistory()
+          .filter(
+            item =>
+              !(
+                item.sessionName === session.name &&
+                item.date === session.date
+              )
+          )
+      );
+
+      saveClearedAuctionHistoryIds([
+        ...getClearedAuctionHistoryIds(),
+        ...removeIds
+      ]);
+
+      renderStatsAuctionHistory();
+    }
+
+
     function renderStats() {
       const orders = getOrders();
+      const activeOrders = orders.filter(order=>!order.voided);
       let revenue=0, itemCount=0;
       const owners={}, payments={}, products={};
 
-      for (const order of orders) {
+      for (const order of activeOrders) {
         revenue += Number(order.total||0);
         payments[order.payment] ||= {count:0,revenue:0};
         payments[order.payment].count++;
@@ -8036,30 +10820,114 @@
           const qty = Number(item.quantity||0);
           const subtotal = Number(item.price)*qty;
           itemCount += qty;
-          owners[item.owner] = (owners[item.owner]||0)+subtotal;
+          const itemOwners =
+            Array.isArray(item.owners) && item.owners.length
+              ? item.owners
+              : (
+                  item.owner
+                    ? [item.owner]
+                    : []
+                );
 
-          const key = `${item.name}||${item.owner}`;
-          products[key] ||= {name:item.name,owner:item.owner,quantity:0,revenue:0};
+          const share =
+            itemOwners.length
+              ? subtotal / itemOwners.length
+              : 0;
+
+          for (const ownerName of itemOwners) {
+            owners[ownerName] =
+              (owners[ownerName] || 0) +
+              share;
+          }
+
+          const ownerLabel =
+            ownerListLabel(
+              itemOwners
+            );
+
+          const key = `${item.name}||${ownerLabel}`;
+          products[key] ||= {name:item.name,owner:ownerLabel,quantity:0,revenue:0};
           products[key].quantity += qty;
           products[key].revenue += subtotal;
         }
       }
 
       document.getElementById("statsRevenue").textContent = money(revenue);
-      document.getElementById("statsOrders").textContent = orders.length;
+      document.getElementById("statsOrders").textContent = activeOrders.length;
       document.getElementById("statsItems").textContent = itemCount;
-      document.getElementById("statsYaki").textContent = money(owners["麻糬燒 Yaki"]||0);
-      document.getElementById("statsAyami").textContent = money(owners["阿芽咪 Ayami"]||0);
-      document.getElementById("statsDuo").textContent = money(owners["雙人"]||0);
+      const ownerGrid =
+        document.getElementById(
+          "ownerStatsGrid"
+        );
 
-      document.getElementById("payCardCash").textContent = money(payments["現金"]?.revenue || 0);
-      document.getElementById("payCardJko").textContent = money(payments["街口"]?.revenue || 0);
-      document.getElementById("payCardTransfer").textContent = money(payments["轉帳"]?.revenue || 0);
-      document.getElementById("payCardLinePay").textContent = money(payments["LINE Pay"]?.revenue || 0);
+      ownerGrid.innerHTML =
+        "";
+
+      for (
+        const owner of
+        getEnabledOwners()
+      ) {
+        const card =
+          document.createElement(
+            "div"
+          );
+
+        card.className =
+          "card";
+
+        card.innerHTML =
+          `${esc(owner.name)}<div class="number">NT$ ${money(owners[owner.name] || 0)}</div>`;
+
+        ownerGrid.appendChild(
+          card
+        );
+      }
+
+      const paymentSettings =
+        getPaymentMethodSettings();
+
+      const enabledPaymentMethods = [
+        ["現金",paymentSettings.cash],
+        ["街口",paymentSettings.jko],
+        ["轉帳",paymentSettings.transfer],
+        ["LINE Pay",paymentSettings.linepay]
+      ].filter(
+        item =>
+          item[1]
+      );
+
+      const paymentCardGrid =
+        document.getElementById(
+          "paymentCardGrid"
+        );
+
+      paymentCardGrid.innerHTML =
+        "";
+
+      for (
+        const [
+          method
+        ] of enabledPaymentMethods
+      ) {
+        const card =
+          document.createElement(
+            "div"
+          );
+
+        card.className =
+          "payment-mini-card";
+
+        card.innerHTML =
+          `${esc(method)}<div class="amount">NT$ ${money(payments[method]?.revenue || 0)}</div>`;
+
+        paymentCardGrid.appendChild(
+          card
+        );
+      }
 
       const payBody = document.getElementById("paymentStatsBody");
       payBody.innerHTML = "";
-      for (const method of ["現金","街口","轉帳","LINE Pay"]) {
+      for (const [method] of enabledPaymentMethods) {
         const d = payments[method] || {count:0,revenue:0};
         const tr = document.createElement("tr");
         tr.innerHTML = `<td>${method}</td><td>${d.count}</td><td>$${money(d.revenue)}</td>`;
@@ -8080,25 +10948,30 @@
       orderBody.innerHTML = "";
       if (!orders.length) orderBody.innerHTML = `<tr><td colspan="5">尚無訂單</td></tr>`;
       else for (const o of [...orders].reverse()) {
-        const tr = document.createElement("tr");
+        const tr=document.createElement("tr");
+        if (o.voided) tr.classList.add("voided-order");
         tr.innerHTML = `
-          <td>${timeText(o.time)}</td>
+          <td>${timeText(o.time)}${o.voided?'<div class="voided-label">已作廢</div>':""}</td>
           <td>${esc(o.payment)}</td>
           <td>$${money(o.total)}</td>
           <td>${o.note?esc(o.note):"—"}</td>
-          <td><button class="small-btn danger-btn" onclick="deleteOrder(${o.id})">刪除</button></td>`;
+          <td><button class="small-btn ${o.voided?"":"danger-btn"}" onclick="toggleVoidOrder(${o.id})">${o.voided?"恢復":"作廢"}</button></td>`;
         orderBody.appendChild(tr);
       }
 
+      renderStatsAuctionHistory();
       updateSessionUI();
     }
 
-    function deleteOrder(id) {
-      if (!confirm("確定刪除這筆訂單嗎？\n\n庫存與統計會同步更新。")) return;
-      saveOrders(getOrders().filter(x => x.id !== id));
-      renderStats();
-      renderMainProducts();
-      renderLibrary();
+    function toggleVoidOrder(id) {
+      const orders=getOrders();
+      const index=orders.findIndex(x=>x.id===id);
+      if (index<0) return;
+      const next=!orders[index].voided;
+      if (next && !confirm("確定作廢這筆訂單嗎？\n\n訂單會保留，但不計入營業額，庫存會補回。")) return;
+      orders[index]={...orders[index],voided:next,voidedAt:next?nowISO():null};
+      saveOrders(orders);
+      renderStats(); renderMainProducts(); renderLibrary();
     }
 
     function duplicateLastOrder() {
@@ -8112,10 +10985,8 @@
         return;
       }
 
-      const last =
-        orders[
-          orders.length - 1
-        ];
+      const last=[...orders].reverse().find(order=>!order.voided);
+      if (!last) return alert("目前沒有可複製的有效訂單");
 
       const copied =
         deepCopy(
@@ -8162,7 +11033,7 @@
     function resetCurrentSession() {
       const s = getCurrentSession();
       if (!s) return;
-      if (!confirm(`確定清除「${s.name}」的所有銷售紀錄嗎？`)) return;
+      if (!confirmDanger(`確定清除「${s.name}」的所有銷售紀錄嗎？`)) return;
       localStorage.removeItem(sessionOrderKey(s.id));
       renderStats();
       renderMainProducts();
@@ -8176,7 +11047,7 @@
       let allRevenue=0, allOrders=0, allItems=0;
 
       for (const s of sortSessions(getSessions())) {
-        const orders = getOrders(s.id);
+        const orders = getOrders(s.id).filter(order=>!order.voided);
         let revenue=0, items=0;
 
         for (const o of orders) {
@@ -8189,7 +11060,7 @@
         allItems += items;
 
         const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${esc(prettyDate(s.date))}</td><td>${esc(s.name)}</td><td>$${money(revenue)}</td><td>${orders.length}</td><td>${items}</td><td>${lotterySold(s.id)} / ${getSettings().lotteryMax}</td>`;
+        tr.innerHTML = `<td>${esc(prettyDate(s.date))}</td><td>${esc(s.name)}${s.day ? `<span class="session-day-badge">${esc(s.day)}</span>` : ""}</td><td>$${money(revenue)}</td><td>${orders.length}</td><td>${items}</td><td>${lotterySold(s.id)} / ${getSettings().lotteryMax}</td>`;
         body.appendChild(tr);
       }
 
@@ -8204,6 +11075,7 @@
 
       for (const s of sortSessions(getSessions())) {
         for (const o of getOrders(s.id)) {
+          if (o.voided) continue;
           for (const i of o.items||[]) {
             rows.push([
               s.date||"",
@@ -8358,9 +11230,22 @@
     }
 
 
+    document.addEventListener("click",event=>{
+      if (!isCurrentSessionEnded()) return;
+      const target=event.target.closest("button,input,select,textarea");
+      if (!target) return;
+      const allowed=target.closest("#sessionModal") || target.id==="sessionButton" || target.classList.contains("tab-button") || target.id==="productSearchInput";
+      if (allowed) return;
+      if (target.closest("#posPage,#libraryPage")) {
+        event.preventDefault(); event.stopImmediatePropagation();
+        alert("此場次已結束，目前為唯讀狀態。");
+      }
+    },true);
+
     /* -------------------- INIT -------------------- */
     initQrCropControls();
     ensureSession();
+    migrateLegacyDefaultPeople();
     updateSessionUI();
     renderMainProducts();
     renderCart();
@@ -8382,9 +11267,3 @@
   </script>
 </body>
 </html>
-  <div id="checkoutToast" class="checkout-toast">
-    結帳完成
-    <small id="checkoutToastDetail"></small>
-  </div>
-
-

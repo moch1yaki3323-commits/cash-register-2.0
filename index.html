@@ -922,7 +922,7 @@
       top: 68px;
       z-index: 90;
       display: grid;
-      grid-template-columns: minmax(180px, 1fr) auto auto auto;
+      grid-template-columns: minmax(180px, 1fr) auto auto;
       align-items: center;
       gap: 14px;
       padding: 10px 18px;
@@ -1113,6 +1113,59 @@
       -webkit-text-fill-color: var(--danger) !important;
     }
 
+
+    /* QR upload / clean crop */
+    .qr-frame {
+      width: min(240px, 68vw) !important;
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      padding: 0 !important;
+      overflow: hidden;
+      background: transparent !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .qr-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 0 !important;
+    }
+
+    .qr-placeholder {
+      display: grid;
+      place-items: center;
+      border: 1px dashed #ddd5d5;
+      border-radius: 12px;
+      background: #fff !important;
+    }
+
+    .qr-upload-note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.45;
+    }
+
+    .auction-status.winner {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* MAIN PAGE STOCK COLOR */
+    #mainPage .stock-text {
+      color: var(--muted) !important;
+      -webkit-text-fill-color: var(--muted) !important;
+    }
+
+    #mainPage .stock-text.low {
+      color: var(--danger) !important;
+      -webkit-text-fill-color: var(--danger) !important;
+    }
 </style>
 </head>
 
@@ -1145,12 +1198,8 @@
     <div class="auction-bid">
       <div class="auction-label">目前競標金額</div>
       <div class="auction-bid-value">NT$ <span id="auctionBidValue">0</span></div>
+      <div id="auctionWinnerText" class="auction-label">署名：—</div>
       <div id="auctionStepText" class="auction-label">每標 + NT$ 100</div>
-    </div>
-
-    <div class="auction-time">
-      <div class="auction-label">開始／結束</div>
-      <div id="auctionStartEndText" class="auction-time-value">—</div>
     </div>
 
     <div class="auction-countdown">
@@ -1583,15 +1632,16 @@
 
         <div class="qr-frame">
           <img id="jkoQrImage" class="hidden" alt="街口 QR Code">
-          <div id="jkoQrPlaceholder" class="qr-placeholder">尚未設定 QR Code</div>
+          <div id="jkoQrPlaceholder" class="qr-placeholder">尚未上傳 QR</div>
         </div>
 
         <div class="qr-tools">
-          <button onclick="pickQr('jko')">更換 QR</button>
+          <button onclick="pickQr('jko')">上傳 QR</button>
           <button id="jkoQrRemove" class="hidden" onclick="removeQr('jko')">移除</button>
         </div>
 
         <input id="jkoQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('jko', this.files[0])">
+        <div class="qr-upload-note">從相簿／檔案選擇含 QR 的圖片，系統會自動偵測並只保留 QR。</div>
       </div>
 
       <div class="modal-note">確認款項已收到後，再按下「確認收到款項」。</div>
@@ -1614,15 +1664,16 @@
 
         <div class="qr-frame">
           <img id="transferQrImage" class="hidden" alt="轉帳 QR Code">
-          <div id="transferQrPlaceholder" class="qr-placeholder">尚未設定 QR Code</div>
+          <div id="transferQrPlaceholder" class="qr-placeholder">尚未上傳 QR</div>
         </div>
 
         <div class="qr-tools">
-          <button onclick="pickQr('transfer')">更換 QR</button>
+          <button onclick="pickQr('transfer')">上傳 QR</button>
           <button id="transferQrRemove" class="hidden" onclick="removeQr('transfer')">移除</button>
         </div>
 
         <input id="transferQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('transfer', this.files[0])">
+        <div class="qr-upload-note">從相簿／檔案選擇含 QR 的圖片，系統會自動偵測並只保留 QR。</div>
       </div>
 
       <div class="modal-note">請依畫面 QR Code 完成付款。非彰銀帳戶可能產生跨行手續費，<strong>請勿從應付金額中扣除。</strong></div>
@@ -1645,15 +1696,16 @@
 
         <div class="qr-frame">
           <img id="linepayQrImage" class="hidden" alt="LINE Pay QR Code">
-          <div id="linepayQrPlaceholder" class="qr-placeholder">尚未設定 QR Code</div>
+          <div id="linepayQrPlaceholder" class="qr-placeholder">尚未上傳 QR</div>
         </div>
 
         <div class="qr-tools">
-          <button onclick="pickQr('linepay')">更換 QR</button>
+          <button onclick="pickQr('linepay')">上傳 QR</button>
           <button id="linepayQrRemove" class="hidden" onclick="removeQr('linepay')">移除</button>
         </div>
 
         <input id="linepayQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('linepay', this.files[0])">
+        <div class="qr-upload-note">從相簿／檔案選擇含 QR 的圖片，系統會自動偵測並只保留 QR。</div>
       </div>
 
       <div class="modal-note">確認款項已收到後，再按下「確認收到款項」。</div>
@@ -1685,6 +1737,9 @@
       <label for="auctionStepInput">每標加價</label>
       <input id="auctionStepInput" type="number" min="1" inputmode="numeric" placeholder="例如：100">
 
+      <label for="auctionWinnerInput">目前署名</label>
+      <input id="auctionWinnerInput" type="text" placeholder="例如：小花">
+
       <label for="auctionStartInput">競標開始時間</label>
       <input id="auctionStartInput" type="datetime-local">
 
@@ -1692,7 +1747,7 @@
       <input id="auctionEndInput" type="datetime-local">
 
       <div class="modal-note">
-        尚未到開始時間會顯示「尚未開始」；開始後顯示倒數；到結束時間後會自動顯示「競標結束」。
+        尚未開始時顯示開始時間；競標開始後只顯示距離結束倒數；結束後若有署名會顯示「恭喜 XXX 得標」。
       </div>
 
       <div class="modal-actions">
@@ -1713,6 +1768,9 @@
 
       <label for="auctionQuickBidInput">目前競標金額（可自由輸入）</label>
       <input id="auctionQuickBidInput" type="number" min="0" inputmode="numeric" placeholder="直接輸入任意金額">
+
+      <label for="auctionQuickWinnerInput">目前署名</label>
+      <input id="auctionQuickWinnerInput" type="text" placeholder="例如：小花">
 
       <button
         id="auctionAddStepButton"
@@ -1747,6 +1805,8 @@
       </div>
     </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 
   <script>
     "use strict";
@@ -1869,6 +1929,7 @@
           title: "掛軸競標",
           currentBid: 0,
           step: 100,
+          winner: "",
           startAt: "",
           endAt: "",
           ...(saved.auction || {})
@@ -2966,22 +3027,351 @@
       document.getElementById(`${type}QrInput`).click();
     }
 
-    async function saveQrFile(type,file) {
-      if (!file) return;
+    async function fileToCanvas(file) {
+      const url =
+        URL.createObjectURL(
+          file
+        );
 
-      if (!file.type.startsWith("image/")) {
-        alert("請選擇圖片檔");
+      try {
+        const image =
+          await new Promise(
+            (resolve,reject) => {
+              const img =
+                new Image();
+
+              img.onload =
+                () =>
+                  resolve(img);
+
+              img.onerror =
+                reject;
+
+              img.src =
+                url;
+            }
+          );
+
+        const canvas =
+          document.createElement(
+            "canvas"
+          );
+
+        canvas.width =
+          image.naturalWidth;
+
+        canvas.height =
+          image.naturalHeight;
+
+        const ctx =
+          canvas.getContext(
+            "2d",
+            {
+              willReadFrequently: true
+            }
+          );
+
+        ctx.drawImage(
+          image,
+          0,
+          0
+        );
+
+        return canvas;
+
+      } finally {
+        URL.revokeObjectURL(
+          url
+        );
+      }
+    }
+
+
+    function canvasBlob(canvas) {
+      return new Promise(
+        (resolve,reject) => {
+          canvas.toBlob(
+            blob => {
+              if (blob) {
+                resolve(blob);
+              } else {
+                reject(
+                  new Error(
+                    "圖片處理失敗"
+                  )
+                );
+              }
+            },
+            "image/png"
+          );
+        }
+      );
+    }
+
+
+    function getQrCropBounds(location) {
+      const points = [
+        location.topLeftCorner,
+        location.topRightCorner,
+        location.bottomLeftCorner,
+        location.bottomRightCorner
+      ];
+
+      const xs =
+        points.map(
+          point =>
+            point.x
+        );
+
+      const ys =
+        points.map(
+          point =>
+            point.y
+        );
+
+      return {
+        minX:
+          Math.min(...xs),
+
+        maxX:
+          Math.max(...xs),
+
+        minY:
+          Math.min(...ys),
+
+        maxY:
+          Math.max(...ys)
+      };
+    }
+
+
+    async function cropQrFromImage(file) {
+      if (
+        typeof jsQR !==
+        "function"
+      ) {
+        throw new Error(
+          "QR 辨識元件尚未載入"
+        );
+      }
+
+      const source =
+        await fileToCanvas(
+          file
+        );
+
+      const ctx =
+        source.getContext(
+          "2d",
+          {
+            willReadFrequently: true
+          }
+        );
+
+      const imageData =
+        ctx.getImageData(
+          0,
+          0,
+          source.width,
+          source.height
+        );
+
+      const result =
+        jsQR(
+          imageData.data,
+          imageData.width,
+          imageData.height,
+          {
+            inversionAttempts:
+              "attemptBoth"
+          }
+        );
+
+      if (
+        !result ||
+        !result.location
+      ) {
+        throw new Error(
+          "找不到 QR Code"
+        );
+      }
+
+      const bounds =
+        getQrCropBounds(
+          result.location
+        );
+
+      const qrWidth =
+        bounds.maxX -
+        bounds.minX;
+
+      const qrHeight =
+        bounds.maxY -
+        bounds.minY;
+
+      const qrSide =
+        Math.max(
+          qrWidth,
+          qrHeight
+        );
+
+      /* 留白邊讓 QR 更好掃 */
+      const padding =
+        qrSide * 0.13;
+
+      let cropSide =
+        qrSide +
+        padding * 2;
+
+      cropSide =
+        Math.min(
+          cropSide,
+          source.width,
+          source.height
+        );
+
+      const centerX =
+        (
+          bounds.minX +
+          bounds.maxX
+        ) / 2;
+
+      const centerY =
+        (
+          bounds.minY +
+          bounds.maxY
+        ) / 2;
+
+      let sx =
+        centerX -
+        cropSide / 2;
+
+      let sy =
+        centerY -
+        cropSide / 2;
+
+      sx =
+        Math.max(
+          0,
+          Math.min(
+            sx,
+            source.width -
+            cropSide
+          )
+        );
+
+      sy =
+        Math.max(
+          0,
+          Math.min(
+            sy,
+            source.height -
+            cropSide
+          )
+        );
+
+      const output =
+        document.createElement(
+          "canvas"
+        );
+
+      output.width =
+        900;
+
+      output.height =
+        900;
+
+      const out =
+        output.getContext(
+          "2d"
+        );
+
+      out.fillStyle =
+        "#ffffff";
+
+      out.fillRect(
+        0,
+        0,
+        output.width,
+        output.height
+      );
+
+      /* QR 保持銳利 */
+      out.imageSmoothingEnabled =
+        false;
+
+      out.drawImage(
+        source,
+        sx,
+        sy,
+        cropSide,
+        cropSide,
+        0,
+        0,
+        output.width,
+        output.height
+      );
+
+      return await canvasBlob(
+        output
+      );
+    }
+
+
+    async function saveQrFile(type,file) {
+      if (!file) {
+        return;
+      }
+
+      if (
+        !file.type.startsWith(
+          "image/"
+        )
+      ) {
+        alert(
+          "請選擇圖片檔"
+        );
+
         return;
       }
 
       try {
-        await putQr(qrKey(type),file);
-        await loadQrToUI(type);
-      } catch (e) {
-        console.error(e);
-        alert("QR 圖片儲存失敗，請換一張圖片再試。");
+        const croppedQr =
+          await cropQrFromImage(
+            file
+          );
+
+        await putQr(
+          qrKey(type),
+          croppedQr
+        );
+
+        await loadQrToUI(
+          type
+        );
+
+      } catch (error) {
+        console.error(
+          error
+        );
+
+        alert(
+          "這張圖片裡沒有找到可辨識的 QR Code。\n\n請從相簿或檔案選擇一張有完整 QR 的圖片。"
+        );
+
+      } finally {
+        const input =
+          document.getElementById(
+            `${type}QrInput`
+          );
+
+        if (input) {
+          input.value =
+            "";
+        }
       }
     }
+
 
     async function loadQrToUI(type) {
       const img = document.getElementById(`${type}QrImage`);
@@ -3266,6 +3656,7 @@
         title: "掛軸競標",
         currentBid: 0,
         step: 100,
+        winner: "",
         startAt: "",
         endAt: "",
         ...(settings.auction || {})
@@ -3387,14 +3778,14 @@
         );
 
       document.getElementById(
+        "auctionWinnerText"
+      ).textContent =
+        `署名：${auction.winner || "—"}`;
+
+      document.getElementById(
         "auctionStepText"
       ).textContent =
         `每標 + NT$ ${money(auction.step || 100)}`;
-
-      document.getElementById(
-        "auctionStartEndText"
-      ).textContent =
-        `${formatAuctionDateTime(auction.startAt)} ～ ${formatAuctionDateTime(auction.endAt)}`;
 
       const status =
         document.getElementById(
@@ -3425,7 +3816,8 @@
         );
 
       status.classList.remove(
-        "live"
+        "live",
+        "winner"
       );
 
       if (
@@ -3436,10 +3828,10 @@
           "時間尚未設定";
 
         countdownLabel.textContent =
-          "倒數";
+          "";
 
         countdown.textContent =
-          "00:00:00";
+          "";
 
       } else if (
         now < start
@@ -3448,11 +3840,11 @@
           "尚未開始";
 
         countdownLabel.textContent =
-          "距離開始";
+          "開始時間";
 
         countdown.textContent =
-          formatDuration(
-            start - now
+          formatAuctionDateTime(
+            auction.startAt
           );
 
       } else if (
@@ -3475,13 +3867,21 @@
 
       } else {
         status.textContent =
-          "競標結束";
+          auction.winner
+            ? `恭喜 ${auction.winner} 得標`
+            : "競標結束";
+
+        if (auction.winner) {
+          status.classList.add(
+            "winner"
+          );
+        }
 
         countdownLabel.textContent =
-          "倒數";
+          "";
 
         countdown.textContent =
-          "00:00:00";
+          "";
       }
 
       renderAuctionLibraryStatus();
@@ -3522,7 +3922,7 @@
         `${auction.title || "掛軸競標"}｜目前 NT$ ${money(auction.currentBid || 0)}`;
 
       detail.textContent =
-        `${formatAuctionDateTime(auction.startAt)} ～ ${formatAuctionDateTime(auction.endAt)}`;
+        `${auction.winner ? `署名：${auction.winner}｜` : ""}${formatAuctionDateTime(auction.startAt)} ～ ${formatAuctionDateTime(auction.endAt)}`;
     }
 
     function openAuctionSetting() {
@@ -3554,6 +3954,11 @@
         Number(
           auction.step || 100
         );
+
+      document.getElementById(
+        "auctionWinnerInput"
+      ).value =
+        auction.winner || "";
 
       document.getElementById(
         "auctionStartInput"
@@ -3601,6 +4006,11 @@
             "auctionStepInput"
           ).value
         );
+
+      const winner =
+        document.getElementById(
+          "auctionWinnerInput"
+        ).value.trim();
 
       const startAt =
         document.getElementById(
@@ -3675,6 +4085,7 @@
         title,
         currentBid,
         step,
+        winner,
         startAt,
         endAt
       };
@@ -3702,6 +4113,11 @@
         Number(
           auction.currentBid || 0
         );
+
+      document.getElementById(
+        "auctionQuickWinnerInput"
+      ).value =
+        auction.winner || "";
 
       document.getElementById(
         "auctionAddStepButton"
@@ -3771,8 +4187,14 @@
 
       settings.auction = {
         ...getAuctionSettings(),
+
         currentBid:
-          value
+          value,
+
+        winner:
+          document.getElementById(
+            "auctionQuickWinnerInput"
+          ).value.trim()
       };
 
       saveSettings(

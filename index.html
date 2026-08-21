@@ -1532,6 +1532,43 @@
       font-size: 11px;
       font-weight: 400;
     }
+
+    .lottery-prize-alerts {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .lottery-prize-alert {
+      padding: 9px 11px;
+      border-radius: 10px;
+      background: var(--danger-soft);
+      color: var(--danger);
+      -webkit-text-fill-color: var(--danger);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .lottery-prize-alert.low {
+      background: #f3eeee;
+      color: #8e7474;
+      -webkit-text-fill-color: #8e7474;
+    }
+
+    .lottery-prize-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .lottery-prize-actions button {
+      padding: 6px 8px;
+      border-radius: 8px;
+      background: var(--soft);
+      cursor: pointer;
+      font-size: 11px;
+    }
 </style>
 </head>
 
@@ -1815,6 +1852,32 @@
       </label>
     </div>
 
+    <h3>抽抽樂獎項管理</h3>
+    <div class="auction-setting-row">
+      <div class="subtle" style="margin-bottom:10px">
+        可手動管理各獎項剩餘數量。剩餘 0 或手動標記完售時，收銀頁的抽抽樂會顯示提醒。
+      </div>
+
+      <div class="page-actions" style="margin:0 0 10px">
+        <button onclick="openLotteryPrizeModal()">＋ 新增獎項</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>獎項</th>
+              <th>剩餘</th>
+              <th>提醒門檻</th>
+              <th>狀態</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="lotteryPrizeBody"></tbody>
+        </table>
+      </div>
+    </div>
+
     <h3>掛軸競標</h3>
     <div class="auction-setting-row">
       <div id="auctionLibraryStatus">未開啟</div>
@@ -1864,6 +1927,21 @@
       <div class="modal-actions">
         <button class="cancel" onclick="closeModal('sessionModal')">取消</button>
         <button class="confirm" onclick="saveSession()">儲存並使用</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHOTO STYLE -->
+  <div id="photoStyleModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>新增生寫真款式</h2>
+      <label for="photoStyleName">款式名稱</label>
+      <input id="photoStyleName" type="text" placeholder="例如：女僕服">
+      <label for="photoStyleStock">庫存</label>
+      <input id="photoStyleStock" type="number" min="0" inputmode="numeric" placeholder="留空＝不限量">
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('photoStyleModal')">取消</button>
+        <button class="confirm" onclick="savePhotoStyle()">新增</button>
       </div>
     </div>
   </div>
@@ -2189,6 +2267,36 @@
   </div>
 
 
+  <!-- LOTTERY PRIZE -->
+  <div id="lotteryPrizeModal" class="modal hidden">
+    <div class="modal-box">
+      <h2 id="lotteryPrizeModalTitle">新增獎項</h2>
+
+      <label for="lotteryPrizeName">獎項名稱</label>
+      <input id="lotteryPrizeName" type="text" placeholder="例如：A賞">
+
+      <label for="lotteryPrizeRemaining">剩餘數量</label>
+      <input id="lotteryPrizeRemaining" type="number" min="0" inputmode="numeric" value="1">
+
+      <label for="lotteryPrizeWarning">低量提醒門檻</label>
+      <input id="lotteryPrizeWarning" type="number" min="0" inputmode="numeric" value="1">
+
+      <label class="checkbox-row">
+        <input id="lotteryPrizeSoldOut" type="checkbox">
+        <span>手動標記完售</span>
+      </label>
+
+      <div class="modal-note">
+        剩餘數量為 0 時也會自動視為完售。若只是暫時不提供，也可以直接勾選「手動標記完售」。
+      </div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('lotteryPrizeModal')">取消</button>
+        <button class="confirm" onclick="saveLotteryPrize()">儲存</button>
+      </div>
+    </div>
+  </div>
+
   <!-- AUCTION SETTING -->
   <div id="auctionSettingModal" class="modal hidden">
     <div class="modal-box">
@@ -2356,9 +2464,7 @@
     ];
 
     const DEFAULT_PHOTO_STOCK = {
-      "公式款": null,
-      "警服款": null,
-      "變身服款": null
+      "公式服": null
     };
 
     let cart = [];
@@ -2427,16 +2533,30 @@
     }
 
     function getSettings() {
-      const saved =
+      const globalSaved =
         loadJSON(
           KEYS.settings,
           {}
         );
 
+      const saved =
+        currentSessionId
+          ? loadJSON(
+              sessionDataKey(
+                "settings"
+              ),
+              globalSaved
+            )
+          : globalSaved;
+
       return {
         lotteryMax: 60,
         defaultStockWarning: 5,
         stockWarningThresholds: {},
+
+        lotteryPrizes: Array.isArray(saved.lotteryPrizes)
+          ? saved.lotteryPrizes
+          : [],
 
         payments: {
           jko: true,
@@ -2449,7 +2569,7 @@
           bankName: "",
           bankCode: "",
           account: "",
-          ...(saved.transferAccount || {})
+          ...(globalSaved.transferAccount || {})
         },
 
         auction: {
@@ -2470,48 +2590,254 @@
     }
 
     function saveSettings(v) {
-      saveJSON(KEYS.settings, v);
+      if (!currentSessionId) {
+        saveJSON(
+          KEYS.settings,
+          v
+        );
+        return;
+      }
+
+      const globalSaved =
+        loadJSON(
+          KEYS.settings,
+          {}
+        );
+
+      globalSaved.transferAccount =
+        deepCopy(
+          v.transferAccount ||
+          globalSaved.transferAccount ||
+          {}
+        );
+
+      saveJSON(
+        KEYS.settings,
+        globalSaved
+      );
+
+      const sessionValue =
+        deepCopy(v);
+
+      delete sessionValue.transferAccount;
+
+      saveJSON(
+        sessionDataKey(
+          "settings"
+        ),
+        sessionValue
+      );
     }
 
     function getProducts() {
-      let items = loadJSON(KEYS.products, []);
+      let items = loadJSON(
+        currentSessionId
+          ? sessionDataKey("products")
+          : KEYS.products,
+        []
+      );
       for (const d of DEFAULT_PRODUCTS) {
         if (!items.some(x => x.id === d.id)) items.push(deepCopy(d));
       }
-      items = items.map(x => ({...x, stock:x.stock === undefined ? null : x.stock}));
-      saveJSON(KEYS.products, items);
+      items = items.map(x => {
+        const item = {
+          ...x,
+          stock:
+            x.stock === undefined
+              ? null
+              : x.stock
+        };
+
+        /* 舊版本曾把抽抽樂名稱存進 localStorage，
+           這裡強制把固定商品名稱同步成新版名稱。 */
+        if (
+          item.id === "lottery-main"
+        ) {
+          item.name =
+            "抽抽樂";
+        }
+
+        return item;
+      });
+
+      saveJSON(
+        KEYS.products,
+        items
+      );
+
       return items;
     }
 
     function saveProducts(v) {
-      saveJSON(KEYS.products, v);
+      saveJSON(
+        currentSessionId
+          ? sessionDataKey("products")
+          : KEYS.products,
+        v
+      );
     }
 
     function getPolaroids() {
-      let items = loadJSON(KEYS.polaroids, []);
+      let items = loadJSON(
+        currentSessionId
+          ? sessionDataKey("polaroids")
+          : KEYS.polaroids,
+        []
+      );
       for (const d of DEFAULT_POLAROIDS) {
         if (!items.some(x => x.id === d.id)) items.push(deepCopy(d));
       }
       items = items.map(x => ({...x, stock:x.stock === undefined ? null : x.stock}));
-      saveJSON(KEYS.polaroids, items);
+      saveJSON(
+        currentSessionId
+          ? sessionDataKey("polaroids")
+          : KEYS.polaroids,
+        items
+      );
       return items;
     }
 
     function savePolaroids(v) {
-      saveJSON(KEYS.polaroids, v);
+      saveJSON(
+        currentSessionId
+          ? sessionDataKey("polaroids")
+          : KEYS.polaroids,
+        v
+      );
     }
 
     function getPhotoStock() {
-      return {...DEFAULT_PHOTO_STOCK, ...loadJSON(KEYS.photoStock,{})};
+      const saved =
+        loadJSON(
+          currentSessionId
+            ? sessionDataKey("photo-stock")
+            : KEYS.photoStock,
+          {}
+        );
+
+      if (
+        Object.prototype.hasOwnProperty.call(
+          saved,
+          "公式款"
+        ) &&
+        !Object.prototype.hasOwnProperty.call(
+          saved,
+          "公式服"
+        )
+      ) {
+        saved["公式服"] =
+          saved["公式款"];
+
+        delete saved["公式款"];
+
+        saveJSON(
+          currentSessionId
+            ? sessionDataKey("photo-stock")
+            : KEYS.photoStock,
+          saved
+        );
+      }
+
+      return {
+        ...DEFAULT_PHOTO_STOCK,
+        ...saved
+      };
     }
 
     function savePhotoStock(v) {
-      saveJSON(KEYS.photoStock,v);
+      saveJSON(
+        currentSessionId
+          ? sessionDataKey("photo-stock")
+          : KEYS.photoStock,
+        v
+      );
     }
 
     /* -------------------- SESSIONS -------------------- */
     function sessionOrderKey(id) {
       return `cash-register-orders-v3-${id}`;
+    }
+
+    function sessionDataKey(type,id=currentSessionId) {
+      return `cash-register-session-${type}-v1-${id}`;
+    }
+
+    function hasSessionData(type,id=currentSessionId) {
+      return Boolean(
+        id &&
+        localStorage.getItem(
+          sessionDataKey(type,id)
+        ) !== null
+      );
+    }
+
+    function initializeSessionData(id,sourceId=null) {
+      if (!id) return;
+
+      const copyOrGlobal =
+        (type,globalKey,fallback) => {
+          if (
+            localStorage.getItem(
+              sessionDataKey(type,id)
+            ) !== null
+          ) return;
+
+          let value = null;
+
+          if (
+            sourceId &&
+            localStorage.getItem(
+              sessionDataKey(type,sourceId)
+            ) !== null
+          ) {
+            value =
+              loadJSON(
+                sessionDataKey(
+                  type,
+                  sourceId
+                ),
+                fallback
+              );
+          } else {
+            value =
+              loadJSON(
+                globalKey,
+                fallback
+              );
+          }
+
+          saveJSON(
+            sessionDataKey(
+              type,
+              id
+            ),
+            deepCopy(value)
+          );
+        };
+
+      copyOrGlobal(
+        "products",
+        KEYS.products,
+        []
+      );
+
+      copyOrGlobal(
+        "polaroids",
+        KEYS.polaroids,
+        []
+      );
+
+      copyOrGlobal(
+        "photo-stock",
+        KEYS.photoStock,
+        {}
+      );
+
+      copyOrGlobal(
+        "settings",
+        KEYS.settings,
+        {}
+      );
     }
 
     function getSessions() {
@@ -2548,6 +2874,10 @@
         if (!sessions.some(x => x.id === currentSessionId)) currentSessionId = sessions[0].id;
         localStorage.setItem(KEYS.currentSession,currentSessionId);
       }
+
+      initializeSessionData(
+        currentSessionId
+      );
     }
 
     function getCurrentSession() {
@@ -2642,8 +2972,16 @@
         const idx = sessions.findIndex(x => x.id === id);
         if (idx >= 0) sessions[idx] = {...sessions[idx],date,name};
       } else {
+        const sourceSessionId =
+          currentSessionId;
+
         id = createSessionId();
         sessions.push({id,date,name,createdAt:Date.now()});
+
+        initializeSessionData(
+          id,
+          sourceSessionId
+        );
       }
 
       const switching = id !== currentSessionId;
@@ -2652,6 +2990,10 @@
       saveSessions(sessions);
       currentSessionId = id;
       localStorage.setItem(KEYS.currentSession,id);
+
+      initializeSessionData(
+        currentSessionId
+      );
 
       if (switching) {
         cart = [];
@@ -2664,6 +3006,8 @@
       closeModal("sessionModal");
       backToMain();
       renderMainProducts();
+      renderLibrary();
+      renderAuctionBanner();
     }
 
     function deleteEditingSession() {
@@ -2679,11 +3023,29 @@
 
       sessions = sessions.filter(x => x.id !== editingSessionId);
       localStorage.removeItem(sessionOrderKey(editingSessionId));
+
+      for (
+        const type of
+        ["products","polaroids","photo-stock","settings"]
+      ) {
+        localStorage.removeItem(
+          sessionDataKey(
+            type,
+            editingSessionId
+          )
+        );
+      }
+
       saveSessions(sessions);
 
       if (editingSessionId === currentSessionId) {
         currentSessionId = sortSessions(sessions)[0].id;
         localStorage.setItem(KEYS.currentSession,currentSessionId);
+
+        initializeSessionData(
+          currentSessionId
+        );
+
         cart = [];
         cartExpanded = false;
         document.getElementById("orderNote").value = "";
@@ -2953,14 +3315,227 @@
       document.getElementById("subOptions").appendChild(b);
     }
 
-    function openPhotoSet() {
-      showSub("生寫真套組");
-      const stocks = getPhotoStock();
+    function openPhotoStyleModal() {
+      document.getElementById(
+        "photoStyleName"
+      ).value = "";
 
-      for (const theme of ["公式款","警服款","變身服款"]) {
-        const info = stockInfo(stocks[theme],inventoryKeyForPhoto(theme),true);
-        addOption(theme,"$350",() => openPhotoChoice(theme),info);
+      document.getElementById(
+        "photoStyleStock"
+      ).value = "";
+
+      document.getElementById(
+        "photoStyleModal"
+      ).classList.remove(
+        "hidden"
+      );
+    }
+
+    function savePhotoStyle() {
+      const name =
+        document.getElementById(
+          "photoStyleName"
+        ).value.trim();
+
+      const stockText =
+        document.getElementById(
+          "photoStyleStock"
+        ).value.trim();
+
+      if (!name) {
+        alert(
+          "請輸入款式名稱"
+        );
+        return;
       }
+
+      if (
+        name === "公式服"
+      ) {
+        alert(
+          "公式服已經是預設款式"
+        );
+        return;
+      }
+
+      const stocks =
+        getPhotoStock();
+
+      if (
+        Object.prototype.hasOwnProperty.call(
+          stocks,
+          name
+        )
+      ) {
+        alert(
+          "這個款式已經存在"
+        );
+        return;
+      }
+
+      let stock =
+        null;
+
+      if (
+        stockText !== ""
+      ) {
+        stock =
+          Number(
+            stockText
+          );
+
+        if (
+          !Number.isInteger(stock) ||
+          stock < 0
+        ) {
+          alert(
+            "請輸入正確庫存"
+          );
+          return;
+        }
+      }
+
+      const saved =
+        loadJSON(
+          currentSessionId
+            ? sessionDataKey("photo-stock")
+            : KEYS.photoStock,
+          {}
+        );
+
+      saved[name] =
+        stock;
+
+      saveJSON(
+        currentSessionId
+          ? sessionDataKey("photo-stock")
+          : KEYS.photoStock,
+        saved
+      );
+
+      closeModal(
+        "photoStyleModal"
+      );
+
+      renderLibrary();
+      openPhotoSet();
+    }
+
+    function deletePhotoStyle(theme) {
+      if (
+        theme === "公式服"
+      ) {
+        alert(
+          "公式服是預設款式，不能刪除"
+        );
+        return;
+      }
+
+      if (
+        !confirm(
+          `確定刪除「${theme}」嗎？`
+        )
+      ) {
+        return;
+      }
+
+      const saved =
+        loadJSON(
+          currentSessionId
+            ? sessionDataKey("photo-stock")
+            : KEYS.photoStock,
+          {}
+        );
+
+      delete saved[
+        theme
+      ];
+
+      saveJSON(
+        currentSessionId
+          ? sessionDataKey("photo-stock")
+          : KEYS.photoStock,
+        saved
+      );
+
+      renderLibrary();
+
+      if (
+        !document.getElementById(
+          "subMenu"
+        ).classList.contains(
+          "hidden"
+        ) &&
+        document.getElementById(
+          "subTitle"
+        ).textContent ===
+          "生寫真套組"
+      ) {
+        openPhotoSet();
+      }
+    }
+
+
+    function openPhotoSet() {
+      showSub(
+        "生寫真套組"
+      );
+
+      const stocks =
+        getPhotoStock();
+
+      const themes =
+        Object.keys(
+          stocks
+        );
+
+      themes.sort(
+        (a,b) => {
+          if (
+            a === "公式服"
+          ) return -1;
+
+          if (
+            b === "公式服"
+          ) return 1;
+
+          return a.localeCompare(
+            b,
+            "zh-Hant"
+          );
+        }
+      );
+
+      for (
+        const theme of themes
+      ) {
+        const info =
+          stockInfo(
+            stocks[theme],
+            inventoryKeyForPhoto(
+              theme
+            ),
+            true
+          );
+
+        addOption(
+          theme,
+          "$350",
+          () =>
+            openPhotoChoice(
+              theme
+            ),
+          info
+        );
+      }
+
+      addOption(
+        "＋",
+        "",
+        () =>
+          openPhotoStyleModal(),
+        null
+      );
     }
 
     function openPhotoChoice(theme) {
@@ -2990,6 +3565,518 @@
       openPhotoSet();
     }
 
+    let editingLotteryPrizeId =
+      null;
+
+    function getLotteryPrizes() {
+      const settings =
+        getSettings();
+
+      return Array.isArray(
+        settings.lotteryPrizes
+      )
+        ? settings.lotteryPrizes
+        : [];
+    }
+
+    function saveLotteryPrizes(items) {
+      const settings =
+        getSettings();
+
+      settings.lotteryPrizes =
+        items;
+
+      saveSettings(
+        settings
+      );
+    }
+
+    function createLotteryPrizeId() {
+      return (
+        "prize-" +
+        Date.now() +
+        "-" +
+        Math.random()
+          .toString(36)
+          .slice(2,6)
+      );
+    }
+
+    function isLotteryPrizeSoldOut(prize) {
+      return (
+        Boolean(
+          prize.soldOut
+        ) ||
+        Number(
+          prize.remaining || 0
+        ) <= 0
+      );
+    }
+
+    function openLotteryPrizeModal(id=null) {
+      editingLotteryPrizeId =
+        id;
+
+      const prize =
+        id
+          ? getLotteryPrizes()
+              .find(
+                item =>
+                  item.id === id
+              )
+          : null;
+
+      document.getElementById(
+        "lotteryPrizeModalTitle"
+      ).textContent =
+        prize
+          ? "修改獎項"
+          : "新增獎項";
+
+      document.getElementById(
+        "lotteryPrizeName"
+      ).value =
+        prize?.name || "";
+
+      document.getElementById(
+        "lotteryPrizeRemaining"
+      ).value =
+        prize
+          ? Number(
+              prize.remaining || 0
+            )
+          : 1;
+
+      document.getElementById(
+        "lotteryPrizeWarning"
+      ).value =
+        prize
+          ? Number(
+              prize.warning || 0
+            )
+          : 1;
+
+      document.getElementById(
+        "lotteryPrizeSoldOut"
+      ).checked =
+        Boolean(
+          prize?.soldOut
+        );
+
+      document.getElementById(
+        "lotteryPrizeModal"
+      ).classList.remove(
+        "hidden"
+      );
+    }
+
+    function saveLotteryPrize() {
+      const name =
+        document.getElementById(
+          "lotteryPrizeName"
+        ).value.trim();
+
+      const remaining =
+        Number(
+          document.getElementById(
+            "lotteryPrizeRemaining"
+          ).value
+        );
+
+      const warning =
+        Number(
+          document.getElementById(
+            "lotteryPrizeWarning"
+          ).value
+        );
+
+      const soldOut =
+        document.getElementById(
+          "lotteryPrizeSoldOut"
+        ).checked;
+
+      if (!name) {
+        alert(
+          "請輸入獎項名稱"
+        );
+        return;
+      }
+
+      if (
+        !Number.isInteger(remaining) ||
+        remaining < 0
+      ) {
+        alert(
+          "請輸入正確剩餘數量"
+        );
+        return;
+      }
+
+      if (
+        !Number.isInteger(warning) ||
+        warning < 0
+      ) {
+        alert(
+          "請輸入正確提醒門檻"
+        );
+        return;
+      }
+
+      const items =
+        getLotteryPrizes();
+
+      if (editingLotteryPrizeId) {
+        const index =
+          items.findIndex(
+            item =>
+              item.id ===
+              editingLotteryPrizeId
+          );
+
+        if (index >= 0) {
+          items[index] = {
+            ...items[index],
+            name,
+            remaining,
+            warning,
+            soldOut
+          };
+        }
+
+      } else {
+        items.push({
+          id:
+            createLotteryPrizeId(),
+
+          name,
+          remaining,
+          warning,
+          soldOut
+        });
+      }
+
+      saveLotteryPrizes(
+        items
+      );
+
+      editingLotteryPrizeId =
+        null;
+
+      closeModal(
+        "lotteryPrizeModal"
+      );
+
+      renderLotteryPrizeLibrary();
+
+      if (
+        !document.getElementById(
+          "subMenu"
+        ).classList.contains(
+          "hidden"
+        ) &&
+        document.getElementById(
+          "subTitle"
+        ).textContent ===
+          "抽抽樂"
+      ) {
+        openLottery();
+      }
+    }
+
+    function changeLotteryPrizeRemaining(id,delta) {
+      const items =
+        getLotteryPrizes();
+
+      const index =
+        items.findIndex(
+          item =>
+            item.id === id
+        );
+
+      if (index < 0) {
+        return;
+      }
+
+      items[index].remaining =
+        Math.max(
+          0,
+          Number(
+            items[index].remaining || 0
+          ) + delta
+        );
+
+      if (
+        items[index].remaining > 0 &&
+        items[index].soldOut &&
+        delta > 0
+      ) {
+        items[index].soldOut =
+          false;
+      }
+
+      saveLotteryPrizes(
+        items
+      );
+
+      renderLotteryPrizeLibrary();
+
+      if (
+        !document.getElementById(
+          "subMenu"
+        ).classList.contains(
+          "hidden"
+        ) &&
+        document.getElementById(
+          "subTitle"
+        ).textContent ===
+          "抽抽樂"
+      ) {
+        openLottery();
+      }
+    }
+
+    function toggleLotteryPrizeSoldOut(id) {
+      const items =
+        getLotteryPrizes();
+
+      const index =
+        items.findIndex(
+          item =>
+            item.id === id
+        );
+
+      if (index < 0) {
+        return;
+      }
+
+      items[index].soldOut =
+        !items[index].soldOut;
+
+      saveLotteryPrizes(
+        items
+      );
+
+      renderLotteryPrizeLibrary();
+
+      if (
+        !document.getElementById(
+          "subMenu"
+        ).classList.contains(
+          "hidden"
+        ) &&
+        document.getElementById(
+          "subTitle"
+        ).textContent ===
+          "抽抽樂"
+      ) {
+        openLottery();
+      }
+    }
+
+    function deleteLotteryPrize(id) {
+      const prize =
+        getLotteryPrizes()
+          .find(
+            item =>
+              item.id === id
+          );
+
+      if (!prize) {
+        return;
+      }
+
+      if (
+        !confirm(
+          `確定刪除「${prize.name}」嗎？`
+        )
+      ) {
+        return;
+      }
+
+      saveLotteryPrizes(
+        getLotteryPrizes()
+          .filter(
+            item =>
+              item.id !== id
+          )
+      );
+
+      renderLotteryPrizeLibrary();
+
+      if (
+        !document.getElementById(
+          "subMenu"
+        ).classList.contains(
+          "hidden"
+        ) &&
+        document.getElementById(
+          "subTitle"
+        ).textContent ===
+          "抽抽樂"
+      ) {
+        openLottery();
+      }
+    }
+
+    function renderLotteryPrizeLibrary() {
+      const body =
+        document.getElementById(
+          "lotteryPrizeBody"
+        );
+
+      if (!body) {
+        return;
+      }
+
+      const items =
+        getLotteryPrizes();
+
+      body.innerHTML =
+        "";
+
+      if (!items.length) {
+        body.innerHTML =
+          `<tr><td colspan="5">尚未新增獎項</td></tr>`;
+        return;
+      }
+
+      for (const prize of items) {
+        const soldOut =
+          isLotteryPrizeSoldOut(
+            prize
+          );
+
+        const low =
+          !soldOut &&
+          Number(
+            prize.warning || 0
+          ) > 0 &&
+          Number(
+            prize.remaining || 0
+          ) <=
+          Number(
+            prize.warning || 0
+          );
+
+        const tr =
+          document.createElement(
+            "tr"
+          );
+
+        tr.innerHTML =
+          `
+            <td>${esc(prize.name)}</td>
+            <td>${Number(prize.remaining || 0)}</td>
+            <td>${Number(prize.warning || 0)}</td>
+            <td>
+              <span class="pill ${soldOut || low ? "low" : ""}">
+                ${soldOut ? "完售" : low ? "低量" : "正常"}
+              </span>
+            </td>
+            <td>
+              <div class="lottery-prize-actions">
+                <button onclick="changeLotteryPrizeRemaining('${prize.id}',-1)">−1</button>
+                <button onclick="changeLotteryPrizeRemaining('${prize.id}',1)">＋1</button>
+                <button onclick="toggleLotteryPrizeSoldOut('${prize.id}')">${prize.soldOut ? "恢復" : "標記完售"}</button>
+                <button onclick="openLotteryPrizeModal('${prize.id}')">修改</button>
+                <button class="danger-btn" onclick="deleteLotteryPrize('${prize.id}')">刪除</button>
+              </div>
+            </td>
+          `;
+
+        body.appendChild(
+          tr
+        );
+      }
+    }
+
+    function renderLotteryPrizeAlerts() {
+      const grid =
+        document.getElementById(
+          "subOptions"
+        );
+
+      if (!grid) {
+        return;
+      }
+
+      const items =
+        getLotteryPrizes();
+
+      const alerts =
+        items.filter(
+          prize => {
+            const soldOut =
+              isLotteryPrizeSoldOut(
+                prize
+              );
+
+            const low =
+              !soldOut &&
+              Number(
+                prize.warning || 0
+              ) > 0 &&
+              Number(
+                prize.remaining || 0
+              ) <=
+              Number(
+                prize.warning || 0
+              );
+
+            return (
+              soldOut ||
+              low
+            );
+          }
+        );
+
+      if (!alerts.length) {
+        return;
+      }
+
+      const wrap =
+        document.createElement(
+          "div"
+        );
+
+      wrap.className =
+        "lottery-prize-alerts";
+
+      for (const prize of alerts) {
+        const soldOut =
+          isLotteryPrizeSoldOut(
+            prize
+          );
+
+        const div =
+          document.createElement(
+            "div"
+          );
+
+        div.className =
+          "lottery-prize-alert" +
+          (
+            soldOut
+              ? ""
+              : " low"
+          );
+
+        div.textContent =
+          soldOut
+            ? `${prize.name} 已完售`
+            : `${prize.name} 剩餘 ${prize.remaining}`;
+
+        wrap.appendChild(
+          div
+        );
+      }
+
+      grid.appendChild(
+        wrap
+      );
+    }
+
+
     function lotterySold(sessionId=currentSessionId) {
       let n = 0;
       for (const o of getOrders(sessionId)) {
@@ -3008,6 +4095,9 @@
 
     function openLottery() {
       showSub("抽抽樂");
+
+      renderLotteryPrizeAlerts();
+
       const r = lotteryRemaining(true);
 
       for (const qty of [1,3,5,10]) {
@@ -4501,18 +5591,83 @@
       photoBody.innerHTML = "";
       const photoStock = getPhotoStock();
 
-      for (const theme of ["公式款","警服款","變身服款"]) {
-        const key = inventoryKeyForPhoto(theme);
-        const sold = getSoldByKey(key);
-        const r = remaining(photoStock[theme],key,false);
-        const tr = document.createElement("tr");
+      const photoThemes =
+        Object.keys(
+          photoStock
+        ).sort(
+          (a,b) => {
+            if (
+              a === "公式服"
+            ) return -1;
+
+            if (
+              b === "公式服"
+            ) return 1;
+
+            return a.localeCompare(
+              b,
+              "zh-Hant"
+            );
+          }
+        );
+
+      for (
+        const theme of photoThemes
+      ) {
+        const key =
+          inventoryKeyForPhoto(
+            theme
+          );
+
+        const sold =
+          getSoldByKey(
+            key
+          );
+
+        const r =
+          remaining(
+            photoStock[theme],
+            key,
+            false
+          );
+
+        const tr =
+          document.createElement(
+            "tr"
+          );
+
+        const encodedTheme =
+          encodeURIComponent(
+            theme
+          );
+
         tr.innerHTML = `
-          <td>${esc(theme)}</td>
+          <td>${esc(theme)}${theme === "公式服" ? ' <span class="pill">預設</span>' : ""}</td>
           <td>${sold}</td>
           <td>${photoStock[theme]==null?'<span class="pill">不限量</span>':`<span class="pill ${r<=getStockWarningThreshold(key)?"low":""}">${r} / ${photoStock[theme]}</span>`}</td>
-          <td><button class="small-btn" onclick="openStockModal({type:'photo',id:'${theme}',name:'生寫真｜${theme}',stock:${photoStock[theme]===null?"null":photoStock[theme]},key:'${key}'})">修改</button></td>`;
-        photoBody.appendChild(tr);
+          <td>
+            <div class="lottery-prize-actions">
+              <button class="small-btn" onclick="openStockModal({type:'photo',id:decodeURIComponent('${encodedTheme}'),name:'生寫真｜'+decodeURIComponent('${encodedTheme}'),stock:${photoStock[theme]===null?"null":photoStock[theme]},key:'${key}'})">修改</button>
+              ${theme === "公式服" ? "" : `<button class="danger-btn" onclick="deletePhotoStyle(decodeURIComponent('${encodedTheme}'))">刪除</button>`}
+            </div>
+          </td>`;
+
+        photoBody.appendChild(
+          tr
+        );
       }
+
+      const addPhotoRow =
+        document.createElement(
+          "tr"
+        );
+
+      addPhotoRow.innerHTML =
+        `<td colspan="4"><button class="small-btn" onclick="openPhotoStyleModal()">＋ 新增生寫真款式</button></td>`;
+
+      photoBody.appendChild(
+        addPhotoRow
+      );
 
       const polBody = document.getElementById("polaroidLibraryBody");
       polBody.innerHTML = "";
@@ -4551,6 +5706,7 @@
       }
 
       renderPaymentMethodSettings();
+      renderLotteryPrizeLibrary();
       renderAuctionLibraryStatus();
     }
 
@@ -6863,6 +8019,7 @@
     renderMainProducts();
     renderCart();
     renderPaymentMethodSettings();
+    renderLotteryPrizeLibrary();
     renderAuctionBanner();
     renderAuctionHistory();
 

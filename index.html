@@ -1511,6 +1511,27 @@
       font-size: 11px;
       text-align: center;
     }
+
+    .auction-history-group {
+      margin-bottom: 18px;
+      padding: 14px;
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: 0 3px 12px rgba(72,58,58,.035);
+    }
+
+    .auction-history-date {
+      margin-bottom: 10px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .auction-history-count {
+      margin-left: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 400;
+    }
 </style>
 </head>
 
@@ -1813,21 +1834,12 @@
     </div>
 
     <h3>競標紀錄</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>日期</th>
-            <th>場次</th>
-            <th>競標品</th>
-            <th>得標署名</th>
-            <th>最終金額</th>
-            <th>結束時間</th>
-          </tr>
-        </thead>
-        <tbody id="auctionHistoryBody"></tbody>
-      </table>
+
+    <div class="page-actions" style="margin:0 0 10px">
+      <button class="danger-btn" onclick="clearAuctionHistory()">清除競標歷史</button>
     </div>
+
+    <div id="auctionHistoryGroups"></div>
   </section>
 
   <!-- SESSION MODAL -->
@@ -5013,58 +5025,197 @@
 
 
     function renderAuctionHistory() {
-      const body =
+      const container =
         document.getElementById(
-          "auctionHistoryBody"
+          "auctionHistoryGroups"
         );
 
-      if (!body) {
+      if (!container) {
         return;
       }
 
       const items =
         [
           ...getAuctionHistory()
-        ].reverse();
+        ].sort(
+          (a,b) => {
+            const dateCompare =
+              String(
+                b.date || ""
+              ).localeCompare(
+                String(
+                  a.date || ""
+                )
+              );
 
-      body.innerHTML =
+            if (
+              dateCompare !== 0
+            ) {
+              return dateCompare;
+            }
+
+            return String(
+              b.endAt || ""
+            ).localeCompare(
+              String(
+                a.endAt || ""
+              )
+            );
+          }
+        );
+
+      container.innerHTML =
         "";
 
       if (!items.length) {
-        body.innerHTML =
-          `
-            <tr>
-              <td colspan="6" class="auction-history-empty">
-                尚無競標紀錄
-              </td>
-            </tr>
-          `;
+        container.innerHTML =
+          `<div class="auction-history-empty">尚無競標紀錄</div>`;
 
         return;
       }
 
-      for (
-        const item of items
-      ) {
-        const tr =
-          document.createElement(
-            "tr"
-          );
+      const groups = {};
 
-        tr.innerHTML =
-          `
-            <td>${esc(prettyDate(item.date || ""))}</td>
-            <td>${esc(item.sessionName || "—")}</td>
-            <td>${esc(item.title || "掛軸競標")}</td>
-            <td>${esc(item.winner || "—")}</td>
-            <td>$${money(item.finalBid || 0)}</td>
-            <td>${esc(formatAuctionDateTime(item.endAt || ""))}</td>
-          `;
+      for (const item of items) {
+        const date =
+          item.date ||
+          "未設定日期";
 
-        body.appendChild(
-          tr
+        if (!groups[date]) {
+          groups[date] =
+            [];
+        }
+
+        groups[date].push(
+          item
         );
       }
+
+      for (
+        const [
+          date,
+          groupItems
+        ] of Object.entries(
+          groups
+        )
+      ) {
+        const section =
+          document.createElement(
+            "section"
+          );
+
+        section.className =
+          "auction-history-group";
+
+        const heading =
+          document.createElement(
+            "div"
+          );
+
+        heading.className =
+          "auction-history-date";
+
+        heading.innerHTML =
+          `${esc(prettyDate(date))}<span class="auction-history-count">${groupItems.length} 筆</span>`;
+
+        const wrap =
+          document.createElement(
+            "div"
+          );
+
+        wrap.className =
+          "table-wrap";
+
+        const table =
+          document.createElement(
+            "table"
+          );
+
+        table.innerHTML =
+          `
+            <thead>
+              <tr>
+                <th>場次</th>
+                <th>競標品</th>
+                <th>得標署名</th>
+                <th>最終金額</th>
+                <th>結束時間</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          `;
+
+        const tbody =
+          table.querySelector(
+            "tbody"
+          );
+
+        for (
+          const item of groupItems
+        ) {
+          const tr =
+            document.createElement(
+              "tr"
+            );
+
+          tr.innerHTML =
+            `
+              <td>${esc(item.sessionName || "—")}</td>
+              <td>${esc(item.title || "掛軸競標")}</td>
+              <td>${esc(item.winner || "—")}</td>
+              <td>$${money(item.finalBid || 0)}</td>
+              <td>${esc(formatAuctionDateTime(item.endAt || ""))}</td>
+            `;
+
+          tbody.appendChild(
+            tr
+          );
+        }
+
+        wrap.appendChild(
+          table
+        );
+
+        section.appendChild(
+          heading
+        );
+
+        section.appendChild(
+          wrap
+        );
+
+        container.appendChild(
+          section
+        );
+      }
+    }
+
+
+    function clearAuctionHistory() {
+      const history =
+        getAuctionHistory();
+
+      if (!history.length) {
+        alert(
+          "目前沒有競標歷史"
+        );
+
+        return;
+      }
+
+      if (
+        !confirm(
+          `確定要清除全部 ${history.length} 筆競標歷史嗎？\n\n此操作無法復原。`
+        )
+      ) {
+        return;
+      }
+
+      saveAuctionHistory(
+        []
+      );
+
+      renderAuctionHistory();
     }
 
 

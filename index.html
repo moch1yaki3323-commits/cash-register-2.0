@@ -2058,6 +2058,9 @@
     </div>
 
     <h3>目前競標出價紀錄</h3>
+    <div class="page-actions" style="margin:0 0 10px">
+      <button class="danger-btn" onclick="clearActiveBidHistory()">清除目前出價紀錄</button>
+    </div>
     <div class="table-wrap auction-bid-history">
       <table>
         <thead><tr><th>時間</th><th>署名</th><th>金額</th></tr></thead>
@@ -2616,7 +2619,8 @@
       settings: "cash-register-settings-v3",
       sessions: "cash-register-sessions-v3",
       currentSession: "cash-register-current-session-v3",
-      auctionHistory: "cash-register-auction-history-v1"
+      auctionHistory: "cash-register-auction-history-v1",
+      clearedAuctionHistory: "cash-register-auction-cleared-v1"
     };
 
     const DEFAULT_PRODUCTS = [
@@ -2753,6 +2757,13 @@
           endAt: "",
           ...(saved.auction || {})
         },
+
+        clearedAuctionHistoryIds:
+          Array.isArray(
+            saved.clearedAuctionHistoryIds
+          )
+            ? saved.clearedAuctionHistoryIds
+            : [],
 
         ...saved
       };
@@ -6074,6 +6085,30 @@
 
     /* -------------------- AUCTION -------------------- */
 
+    function getClearedAuctionHistoryIds() {
+      const data =
+        loadJSON(
+          KEYS.clearedAuctionHistory,
+          []
+        );
+
+      return Array.isArray(data)
+        ? data
+        : [];
+    }
+
+    function saveClearedAuctionHistoryIds(ids) {
+      saveJSON(
+        KEYS.clearedAuctionHistory,
+        Array.from(
+          new Set(
+            ids.filter(Boolean)
+          )
+        )
+      );
+    }
+
+
     function getAuctionHistory() {
       const data =
         loadJSON(
@@ -6128,6 +6163,17 @@
         auctionHistoryId(
           auction
         );
+
+      const clearedIds =
+        getClearedAuctionHistoryIds();
+
+      if (
+        clearedIds.includes(
+          id
+        )
+      ) {
+        return;
+      }
 
       if (
         history.some(
@@ -6516,11 +6562,72 @@
     }
 
 
+    function clearActiveBidHistory() {
+      const auction =
+        getAuctionSettings();
+
+      const items =
+        Array.isArray(
+          auction.bidHistory
+        )
+          ? auction.bidHistory
+          : [];
+
+      if (!items.length) {
+        alert(
+          "目前沒有出價紀錄"
+        );
+        return;
+      }
+
+      if (
+        !confirm(
+          `確定要清除目前 ${items.length} 筆出價紀錄嗎？\n\n目前競標金額與署名會保留。`
+        )
+      ) {
+        return;
+      }
+
+      const settings =
+        getSettings();
+
+      settings.auction = {
+        ...auction,
+        bidHistory: []
+      };
+
+      saveSettings(
+        settings
+      );
+
+      renderActiveBidHistory();
+    }
+
+
     function clearAuctionHistory() {
       const history =
         getAuctionHistory();
 
-      if (!history.length) {
+      const currentAuction =
+        getAuctionSettings();
+
+      const hasCurrentEndedAuction =
+        Boolean(
+          currentAuction &&
+          currentAuction.endAt &&
+          parseLocalDateTime(
+            currentAuction.endAt
+          ) &&
+          new Date() >=
+            parseLocalDateTime(
+              currentAuction.endAt
+            )
+        );
+
+      if (
+        !history.length &&
+        !hasCurrentEndedAuction
+      ) {
         alert(
           "目前沒有競標歷史"
         );
@@ -6530,17 +6637,74 @@
 
       if (
         !confirm(
-          `確定要清除全部 ${history.length} 筆競標歷史嗎？\n\n此操作無法復原。`
+          "確定要清除全部競標歷史嗎？\n\n此操作無法復原。"
         )
       ) {
         return;
       }
 
+      const clearedIds =
+        getClearedAuctionHistoryIds();
+
+      for (
+        const item of history
+      ) {
+        if (
+          item &&
+          item.id
+        ) {
+          clearedIds.push(
+            item.id
+          );
+        }
+      }
+
+      if (
+        hasCurrentEndedAuction
+      ) {
+        clearedIds.push(
+          auctionHistoryId(
+            currentAuction
+          )
+        );
+      }
+
+      saveClearedAuctionHistoryIds(
+        clearedIds
+      );
+
+      /* 強制移除歷史資料，不只寫入空陣列 */
+      localStorage.removeItem(
+        KEYS.auctionHistory
+      );
+
       saveAuctionHistory(
         []
       );
 
+      /* 如果目前這輪已經結束，順便關閉並歸零，
+         避免下一次 render 又把同一輪重新寫回。 */
+      if (
+        hasCurrentEndedAuction
+      ) {
+        const settings =
+          getSettings();
+
+        settings.auction =
+          getResetAuctionState();
+
+        saveSettings(
+          settings
+        );
+      }
+
       renderAuctionHistory();
+      renderAuctionBanner();
+      renderAuctionLibraryStatus();
+
+      alert(
+        "競標歷史已清除"
+      );
     }
 
 
@@ -7322,6 +7486,19 @@
           }
         ];
       }
+
+      const newAuctionId =
+        auctionHistoryId(
+          settings.auction
+        );
+
+      saveClearedAuctionHistoryIds(
+        getClearedAuctionHistoryIds()
+          .filter(
+            id =>
+              id !== newAuctionId
+          )
+      );
 
       saveSettings(
         settings

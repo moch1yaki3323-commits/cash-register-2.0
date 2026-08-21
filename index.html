@@ -1,0 +1,3976 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3f3">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="收銀機">
+
+  <title>收銀機</title>
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <style>
+    @font-face {
+      font-family: "Huninn";
+      src: url("jf-openhuninn-2.1.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #f6f3f3;
+      --panel: #ffffff;
+      --text: #413d3d;
+      --muted: #969090;
+      --line: #e9e4e4;
+      --soft: #f1eded;
+      --soft-2: #faf8f8;
+      --accent: #8e7db0;
+      --accent-soft: #ece6f3;
+      --danger: #aa7272;
+      --danger-soft: #f1e3e3;
+      --sold: #aaa3a3;
+      --shadow: 0 6px 20px rgba(72, 58, 58, .07);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-tap-highlight-color: transparent;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding:
+        env(safe-area-inset-top)
+        env(safe-area-inset-right)
+        env(safe-area-inset-bottom)
+        env(safe-area-inset-left);
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Huninn", "Noto Sans TC", system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      color: var(--text);
+      -webkit-text-fill-color: currentColor;
+      -webkit-appearance: none;
+      appearance: none;
+      -webkit-tap-highlight-color: transparent;
+      border: 0;
+    }
+
+    button:active {
+      transform: scale(.975);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 20px;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 23px;
+      font-weight: 600;
+      letter-spacing: .02em;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .session-button {
+      display: block;
+      min-width: 170px;
+      max-width: 280px;
+      padding: 8px 12px;
+      text-align: left;
+      background: var(--soft-2);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      cursor: pointer;
+    }
+
+    .session-date {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .session-name {
+      display: block;
+      margin-top: 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+    }
+
+    .tab-button {
+      padding: 9px 12px;
+      background: var(--soft);
+      border-radius: 11px;
+      cursor: pointer;
+    }
+
+    .tab-button.active {
+      background: var(--text);
+      color: #fff;
+      -webkit-text-fill-color: #fff;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 370px;
+      min-height: calc(100vh - 68px);
+      transition: grid-template-columns .2s ease;
+    }
+
+    .container.cart-hidden {
+      grid-template-columns: 1fr;
+    }
+
+    .products {
+      padding: 22px;
+      min-width: 0;
+    }
+
+    .section-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .current-session {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .manage-toggle {
+      padding: 7px 10px;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .manage-toggle.active {
+      background: var(--soft);
+      color: var(--text);
+    }
+
+    .main-grid,
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .product-wrap {
+      position: relative;
+      min-width: 0;
+    }
+
+    .product-button {
+      width: 100%;
+      min-height: 118px;
+      padding: 18px 14px;
+      background: var(--panel);
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 1.35;
+      transition: transform .14s ease, box-shadow .14s ease, opacity .14s ease;
+    }
+
+    .product-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 9px 24px rgba(72,58,58,.10);
+    }
+
+    .product-button small {
+      display: block;
+      margin-top: 7px;
+      color: #696363;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .stock-text {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    .stock-text.low {
+      color: var(--danger) !important;
+      -webkit-text-fill-color: var(--danger) !important;
+    }
+
+    .product-button.sold-out {
+      background: #ebe8e8;
+      color: var(--sold) !important;
+      -webkit-text-fill-color: var(--sold) !important;
+      box-shadow: none;
+      cursor: not-allowed;
+      opacity: .82;
+    }
+
+    .product-button.sold-out .sold-label {
+      display: block;
+      margin-top: 7px;
+      color: var(--danger) !important;
+      -webkit-text-fill-color: var(--danger) !important;
+      font-size: 12px;
+      letter-spacing: .13em;
+      font-weight: 500;
+    }
+
+    .plus-button {
+      font-size: 31px;
+      font-weight: 400;
+    }
+
+    .manage-dot {
+      position: absolute;
+      z-index: 5;
+      right: 8px;
+      top: 8px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(238,234,234,.96);
+      color: #837d7d;
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    .back-button {
+      margin-bottom: 14px;
+      padding: 9px 13px;
+      background: var(--soft);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* CART */
+    .cart {
+      display: flex;
+      flex-direction: column;
+      padding: 18px;
+      background: var(--panel);
+      border-left: 1px solid var(--line);
+      animation: slideCart .18s ease;
+    }
+
+    @keyframes slideCart {
+      from { opacity: 0; transform: translateX(12px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .cart-header h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .cart-collapse {
+      padding: 7px 10px;
+      border-radius: 9px;
+      background: var(--soft);
+      color: #777;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    #cartItems {
+      flex: 1;
+      min-height: 120px;
+      max-height: 48vh;
+      overflow-y: auto;
+    }
+
+    .cart-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cart-item-title {
+      margin-bottom: 4px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .cart-item-meta {
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .cart-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .qty {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .qty button {
+      min-width: 34px;
+      height: 32px;
+      border-radius: 9px;
+      background: var(--soft);
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    .cart-total {
+      margin: 14px 0;
+      text-align: right;
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    .order-note label {
+      display: block;
+      margin-bottom: 5px;
+      color: #777;
+      font-size: 12px;
+    }
+
+    .order-note textarea {
+      width: 100%;
+      min-height: 58px;
+      padding: 10px 11px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--soft-2);
+      color: var(--text);
+    }
+
+    .cart-actions {
+      display: grid;
+      gap: 8px;
+      margin-top: 11px;
+    }
+
+    .checkout-main {
+      padding: 14px;
+      border-radius: 13px;
+      background: var(--text);
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .clear-cart {
+      padding: 10px;
+      border-radius: 11px;
+      background: var(--soft);
+      color: #777;
+      cursor: pointer;
+    }
+
+    .cart-reopen {
+      position: fixed;
+      z-index: 700;
+      right: 16px;
+      bottom: calc(16px + env(safe-area-inset-bottom));
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: var(--text);
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      box-shadow: 0 8px 25px rgba(0,0,0,.18);
+      cursor: pointer;
+    }
+
+    /* PAGES */
+    .page {
+      padding: 22px;
+    }
+
+    .page h2 {
+      margin: 0 0 4px;
+      font-size: 21px;
+      font-weight: 500;
+    }
+
+    .page h3 {
+      margin: 25px 0 10px;
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stats-grid,
+    .owner-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 13px;
+      margin: 16px 0;
+    }
+
+    .card {
+      padding: 17px;
+      background: var(--panel);
+      border-radius: 15px;
+      box-shadow: 0 3px 12px rgba(72,58,58,.035);
+    }
+
+    .card .number {
+      margin-top: 6px;
+      font-size: 23px;
+      font-weight: 500;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--panel);
+    }
+
+    th,
+    td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    th {
+      font-weight: 500;
+    }
+
+    .small-btn {
+      padding: 7px 9px;
+      border-radius: 8px;
+      background: var(--soft);
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .danger-btn {
+      background: var(--danger-soft);
+      color: #825f5f !important;
+      -webkit-text-fill-color: #825f5f !important;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: #777;
+      font-size: 11px;
+    }
+
+    .pill.low {
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .library-actions,
+    .page-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .page-actions {
+      margin-top: 16px;
+    }
+
+    .page-actions button {
+      padding: 9px 12px;
+      border-radius: 9px;
+      background: var(--soft);
+      cursor: pointer;
+    }
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(45,40,40,.42);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-box {
+      width: min(100%, 460px);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 21px;
+      background: var(--panel);
+      border-radius: 20px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.20);
+      animation: pop .17s ease;
+    }
+
+    .modal-box.wide {
+      width: min(100%, 680px);
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: scale(.96) translateY(6px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-box h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .modal-box label {
+      display: block;
+      margin: 10px 0 6px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .modal-box input,
+    .modal-box select,
+    .modal-box textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #d9d3d3;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .modal-note {
+      margin: 10px 0 14px;
+      color: #716b6b;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .modal-actions button {
+      padding: 13px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .cancel {
+      background: var(--soft);
+    }
+
+    .confirm {
+      background: var(--text);
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+
+    .checkbox-row {
+      display: flex !important;
+      align-items: center;
+      gap: 9px;
+      margin: 10px 0 !important;
+      padding: 11px 12px;
+      border-radius: 11px;
+      background: var(--soft-2);
+      cursor: pointer;
+    }
+
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+    }
+
+    .checkbox-row span {
+      font-size: 13px;
+    }
+
+    .payment-total {
+      margin: 4px 0 14px;
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    /* PAYMENT CHOOSER */
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .payment-choice {
+      min-height: 94px;
+      padding: 15px 11px;
+      border-radius: 15px;
+      background: var(--soft-2);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .payment-choice small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 400;
+    }
+
+    /* QR CARD */
+    .qr-card {
+      margin: 12px 0 14px;
+      padding: 18px;
+      background:
+        radial-gradient(circle at 50% -10%, #f5eff8 0, transparent 42%),
+        #fbf9f9;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .qr-card-title {
+      margin-bottom: 2px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .qr-card-amount {
+      margin-bottom: 14px;
+      font-size: 22px;
+      font-weight: 500;
+    }
+
+    .qr-frame {
+      width: min(260px, 72vw);
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 12px;
+      background: #fff;
+      border: 1px solid #ece7e7;
+      border-radius: 18px;
+      box-shadow: 0 5px 18px rgba(70,55,55,.06);
+    }
+
+    .qr-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .qr-placeholder {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      color: #aaa;
+      background:
+        linear-gradient(45deg, #fafafa 25%, transparent 25%) 0 0 / 18px 18px,
+        linear-gradient(-45deg, #fafafa 25%, transparent 25%) 0 0 / 18px 18px,
+        #fff;
+      border: 1px dashed #ddd5d5;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    .qr-tools {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 11px;
+    }
+
+    .qr-tools button {
+      padding: 7px 10px;
+      border-radius: 9px;
+      background: var(--soft);
+      color: #777;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .qr-file-input {
+      display: none;
+    }
+
+    /* CASH */
+    .quick-cash {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 6px;
+      margin: 10px 0 14px;
+    }
+
+    .quick-cash button {
+      padding: 9px 5px;
+      border-radius: 10px;
+      background: var(--soft);
+      cursor: pointer;
+    }
+
+    .change-box {
+      padding: 13px;
+      border-radius: 12px;
+      background: var(--soft);
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .change-box.insufficient {
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .confirm.insufficient {
+      background: #b88d8d;
+    }
+
+    /* SESSION */
+    .session-new {
+      width: 100%;
+      margin: 8px 0 12px;
+      padding: 10px;
+      border: 1px dashed #d8d0d0;
+      border-radius: 11px;
+      background: var(--soft-2);
+      color: #777;
+      cursor: pointer;
+    }
+
+    .session-delete {
+      width: 100%;
+      margin-top: 8px;
+      padding: 9px;
+      border-radius: 10px;
+      background: var(--danger-soft);
+      color: #805d5d;
+      cursor: pointer;
+    }
+
+    @media (max-width: 850px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .cart {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .stats-grid,
+      .owner-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      header {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 12px;
+      }
+
+      .header-right {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .session-button {
+        width: 100%;
+        max-width: none;
+      }
+
+      .tabs {
+        width: 100%;
+      }
+
+      .tab-button {
+        flex: 1;
+        padding: 8px 6px;
+        font-size: 12px;
+      }
+
+      .products,
+      .page {
+        padding: 14px;
+      }
+
+      .main-grid,
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-button {
+        min-height: 96px;
+      }
+
+      .payment-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .quick-cash {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  
+    /* AUCTION BANNER */
+    .auction-banner {
+      position: sticky;
+      top: 68px;
+      z-index: 90;
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) auto auto auto;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 18px;
+      background: rgba(255, 250, 250, .97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 5px 16px rgba(72,58,58,.045);
+    }
+
+    .auction-main {
+      min-width: 0;
+    }
+
+    .auction-title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .auction-status {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .auction-status.live {
+      color: var(--danger);
+    }
+
+    .auction-bid {
+      text-align: right;
+    }
+
+    .auction-label {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .auction-bid-value {
+      margin-top: 1px;
+      font-size: 20px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .auction-time {
+      min-width: 128px;
+      text-align: center;
+    }
+
+    .auction-time-value {
+      margin-top: 1px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .auction-countdown {
+      min-width: 116px;
+      text-align: center;
+    }
+
+    .auction-countdown-value {
+      margin-top: 1px;
+      font-size: 20px;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .04em;
+      white-space: nowrap;
+    }
+
+    .auction-edit {
+      padding: 7px 10px;
+      border-radius: 9px;
+      background: var(--soft);
+      color: #777;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .auction-setting-row {
+      padding: 12px 13px;
+      background: var(--soft-2);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+    }
+
+    @media (max-width: 850px) {
+      .auction-banner {
+        position: static;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px 12px;
+        padding: 10px 14px;
+      }
+
+      .auction-main {
+        grid-column: 1 / -1;
+      }
+
+      .auction-bid,
+      .auction-time,
+      .auction-countdown {
+        min-width: 0;
+        text-align: left;
+      }
+
+      .auction-edit {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .auction-banner {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .auction-bid-value,
+      .auction-countdown-value {
+        font-size: 18px;
+      }
+    }
+
+
+    /* FINAL iOS / iPadOS / Safari BUTTON COLOR FIX */
+    button,
+    button *,
+    input,
+    select,
+    textarea {
+      font-family: "Huninn", "Noto Sans TC", system-ui, sans-serif !important;
+    }
+
+    button {
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      text-decoration: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+
+    .product-button,
+    .product-button *,
+    .payment-choice,
+    .payment-choice *,
+    .small-btn,
+    .page-actions button,
+    .session-button,
+    .session-button *,
+    .auction-edit,
+    .qr-tools button,
+    .cart-collapse,
+    .clear-cart,
+    .session-new,
+    .back-button,
+    .manage-toggle,
+    .manage-dot,
+    .quick-cash button,
+    .qty button,
+    .cancel,
+    .tab-button {
+      color: var(--text) !important;
+      -webkit-text-fill-color: var(--text) !important;
+    }
+
+    .tab-button.active,
+    .tab-button.active *,
+    .checkout-main,
+    .checkout-main *,
+    .confirm,
+    .confirm *,
+    .cart-reopen,
+    .cart-reopen * {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+
+    .danger-btn,
+    .session-delete {
+      color: #805f5f !important;
+      -webkit-text-fill-color: #805f5f !important;
+    }
+
+    .product-button.sold-out,
+    .product-button.sold-out * {
+      color: var(--sold) !important;
+      -webkit-text-fill-color: var(--sold) !important;
+    }
+
+    .product-button.sold-out .sold-label,
+    .stock-text.low {
+      color: var(--danger) !important;
+      -webkit-text-fill-color: var(--danger) !important;
+    }
+
+</style>
+</head>
+
+<body>
+  <header>
+    <h1>收銀機</h1>
+
+    <div class="header-right">
+      <button id="sessionButton" class="session-button" onclick="openSessionModal()">
+        <span id="headerSessionDate" class="session-date"></span>
+        <span id="headerSessionName" class="session-name"></span>
+      </button>
+
+      <div class="tabs">
+        <button class="tab-button active" data-page="posPage" onclick="showPage('posPage', this)">收銀</button>
+        <button class="tab-button" data-page="statsPage" onclick="showPage('statsPage', this)">場次統計</button>
+        <button class="tab-button" data-page="overviewPage" onclick="showPage('overviewPage', this)">全部總覽</button>
+        <button class="tab-button" data-page="libraryPage" onclick="showPage('libraryPage', this)">商品庫</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- AUCTION BANNER -->
+  <section id="auctionBanner" class="auction-banner hidden">
+    <div class="auction-main">
+      <div id="auctionBannerTitle" class="auction-title">掛軸競標</div>
+      <div id="auctionStatusText" class="auction-status">尚未開始</div>
+    </div>
+
+    <div class="auction-bid">
+      <div class="auction-label">目前競標金額</div>
+      <div class="auction-bid-value">NT$ <span id="auctionBidValue">0</span></div>
+      <div id="auctionStepText" class="auction-label">每標 + NT$ 100</div>
+    </div>
+
+    <div class="auction-time">
+      <div class="auction-label">開始／結束</div>
+      <div id="auctionStartEndText" class="auction-time-value">—</div>
+    </div>
+
+    <div class="auction-countdown">
+      <div id="auctionCountdownLabel" class="auction-label">倒數</div>
+      <div id="auctionCountdownValue" class="auction-countdown-value">00:00:00</div>
+    </div>
+
+    <button class="auction-edit" onclick="openAuctionQuickEdit()">更新金額</button>
+  </section>
+
+
+  <!-- POS -->
+  <div id="posPage" class="container cart-hidden">
+    <main class="products">
+      <div id="mainMenu">
+        <div id="currentSessionLabel" class="current-session"></div>
+
+        <div class="section-top">
+          <h2 class="section-title">選擇商品</h2>
+          <button id="manageToggle" class="manage-toggle" onclick="toggleManageMode()">管理</button>
+        </div>
+
+        <div id="mainProductGrid" class="main-grid"></div>
+      </div>
+
+      <div id="subMenu" class="hidden">
+        <button class="back-button" onclick="backToMain()">← 返回</button>
+        <h2 id="subTitle" class="section-title" style="margin-bottom:14px"></h2>
+        <div id="subOptions" class="option-grid"></div>
+      </div>
+    </main>
+
+    <aside id="cartPanel" class="cart hidden">
+      <div class="cart-header">
+        <h2>購物車</h2>
+        <button class="cart-collapse" onclick="collapseCart()">收起</button>
+      </div>
+
+      <div id="cartItems"></div>
+
+      <div class="cart-total">
+        NT$ <span id="cartTotal">0</span>
+      </div>
+
+      <div class="order-note">
+        <label for="orderNote">訂單備註</label>
+        <textarea id="orderNote"></textarea>
+      </div>
+
+      <div class="cart-actions">
+        <button class="checkout-main" onclick="openPaymentChooser()">結帳</button>
+        <button class="clear-cart" onclick="clearCart()">清空購物車</button>
+      </div>
+    </aside>
+  </div>
+
+  <button id="cartReopen" class="cart-reopen hidden" onclick="expandCart()">
+    購物車 · <span id="cartReopenCount">0</span>
+  </button>
+
+  <!-- STATS -->
+  <section id="statsPage" class="page hidden">
+    <h2 id="statsSessionName">場次統計</h2>
+    <div id="statsSessionDate" class="subtle"></div>
+
+    <div class="stats-grid">
+      <div class="card">營業額<div class="number">NT$ <span id="statsRevenue">0</span></div></div>
+      <div class="card">訂單<div class="number"><span id="statsOrders">0</span> 筆</div></div>
+      <div class="card">已售數量<div class="number"><span id="statsItems">0</span></div></div>
+    </div>
+
+    <div class="owner-grid">
+      <div class="card">麻糬燒 Yaki<div class="number">NT$ <span id="statsYaki">0</span></div></div>
+      <div class="card">阿芽咪 Ayami<div class="number">NT$ <span id="statsAyami">0</span></div></div>
+      <div class="card">雙人<div class="number">NT$ <span id="statsDuo">0</span></div></div>
+    </div>
+
+    <h3>付款方式</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>付款方式</th><th>筆數</th><th>金額</th></tr></thead>
+        <tbody id="paymentStatsBody"></tbody>
+      </table>
+    </div>
+
+    <h3>商品銷售</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>商品</th><th>歸屬</th><th>數量</th><th>營業額</th></tr></thead>
+        <tbody id="productStatsBody"></tbody>
+      </table>
+    </div>
+
+    <h3>訂單明細</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>時間</th><th>付款</th><th>金額</th><th>備註</th><th>操作</th></tr></thead>
+        <tbody id="orderBody"></tbody>
+      </table>
+    </div>
+
+    <div class="page-actions">
+      <button onclick="undoLastOrder()">撤銷上一筆</button>
+      <button onclick="exportCSV()">匯出 CSV</button>
+      <button class="danger-btn" onclick="resetCurrentSession()">清除此場次紀錄</button>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section id="overviewPage" class="page hidden">
+    <h2>全部總覽</h2>
+
+    <div class="stats-grid">
+      <div class="card">總營業額<div class="number">NT$ <span id="allRevenue">0</span></div></div>
+      <div class="card">總訂單<div class="number"><span id="allOrders">0</span> 筆</div></div>
+      <div class="card">總售出數量<div class="number"><span id="allItems">0</span></div></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>日期</th><th>場次名稱</th><th>營業額</th><th>訂單</th><th>售出數量</th><th>抽抽樂</th></tr></thead>
+        <tbody id="overviewBody"></tbody>
+      </table>
+    </div>
+
+    <div class="page-actions">
+      <button onclick="exportCSV()">匯出全部 CSV</button>
+    </div>
+  </section>
+
+  <!-- LIBRARY -->
+  <section id="libraryPage" class="page hidden">
+    <h2>商品庫</h2>
+    <div class="subtle">實體庫存由所有場次共用。完成結帳才扣除；刪除／撤銷訂單會自動補回。</div>
+
+    <h3>一般商品</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>商品</th><th>價格</th><th>歸屬</th><th>庫存</th><th>狀態</th><th>操作</th></tr></thead>
+        <tbody id="libraryBody"></tbody>
+      </table>
+    </div>
+
+    <h3>生寫真庫存</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>款式</th><th>已售</th><th>剩餘</th><th>操作</th></tr></thead>
+        <tbody id="photoStockBody"></tbody>
+      </table>
+    </div>
+
+    <h3>拍立得選項</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>名字</th><th>價格</th><th>已售</th><th>剩餘</th><th>狀態</th><th>操作</th></tr></thead>
+        <tbody id="polaroidLibraryBody"></tbody>
+      </table>
+    </div>
+
+    <h3>抽抽樂設定</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>每場次起始抽數</th><th>操作</th></tr></thead>
+        <tbody>
+          <tr>
+            <td id="lotteryMaxText">60</td>
+            <td><button class="small-btn" onclick="openLotterySetting()">修改</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>付款方式設定</h3>
+    <div class="auction-setting-row">
+      <div class="subtle" style="margin-bottom:10px">現金固定開啟；街口、轉帳、LINE Pay 可自行決定是否顯示。</div>
+
+      <label class="checkbox-row">
+        <input id="enableJko" type="checkbox" onchange="savePaymentMethodSettings()">
+        <span>開啟街口</span>
+      </label>
+
+      <label class="checkbox-row">
+        <input id="enableTransfer" type="checkbox" onchange="savePaymentMethodSettings()">
+        <span>開啟轉帳</span>
+      </label>
+
+      <label class="checkbox-row">
+        <input id="enableLinePay" type="checkbox" onchange="savePaymentMethodSettings()">
+        <span>開啟 LINE Pay</span>
+      </label>
+    </div>
+
+    <h3>掛軸競標</h3>
+    <div class="auction-setting-row">
+      <div id="auctionLibraryStatus">未開啟</div>
+      <div class="subtle" id="auctionLibraryDetail" style="margin-top:4px">開啟後會固定顯示在收銀機上方。</div>
+      <div class="page-actions" style="margin-top:10px">
+        <button onclick="openAuctionSetting()">設定競標</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SESSION MODAL -->
+  <div id="sessionModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>場次設定</h2>
+      <div class="modal-note">每個場次的訂單與統計獨立保存；商品實體庫存共用。</div>
+
+      <label for="sessionPicker">已建立場次</label>
+      <select id="sessionPicker" onchange="loadPickedSession()"></select>
+
+      <button class="session-new" onclick="newSessionForm()">＋ 新增場次</button>
+
+      <label for="sessionDate">日期</label>
+      <input id="sessionDate" type="date">
+
+      <label for="sessionName">場次名稱</label>
+      <input id="sessionName" type="text" placeholder="例如：FF46">
+
+      <button id="sessionDelete" class="session-delete" onclick="deleteEditingSession()">刪除此場次</button>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('sessionModal')">取消</button>
+        <button class="confirm" onclick="saveSession()">儲存並使用</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT CHOICE MODAL: PHOTO DIGITAL -->
+  <div id="photoChoiceModal" class="modal hidden">
+    <div class="modal-box">
+      <h2 id="photoChoiceTitle">生寫真套組</h2>
+      <div class="payment-grid">
+        <button class="payment-choice" onclick="confirmPhotoChoice(false)">不用加購<small>NT$350</small></button>
+        <button class="payment-choice" onclick="confirmPhotoChoice(true)">＋電子檔<small>NT$450</small></button>
+      </div>
+      <div class="modal-actions" style="grid-template-columns:1fr">
+        <button class="cancel" onclick="closeModal('photoChoiceModal')">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGNATURE -->
+  <div id="signatureModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>拍立得署名</h2>
+      <div id="signatureItem" class="modal-note"></div>
+
+      <label for="signatureName">署名</label>
+      <input id="signatureName" type="text" placeholder="客人署名">
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="confirmSignature(true)">跳過</button>
+        <button class="confirm" onclick="confirmSignature(false)">加入購物車</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM PRODUCT -->
+  <div id="customModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>新增品項</h2>
+
+      <label for="customName">品項</label>
+      <input id="customName" type="text" placeholder="大便">
+
+      <label for="customPrice">單價</label>
+      <input id="customPrice" type="number" inputmode="numeric">
+
+      <label for="customQty">數量</label>
+      <input id="customQty" type="number" inputmode="numeric" min="1" value="1">
+
+      <label for="customOwner">歸屬</label>
+      <select id="customOwner" onchange="toggleCustomOtherOwner()">
+        <option value="麻糬燒 Yaki">麻糬燒 Yaki</option>
+        <option value="阿芽咪 Ayami">阿芽咪 Ayami</option>
+        <option value="雙人">雙人</option>
+        <option value="__other__">＋ 其他</option>
+      </select>
+
+      <div id="customOtherArea" class="hidden">
+        <label for="customOther">其他</label>
+        <input id="customOther" type="text">
+      </div>
+
+      <label class="checkbox-row">
+        <input id="customPermanent" type="checkbox" onchange="toggleCustomStockArea()">
+        <span>加入常駐商品</span>
+      </label>
+
+      <div id="customStockArea" class="hidden">
+        <label class="checkbox-row">
+          <input id="customUnlimited" type="checkbox" checked onchange="toggleCustomStockInput()">
+          <span>不限量</span>
+        </label>
+        <div id="customStockInputArea" class="hidden">
+          <label for="customStock">初始數量</label>
+          <input id="customStock" type="number" inputmode="numeric" min="0" value="0">
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('customModal')">取消</button>
+        <button class="confirm" onclick="saveCustomProduct()">加入購物車</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OTHER POLAROID -->
+  <div id="otherPolaroidModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>新增拍立得</h2>
+
+      <label for="otherPolaroidName">名字</label>
+      <input id="otherPolaroidName" type="text">
+
+      <label for="otherPolaroidPrice">單價</label>
+      <input id="otherPolaroidPrice" type="number" inputmode="numeric" value="200">
+
+      <label class="checkbox-row">
+        <input id="otherPolaroidPermanent" type="checkbox" onchange="toggleOtherPolaroidStockArea()">
+        <span>加入常駐選項</span>
+      </label>
+
+      <div id="otherPolaroidStockArea" class="hidden">
+        <label class="checkbox-row">
+          <input id="otherPolaroidUnlimited" type="checkbox" checked onchange="toggleOtherPolaroidStockInput()">
+          <span>不限量</span>
+        </label>
+        <div id="otherPolaroidStockInputArea" class="hidden">
+          <label for="otherPolaroidStock">初始數量</label>
+          <input id="otherPolaroidStock" type="number" inputmode="numeric" min="0" value="0">
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('otherPolaroidModal')">取消</button>
+        <button class="confirm" onclick="saveOtherPolaroid()">下一步</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANAGE PRODUCT -->
+  <div id="manageProductModal" class="modal hidden">
+    <div class="modal-box">
+      <h2 id="manageProductTitle">商品管理</h2>
+      <div id="manageProductInfo" class="modal-note"></div>
+      <div id="manageProductActions" class="cart-actions"></div>
+      <div class="modal-actions" style="grid-template-columns:1fr">
+        <button class="cancel" onclick="closeModal('manageProductModal')">關閉</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STOCK EDIT -->
+  <div id="stockModal" class="modal hidden">
+    <div class="modal-box">
+      <h2 id="stockTitle">修改庫存</h2>
+      <div id="stockSoldText" class="modal-note"></div>
+
+      <label class="checkbox-row">
+        <input id="stockUnlimited" type="checkbox" onchange="toggleStockInput()">
+        <span>不限量</span>
+      </label>
+
+      <div id="stockInputArea">
+        <label for="stockInitial">初始數量</label>
+        <input id="stockInitial" type="number" inputmode="numeric" min="0">
+      </div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('stockModal')">取消</button>
+        <button class="confirm" onclick="saveStock()">儲存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYMENT CHOOSER -->
+  <div id="paymentChooserModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>選擇付款方式</h2>
+      <div class="payment-total">應付 NT$ <span id="chooserTotal">0</span></div>
+
+      <div class="payment-grid">
+        <button class="payment-choice" onclick="choosePayment('cash')">現金<small>計算找零</small></button>
+        <button id="paymentChoiceJko" class="payment-choice" onclick="choosePayment('jko')">街口<small>顯示你的 QR</small></button>
+        <button id="paymentChoiceTransfer" class="payment-choice" onclick="choosePayment('transfer')">轉帳<small>顯示你的 QR</small></button>
+        <button id="paymentChoiceLinePay" class="payment-choice" onclick="choosePayment('linepay')">LINE Pay<small>顯示你的 QR</small></button>
+      </div>
+
+      <div class="modal-actions" style="grid-template-columns:1fr">
+        <button class="cancel" onclick="closeModal('paymentChooserModal')">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASH -->
+  <div id="cashModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>現金結帳</h2>
+      <div class="payment-total">應收 NT$ <span id="cashTotal">0</span></div>
+
+      <label for="cashReceived">收到現金</label>
+      <input id="cashReceived" type="number" inputmode="numeric" oninput="updateChange()">
+
+      <div class="quick-cash">
+        <button onclick="setExactCash()">剛好</button>
+        <button onclick="setCash(500)">$500</button>
+        <button onclick="setCash(1000)">$1,000</button>
+        <button onclick="setCash(2000)">$2,000</button>
+      </div>
+
+      <div id="changeBox" class="change-box">找零 NT$ <span id="changeAmount">0</span></div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('cashModal')">取消</button>
+        <button id="cashConfirm" class="confirm" onclick="confirmCash()">確認結帳</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JKO -->
+  <div id="jkoModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>街口付款</h2>
+
+      <div class="qr-card">
+        <div class="qr-card-title">街口付款</div>
+        <div class="qr-card-amount">NT$ <span id="jkoTotal">0</span></div>
+
+        <div class="qr-frame">
+          <img id="jkoQrImage" class="hidden" alt="街口 QR Code">
+          <div id="jkoQrPlaceholder" class="qr-placeholder">尚未設定 QR Code</div>
+        </div>
+
+        <div class="qr-tools">
+          <button onclick="pickQr('jko')">更換 QR</button>
+          <button id="jkoQrRemove" class="hidden" onclick="removeQr('jko')">移除</button>
+        </div>
+
+        <input id="jkoQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('jko', this.files[0])">
+      </div>
+
+      <div class="modal-note">確認款項已收到後，再按下「確認收到款項」。</div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('jkoModal')">取消</button>
+        <button class="confirm" onclick="confirmSimple('街口','jkoModal')">確認收到款項</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRANSFER -->
+  <div id="transferModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>轉帳付款</h2>
+
+      <div class="qr-card">
+        <div class="qr-card-title">轉帳付款</div>
+        <div class="qr-card-amount">NT$ <span id="transferTotal">0</span></div>
+
+        <div class="qr-frame">
+          <img id="transferQrImage" class="hidden" alt="轉帳 QR Code">
+          <div id="transferQrPlaceholder" class="qr-placeholder">尚未設定 QR Code</div>
+        </div>
+
+        <div class="qr-tools">
+          <button onclick="pickQr('transfer')">更換 QR</button>
+          <button id="transferQrRemove" class="hidden" onclick="removeQr('transfer')">移除</button>
+        </div>
+
+        <input id="transferQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('transfer', this.files[0])">
+      </div>
+
+      <div class="modal-note">請依畫面 QR Code 完成付款。非彰銀帳戶可能產生跨行手續費，<strong>請勿從應付金額中扣除。</strong></div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('transferModal')">取消</button>
+        <button class="confirm" onclick="confirmSimple('轉帳','transferModal')">確認收到款項</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LINE PAY -->
+  <div id="linepayModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>LINE Pay</h2>
+
+      <div class="qr-card">
+        <div class="qr-card-title">LINE Pay</div>
+        <div class="qr-card-amount">NT$ <span id="linepayTotal">0</span></div>
+
+        <div class="qr-frame">
+          <img id="linepayQrImage" class="hidden" alt="LINE Pay QR Code">
+          <div id="linepayQrPlaceholder" class="qr-placeholder">尚未設定 QR Code</div>
+        </div>
+
+        <div class="qr-tools">
+          <button onclick="pickQr('linepay')">更換 QR</button>
+          <button id="linepayQrRemove" class="hidden" onclick="removeQr('linepay')">移除</button>
+        </div>
+
+        <input id="linepayQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('linepay', this.files[0])">
+      </div>
+
+      <div class="modal-note">確認款項已收到後，再按下「確認收到款項」。</div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('linepayModal')">取消</button>
+        <button class="confirm" onclick="confirmSimple('LINE Pay','linepayModal')">確認收到款項</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- AUCTION SETTING -->
+  <div id="auctionSettingModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>掛軸競標設定</h2>
+
+      <label class="checkbox-row">
+        <input id="auctionEnabled" type="checkbox">
+        <span>開啟掛軸競標</span>
+      </label>
+
+      <label for="auctionTitleInput">顯示名稱</label>
+      <input id="auctionTitleInput" type="text" value="掛軸競標">
+
+      <label for="auctionBidInput">目前競標金額（可自由輸入）</label>
+      <input id="auctionBidInput" type="number" min="0" inputmode="numeric" placeholder="直接輸入目前金額">
+
+      <label for="auctionStepInput">每標加價</label>
+      <input id="auctionStepInput" type="number" min="1" inputmode="numeric" placeholder="例如：100">
+
+      <label for="auctionStartInput">競標開始時間</label>
+      <input id="auctionStartInput" type="datetime-local">
+
+      <label for="auctionEndInput">競標結束時間</label>
+      <input id="auctionEndInput" type="datetime-local">
+
+      <div class="modal-note">
+        尚未到開始時間會顯示「尚未開始」；開始後顯示倒數；到結束時間後會自動顯示「競標結束」。
+      </div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('auctionSettingModal')">取消</button>
+        <button class="confirm" onclick="saveAuctionSetting()">儲存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUCTION QUICK EDIT -->
+  <div id="auctionQuickEditModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>更新競標金額</h2>
+
+      <div class="modal-note">
+        可以直接輸入任意競標金額；「＋一標」只是快速加上每標金額，不會限制你手動輸入的數字。
+      </div>
+
+      <label for="auctionQuickBidInput">目前競標金額（可自由輸入）</label>
+      <input id="auctionQuickBidInput" type="number" min="0" inputmode="numeric" placeholder="直接輸入任意金額">
+
+      <button
+        id="auctionAddStepButton"
+        type="button"
+        class="session-new"
+        onclick="addAuctionStep()"
+      >
+        ＋ 一標
+      </button>
+
+      <div id="auctionQuickStepText" class="subtle" style="margin-top:-4px"></div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('auctionQuickEditModal')">取消</button>
+        <button class="confirm" onclick="saveAuctionQuickBid()">更新金額</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOTTERY SETTING -->
+  <div id="lotterySettingModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>抽抽樂設定</h2>
+      <div class="modal-note">此數字會套用到每一個場次，已售抽數不會被清除。</div>
+
+      <label for="lotteryMaxInput">每場次起始抽數</label>
+      <input id="lotteryMaxInput" type="number" min="0" inputmode="numeric">
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('lotterySettingModal')">取消</button>
+        <button class="confirm" onclick="saveLotterySetting()">儲存</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    "use strict";
+
+    /* -------------------- CONSTANTS -------------------- */
+    const OWNERS = ["麻糬燒 Yaki", "阿芽咪 Ayami", "雙人"];
+
+    const KEYS = {
+      products: "cash-register-products-v3",
+      polaroids: "cash-register-polaroids-v3",
+      photoStock: "cash-register-photo-stock-v3",
+      settings: "cash-register-settings-v3",
+      sessions: "cash-register-sessions-v3",
+      currentSession: "cash-register-current-session-v3"
+    };
+
+    const DEFAULT_PRODUCTS = [
+      { id:"photoset", name:"生寫真套組", price:350, displayPrice:"$350", owner:"雙人", type:"photoset", visible:true, custom:false, stock:null },
+      { id:"ultimate", name:"終極大全套", price:1000, displayPrice:"$1,000", owner:"雙人", type:"simple", visible:true, custom:false, stock:null },
+      { id:"lottery-main", name:"抽抽樂", price:50, displayPrice:"$50", owner:"雙人", type:"lottery", visible:true, custom:false, stock:null },
+      { id:"polaroid-main", name:"拍立得", price:200, displayPrice:"$200 起", owner:"雙人", type:"polaroid", visible:true, custom:false, stock:null }
+    ];
+
+    const DEFAULT_POLAROIDS = [
+      { id:"polaroid-yaki", name:"麻糬燒 Yaki", price:200, owner:"麻糬燒 Yaki", visible:true, custom:false, stock:null },
+      { id:"polaroid-ayami", name:"阿芽咪 Ayami", price:200, owner:"阿芽咪 Ayami", visible:true, custom:false, stock:null },
+      { id:"polaroid-duo", name:"雙人", price:400, owner:"雙人", visible:true, custom:false, stock:null }
+    ];
+
+    const DEFAULT_PHOTO_STOCK = {
+      "公式款": null,
+      "警服款": null,
+      "變身服款": null
+    };
+
+    let cart = [];
+    let cartExpanded = false;
+    let manageMode = false;
+    let currentSessionId = "";
+    let editingSessionId = null;
+    let pendingPhotoTheme = null;
+    let pendingPolaroid = null;
+    let stockContext = null;
+
+    /* -------------------- HELPERS -------------------- */
+    function esc(value) {
+      return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function money(value) {
+      return Number(value || 0).toLocaleString("zh-TW");
+    }
+
+    function nowISO() {
+      return new Date().toISOString();
+    }
+
+    function todayISO() {
+      const d = new Date();
+      const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+      return local.toISOString().slice(0,10);
+    }
+
+    function prettyDate(value) {
+      if (!value) return "未設定日期";
+      const p = value.split("-");
+      return p.length === 3 ? `${p[0]}/${p[1]}/${p[2]}` : value;
+    }
+
+    function timeText(iso) {
+      return new Date(iso).toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit"});
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add("hidden");
+    }
+
+    function deepCopy(v) {
+      return JSON.parse(JSON.stringify(v));
+    }
+
+    /* -------------------- STORAGE -------------------- */
+    function loadJSON(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : deepCopy(fallback);
+      } catch {
+        return deepCopy(fallback);
+      }
+    }
+
+    function saveJSON(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function getSettings() {
+      const saved =
+        loadJSON(
+          KEYS.settings,
+          {}
+        );
+
+      return {
+        lotteryMax: 60,
+
+        payments: {
+          jko: true,
+          transfer: true,
+          linepay: true,
+          ...(saved.payments || {})
+        },
+
+        auction: {
+          enabled: false,
+          title: "掛軸競標",
+          currentBid: 0,
+          step: 100,
+          startAt: "",
+          endAt: "",
+          ...(saved.auction || {})
+        },
+
+        ...saved
+      };
+    }
+
+    function saveSettings(v) {
+      saveJSON(KEYS.settings, v);
+    }
+
+    function getProducts() {
+      let items = loadJSON(KEYS.products, []);
+      for (const d of DEFAULT_PRODUCTS) {
+        if (!items.some(x => x.id === d.id)) items.push(deepCopy(d));
+      }
+      items = items.map(x => ({...x, stock:x.stock === undefined ? null : x.stock}));
+      saveJSON(KEYS.products, items);
+      return items;
+    }
+
+    function saveProducts(v) {
+      saveJSON(KEYS.products, v);
+    }
+
+    function getPolaroids() {
+      let items = loadJSON(KEYS.polaroids, []);
+      for (const d of DEFAULT_POLAROIDS) {
+        if (!items.some(x => x.id === d.id)) items.push(deepCopy(d));
+      }
+      items = items.map(x => ({...x, stock:x.stock === undefined ? null : x.stock}));
+      saveJSON(KEYS.polaroids, items);
+      return items;
+    }
+
+    function savePolaroids(v) {
+      saveJSON(KEYS.polaroids, v);
+    }
+
+    function getPhotoStock() {
+      return {...DEFAULT_PHOTO_STOCK, ...loadJSON(KEYS.photoStock,{})};
+    }
+
+    function savePhotoStock(v) {
+      saveJSON(KEYS.photoStock,v);
+    }
+
+    /* -------------------- SESSIONS -------------------- */
+    function sessionOrderKey(id) {
+      return `cash-register-orders-v3-${id}`;
+    }
+
+    function getSessions() {
+      const v = loadJSON(KEYS.sessions, []);
+      return Array.isArray(v) ? v : [];
+    }
+
+    function saveSessions(v) {
+      saveJSON(KEYS.sessions, v);
+    }
+
+    function sortSessions(v) {
+      return [...v].sort((a,b) => {
+        const d = String(b.date||"").localeCompare(String(a.date||""));
+        return d || Number(b.createdAt||0)-Number(a.createdAt||0);
+      });
+    }
+
+    function createSessionId() {
+      return `session-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
+    }
+
+    function ensureSession() {
+      let sessions = getSessions();
+
+      if (!sessions.length) {
+        const s = { id:createSessionId(), date:todayISO(), name:"今日場次", createdAt:Date.now() };
+        sessions = [s];
+        saveSessions(sessions);
+        currentSessionId = s.id;
+        localStorage.setItem(KEYS.currentSession,s.id);
+      } else {
+        currentSessionId = localStorage.getItem(KEYS.currentSession) || sessions[0].id;
+        if (!sessions.some(x => x.id === currentSessionId)) currentSessionId = sessions[0].id;
+        localStorage.setItem(KEYS.currentSession,currentSessionId);
+      }
+    }
+
+    function getCurrentSession() {
+      return getSessions().find(x => x.id === currentSessionId) || null;
+    }
+
+    function getOrders(sessionId=currentSessionId) {
+      return loadJSON(sessionOrderKey(sessionId), []);
+    }
+
+    function saveOrders(orders, sessionId=currentSessionId) {
+      saveJSON(sessionOrderKey(sessionId), orders);
+    }
+
+    function getAllOrders() {
+      const all = [];
+      for (const s of getSessions()) {
+        for (const o of getOrders(s.id)) all.push(o);
+      }
+      return all;
+    }
+
+    function updateSessionUI() {
+      const s = getCurrentSession();
+      if (!s) return;
+
+      document.getElementById("headerSessionDate").textContent = prettyDate(s.date);
+      document.getElementById("headerSessionName").textContent = s.name || "未命名場次";
+      document.getElementById("currentSessionLabel").textContent = `目前場次：${prettyDate(s.date)}｜${s.name || "未命名場次"}`;
+      document.getElementById("statsSessionName").textContent = s.name || "未命名場次";
+      document.getElementById("statsSessionDate").textContent = prettyDate(s.date);
+    }
+
+    function openSessionModal() {
+      renderSessionPicker();
+      editingSessionId = currentSessionId;
+      const s = getCurrentSession();
+
+      if (s) {
+        document.getElementById("sessionPicker").value = s.id;
+        fillSessionForm(s);
+      } else {
+        newSessionForm();
+      }
+
+      document.getElementById("sessionModal").classList.remove("hidden");
+    }
+
+    function renderSessionPicker() {
+      const el = document.getElementById("sessionPicker");
+      el.innerHTML = "";
+      for (const s of sortSessions(getSessions())) {
+        const opt = document.createElement("option");
+        opt.value = s.id;
+        opt.textContent = `${prettyDate(s.date)}｜${s.name || "未命名場次"}`;
+        el.appendChild(opt);
+      }
+    }
+
+    function fillSessionForm(s) {
+      document.getElementById("sessionDate").value = s.date || "";
+      document.getElementById("sessionName").value = s.name || "";
+      document.getElementById("sessionDelete").disabled = getSessions().length <= 1;
+    }
+
+    function loadPickedSession() {
+      const id = document.getElementById("sessionPicker").value;
+      const s = getSessions().find(x => x.id === id);
+      if (!s) return;
+      editingSessionId = s.id;
+      fillSessionForm(s);
+    }
+
+    function newSessionForm() {
+      editingSessionId = null;
+      document.getElementById("sessionDate").value = todayISO();
+      document.getElementById("sessionName").value = "";
+      document.getElementById("sessionDelete").disabled = true;
+    }
+
+    function saveSession() {
+      const date = document.getElementById("sessionDate").value;
+      const name = document.getElementById("sessionName").value.trim();
+
+      if (!date) return alert("請選擇日期");
+      if (!name) return alert("請輸入場次名稱");
+
+      let sessions = getSessions();
+      let id = editingSessionId;
+
+      if (id) {
+        const idx = sessions.findIndex(x => x.id === id);
+        if (idx >= 0) sessions[idx] = {...sessions[idx],date,name};
+      } else {
+        id = createSessionId();
+        sessions.push({id,date,name,createdAt:Date.now()});
+      }
+
+      const switching = id !== currentSessionId;
+      if (switching && cart.length && !confirm("切換場次會清空目前購物車，確定繼續嗎？")) return;
+
+      saveSessions(sessions);
+      currentSessionId = id;
+      localStorage.setItem(KEYS.currentSession,id);
+
+      if (switching) {
+        cart = [];
+        cartExpanded = false;
+        document.getElementById("orderNote").value = "";
+        renderCart();
+      }
+
+      updateSessionUI();
+      closeModal("sessionModal");
+      backToMain();
+      renderMainProducts();
+    }
+
+    function deleteEditingSession() {
+      if (!editingSessionId) return;
+
+      let sessions = getSessions();
+      if (sessions.length <= 1) return alert("至少要保留一個場次");
+
+      const target = sessions.find(x => x.id === editingSessionId);
+      if (!target) return;
+
+      if (!confirm(`確定刪除「${target.name}」嗎？\n\n此場次訂單紀錄也會一起刪除。`)) return;
+
+      sessions = sessions.filter(x => x.id !== editingSessionId);
+      localStorage.removeItem(sessionOrderKey(editingSessionId));
+      saveSessions(sessions);
+
+      if (editingSessionId === currentSessionId) {
+        currentSessionId = sortSessions(sessions)[0].id;
+        localStorage.setItem(KEYS.currentSession,currentSessionId);
+        cart = [];
+        cartExpanded = false;
+        document.getElementById("orderNote").value = "";
+        renderCart();
+      }
+
+      editingSessionId = currentSessionId;
+      renderSessionPicker();
+      document.getElementById("sessionPicker").value = currentSessionId;
+      fillSessionForm(getCurrentSession());
+      updateSessionUI();
+      renderMainProducts();
+    }
+
+    /* -------------------- INVENTORY -------------------- */
+    function inventoryKeyForProduct(id) {
+      return `product:${id}`;
+    }
+
+    function inventoryKeyForPhoto(theme) {
+      return `photoset:${theme}`;
+    }
+
+    function inventoryKeyForPolaroid(id) {
+      return `polaroid:${id}`;
+    }
+
+    function getSoldByKey(key) {
+      let sum = 0;
+      for (const order of getAllOrders()) {
+        for (const item of order.items || []) {
+          if (item.inventoryKey === key) sum += Number(item.quantity||0);
+        }
+      }
+      return sum;
+    }
+
+    function getCartByKey(key) {
+      return cart.reduce((sum,item) => sum + (item.inventoryKey === key ? Number(item.quantity||0) : 0),0);
+    }
+
+    function remaining(stock,key,includeCart=false) {
+      if (stock === null || stock === undefined) return null;
+      return Math.max(0, Number(stock) - getSoldByKey(key) - (includeCart ? getCartByKey(key) : 0));
+    }
+
+    function stockInfo(stock,key,includeCart=false) {
+      const r = remaining(stock,key,includeCart);
+      if (r === null) return {text:"不限量",low:false,sold:false,remaining:null};
+      if (r <= 0) return {text:"SOLD OUT",low:false,sold:true,remaining:0};
+      return {text:`剩餘 ${r}`,low:r<=5,sold:false,remaining:r};
+    }
+
+    function canAdd(stock,key,qty=1) {
+      if (stock === null || stock === undefined) return true;
+      return qty <= remaining(stock,key,true);
+    }
+
+    function stockSource(key) {
+      if (!key) return null;
+      if (key.startsWith("product:")) {
+        const id = key.slice("product:".length);
+        const item = getProducts().find(x => x.id === id);
+        return item ? item.stock : null;
+      }
+      if (key.startsWith("photoset:")) {
+        return getPhotoStock()[key.slice("photoset:".length)];
+      }
+      if (key.startsWith("polaroid:")) {
+        const id = key.slice("polaroid:".length);
+        const item = getPolaroids().find(x => x.id === id);
+        return item ? item.stock : null;
+      }
+      return null;
+    }
+
+    /* -------------------- PAGES -------------------- */
+    function showPage(id, button=null) {
+      for (const el of document.querySelectorAll("#posPage,#statsPage,#overviewPage,#libraryPage")) el.classList.add("hidden");
+      document.getElementById(id).classList.remove("hidden");
+
+      document.querySelectorAll(".tab-button").forEach(x => x.classList.remove("active"));
+      if (button) button.classList.add("active");
+      else {
+        const b = document.querySelector(`.tab-button[data-page="${id}"]`);
+        if (b) b.classList.add("active");
+      }
+
+      if (id === "statsPage") renderStats();
+      if (id === "overviewPage") renderOverview();
+      if (id === "libraryPage") renderLibrary();
+      if (id === "posPage") renderMainProducts();
+    }
+
+    /* -------------------- PRODUCTS -------------------- */
+    function renderMainProducts() {
+      const grid = document.getElementById("mainProductGrid");
+      grid.innerHTML = "";
+
+      for (const p of getProducts().filter(x => x.visible)) {
+        const wrap = document.createElement("div");
+        wrap.className = "product-wrap";
+
+        const btn = document.createElement("button");
+        btn.className = "product-button";
+
+        let sold = false;
+        let stockLine = "";
+
+        if (p.type === "simple" || p.type === "custom") {
+          const info = stockInfo(p.stock,inventoryKeyForProduct(p.id),true);
+          sold = info.sold;
+          stockLine = sold
+            ? `<span class="sold-label">SOLD OUT</span>`
+            : `<span class="stock-text ${info.low ? "low":""}">${esc(info.text)}</span>`;
+        } else if (p.type === "lottery") {
+          const r = lotteryRemaining(true);
+          sold = r <= 0;
+          stockLine = sold
+            ? `<span class="sold-label">SOLD OUT</span>`
+            : `<span class="stock-text ${r<=5 ? "low":""}">剩餘 ${r}</span>`;
+        } else if (p.type === "photoset") {
+          stockLine = `<span class="stock-text">點入查看各款庫存</span>`;
+        } else if (p.type === "polaroid") {
+          stockLine = `<span class="stock-text">點入查看各選項庫存</span>`;
+        }
+
+        btn.innerHTML = sold
+          ? `${esc(p.name)}${stockLine}`
+          : `${esc(p.name)}<small>${esc(p.displayPrice || "$"+money(p.price))}</small>${stockLine}`;
+
+        if (sold) {
+          btn.classList.add("sold-out");
+          btn.disabled = true;
+        } else {
+          btn.onclick = () => activateProduct(p);
+        }
+
+        wrap.appendChild(btn);
+
+        if (manageMode) {
+          const m = document.createElement("button");
+          m.className = "manage-dot";
+          m.textContent = "⋯";
+          m.onclick = e => { e.stopPropagation(); openManageProduct(p.id); };
+          wrap.appendChild(m);
+        }
+
+        grid.appendChild(wrap);
+      }
+
+      const plus = document.createElement("button");
+      plus.className = "product-button plus-button";
+      plus.textContent = "＋";
+      plus.onclick = openCustomModal;
+      const wrap = document.createElement("div");
+      wrap.className = "product-wrap";
+      wrap.appendChild(plus);
+      grid.appendChild(wrap);
+    }
+
+    function activateProduct(p) {
+      if (p.type === "photoset") return openPhotoSet();
+      if (p.type === "polaroid") return openPolaroid();
+      if (p.type === "lottery") return openLottery();
+
+      const key = inventoryKeyForProduct(p.id);
+      if (!canAdd(p.stock,key,1)) return alert("這個商品已完售");
+      addToCart({id:p.id,inventoryKey:key,name:p.name,price:p.price,owner:p.owner});
+    }
+
+    function toggleManageMode() {
+      manageMode = !manageMode;
+      const b = document.getElementById("manageToggle");
+      b.classList.toggle("active",manageMode);
+      b.textContent = manageMode ? "完成" : "管理";
+      renderMainProducts();
+    }
+
+    function showSub(title) {
+      document.getElementById("mainMenu").classList.add("hidden");
+      document.getElementById("subMenu").classList.remove("hidden");
+      document.getElementById("subTitle").textContent = title;
+      document.getElementById("subOptions").innerHTML = "";
+    }
+
+    function backToMain() {
+      document.getElementById("subMenu").classList.add("hidden");
+      document.getElementById("mainMenu").classList.remove("hidden");
+      renderMainProducts();
+    }
+
+    function addOption(title,price,onclick,info=null) {
+      const b = document.createElement("button");
+      b.className = "product-button";
+
+      if (info?.sold) {
+        b.classList.add("sold-out");
+        b.disabled = true;
+        b.innerHTML = `${esc(title)}<span class="sold-label">SOLD OUT</span>`;
+      } else {
+        b.innerHTML = `${esc(title)}${price ? `<small>${esc(price)}</small>`:""}${info ? `<span class="stock-text ${info.low?"low":""}">${esc(info.text)}</span>`:""}`;
+        b.onclick = onclick;
+      }
+
+      document.getElementById("subOptions").appendChild(b);
+    }
+
+    function openPhotoSet() {
+      showSub("生寫真套組");
+      const stocks = getPhotoStock();
+
+      for (const theme of ["公式款","警服款","變身服款"]) {
+        const info = stockInfo(stocks[theme],inventoryKeyForPhoto(theme),true);
+        addOption(theme,"$350",() => openPhotoChoice(theme),info);
+      }
+    }
+
+    function openPhotoChoice(theme) {
+      pendingPhotoTheme = theme;
+      document.getElementById("photoChoiceTitle").textContent = `生寫真套組｜${theme}`;
+      document.getElementById("photoChoiceModal").classList.remove("hidden");
+    }
+
+    function confirmPhotoChoice(digital) {
+      const theme = pendingPhotoTheme;
+      if (!theme) return;
+
+      const stocks = getPhotoStock();
+      const key = inventoryKeyForPhoto(theme);
+      if (!canAdd(stocks[theme],key,1)) return alert(`${theme} 已完售`);
+
+      addToCart({
+        id:`photoset-${theme}-${digital?"digital":"normal"}`,
+        inventoryKey:key,
+        name:`生寫真套組｜${theme}${digital?"＋電子檔":""}`,
+        price:digital?450:350,
+        owner:"雙人"
+      });
+
+      pendingPhotoTheme = null;
+      closeModal("photoChoiceModal");
+      openPhotoSet();
+    }
+
+    function lotterySold(sessionId=currentSessionId) {
+      let n = 0;
+      for (const o of getOrders(sessionId)) {
+        for (const i of o.items || []) if (i.id === "lottery") n += Number(i.quantity||0);
+      }
+      return n;
+    }
+
+    function lotteryInCart() {
+      return cart.filter(i => i.id === "lottery").reduce((s,i)=>s+Number(i.quantity||0),0);
+    }
+
+    function lotteryRemaining(includeCart=false) {
+      return Math.max(0, Number(getSettings().lotteryMax||0) - lotterySold() - (includeCart ? lotteryInCart() : 0));
+    }
+
+    function openLottery() {
+      showSub("抽抽樂");
+      const r = lotteryRemaining(true);
+
+      for (const qty of [1,3,5,10]) {
+        addOption(`${qty} 抽`,`$${qty*50}`,() => addLottery(qty),{
+          sold: qty>r,
+          low:r<=5 && r>0,
+          text:r>0?`剩餘 ${r}`:"SOLD OUT"
+        });
+      }
+    }
+
+    function addLottery(qty) {
+      const r = lotteryRemaining(true);
+      if (qty > r) return alert(`目前只剩 ${r} 抽`);
+      addToCart({id:"lottery",name:"抽抽樂",price:50,quantity:qty,owner:"雙人"});
+      openLottery();
+    }
+
+    function openPolaroid() {
+      showSub("拍立得");
+
+      for (const p of getPolaroids().filter(x => x.visible)) {
+        const key = inventoryKeyForPolaroid(p.id);
+        const info = stockInfo(p.stock,key,true);
+        addOption(p.name,`$${money(p.price)}`,() => preparePolaroid(p),info);
+      }
+
+      addOption("＋","",openOtherPolaroidModal,null);
+    }
+
+    function preparePolaroid(p) {
+      const key = inventoryKeyForPolaroid(p.id);
+      if (!canAdd(p.stock,key,1)) return alert("這個拍立得選項已完售");
+
+      pendingPolaroid = {...p,inventoryKey:key};
+      document.getElementById("signatureItem").textContent = `拍立得｜${p.name}　$${money(p.price)}`;
+      document.getElementById("signatureName").value = "";
+      document.getElementById("signatureModal").classList.remove("hidden");
+    }
+
+    function confirmSignature(skip) {
+      if (!pendingPolaroid) return;
+
+      if (!canAdd(pendingPolaroid.stock,pendingPolaroid.inventoryKey,1)) return alert("這個拍立得選項已完售");
+
+      const signature = skip ? "" : document.getElementById("signatureName").value.trim();
+
+      addToCart({
+        id:`polaroid-${Date.now()}-${Math.random()}`,
+        inventoryKey:pendingPolaroid.inventoryKey,
+        name:`拍立得｜${pendingPolaroid.name}`,
+        price:pendingPolaroid.price,
+        owner:pendingPolaroid.owner,
+        signature
+      });
+
+      pendingPolaroid = null;
+      closeModal("signatureModal");
+      openPolaroid();
+    }
+
+    /* -------------------- CUSTOM -------------------- */
+    function openCustomModal() {
+      document.getElementById("customName").value = "";
+      document.getElementById("customPrice").value = "";
+      document.getElementById("customQty").value = "1";
+      document.getElementById("customOwner").value = "麻糬燒 Yaki";
+      document.getElementById("customOther").value = "";
+      document.getElementById("customPermanent").checked = false;
+      document.getElementById("customUnlimited").checked = true;
+      document.getElementById("customStock").value = "0";
+      toggleCustomOtherOwner();
+      toggleCustomStockArea();
+      toggleCustomStockInput();
+      document.getElementById("customModal").classList.remove("hidden");
+    }
+
+    function toggleCustomOtherOwner() {
+      document.getElementById("customOtherArea").classList.toggle("hidden",document.getElementById("customOwner").value !== "__other__");
+    }
+
+    function toggleCustomStockArea() {
+      document.getElementById("customStockArea").classList.toggle("hidden",!document.getElementById("customPermanent").checked);
+    }
+
+    function toggleCustomStockInput() {
+      document.getElementById("customStockInputArea").classList.toggle("hidden",document.getElementById("customUnlimited").checked);
+    }
+
+    function saveCustomProduct() {
+      const name = document.getElementById("customName").value.trim();
+      const price = Number(document.getElementById("customPrice").value);
+      const qty = Number(document.getElementById("customQty").value);
+      let owner = document.getElementById("customOwner").value;
+      if (owner === "__other__") owner = document.getElementById("customOther").value.trim();
+
+      const permanent = document.getElementById("customPermanent").checked;
+      const unlimited = document.getElementById("customUnlimited").checked;
+      const stock = unlimited ? null : Number(document.getElementById("customStock").value);
+
+      if (!name) return alert("請輸入品項");
+      if (!Number.isFinite(price) || price<=0) return alert("請輸入正確單價");
+      if (!Number.isInteger(qty) || qty<=0) return alert("請輸入正確數量");
+      if (!owner) return alert("請輸入歸屬");
+      if (permanent && !unlimited && (!Number.isInteger(stock) || stock<qty)) return alert("初始庫存不能小於加入購物車的數量");
+
+      const id = `custom-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
+
+      if (permanent) {
+        const products = getProducts();
+        products.push({id,name,price,displayPrice:`$${money(price)}`,owner,type:"custom",visible:true,custom:true,stock,createdAt:nowISO()});
+        saveProducts(products);
+      }
+
+      addToCart({
+        id:permanent?id:`temp-${Date.now()}-${Math.random()}`,
+        inventoryKey:permanent?inventoryKeyForProduct(id):null,
+        name,price,quantity:qty,owner
+      });
+
+      closeModal("customModal");
+      renderMainProducts();
+    }
+
+    function openOtherPolaroidModal() {
+      document.getElementById("otherPolaroidName").value = "";
+      document.getElementById("otherPolaroidPrice").value = "200";
+      document.getElementById("otherPolaroidPermanent").checked = false;
+      document.getElementById("otherPolaroidUnlimited").checked = true;
+      document.getElementById("otherPolaroidStock").value = "0";
+      toggleOtherPolaroidStockArea();
+      toggleOtherPolaroidStockInput();
+      document.getElementById("otherPolaroidModal").classList.remove("hidden");
+    }
+
+    function toggleOtherPolaroidStockArea() {
+      document.getElementById("otherPolaroidStockArea").classList.toggle("hidden",!document.getElementById("otherPolaroidPermanent").checked);
+    }
+
+    function toggleOtherPolaroidStockInput() {
+      document.getElementById("otherPolaroidStockInputArea").classList.toggle("hidden",document.getElementById("otherPolaroidUnlimited").checked);
+    }
+
+    function saveOtherPolaroid() {
+      const name = document.getElementById("otherPolaroidName").value.trim();
+      const price = Number(document.getElementById("otherPolaroidPrice").value);
+      const permanent = document.getElementById("otherPolaroidPermanent").checked;
+      const unlimited = document.getElementById("otherPolaroidUnlimited").checked;
+      const stock = unlimited ? null : Number(document.getElementById("otherPolaroidStock").value);
+
+      if (!name) return alert("請輸入名字");
+      if (!Number.isFinite(price) || price<=0) return alert("請輸入正確金額");
+      if (permanent && !unlimited && (!Number.isInteger(stock) || stock<0)) return alert("請輸入正確初始數量");
+
+      const p = {
+        id:permanent?`polaroid-custom-${Date.now()}-${Math.random().toString(36).slice(2,7)}`:`polaroid-temp-${Date.now()}-${Math.random()}`,
+        name,price,owner:name,visible:permanent,custom:true,stock:permanent?stock:null
+      };
+
+      if (permanent) {
+        const items = getPolaroids();
+        items.push(p);
+        savePolaroids(items);
+      }
+
+      closeModal("otherPolaroidModal");
+      preparePolaroid(p);
+    }
+
+    /* -------------------- CART -------------------- */
+    function getCartCount() {
+      return cart.reduce((s,i)=>s+Number(i.quantity||0),0);
+    }
+
+    function updateCartVisibility() {
+      const panel = document.getElementById("cartPanel");
+      const reopen = document.getElementById("cartReopen");
+      const pos = document.getElementById("posPage");
+      document.getElementById("cartReopenCount").textContent = getCartCount();
+
+      if (!cart.length) {
+        cartExpanded = false;
+        panel.classList.add("hidden");
+        reopen.classList.add("hidden");
+        pos.classList.add("cart-hidden");
+        return;
+      }
+
+      if (cartExpanded) {
+        panel.classList.remove("hidden");
+        reopen.classList.add("hidden");
+        pos.classList.remove("cart-hidden");
+      } else {
+        panel.classList.add("hidden");
+        reopen.classList.remove("hidden");
+        pos.classList.add("cart-hidden");
+      }
+    }
+
+    function expandCart() {
+      if (!cart.length) return;
+      cartExpanded = true;
+      updateCartVisibility();
+    }
+
+    function collapseCart() {
+      if (!cart.length) return;
+      cartExpanded = false;
+      updateCartVisibility();
+    }
+
+    function addToCart(item) {
+      const wasEmpty = cart.length === 0;
+      const qty = Number(item.quantity || 1);
+
+      const mergeable = !String(item.name).startsWith("拍立得｜");
+      const existing = mergeable ? cart.find(x => x.id === item.id && x.inventoryKey === item.inventoryKey) : null;
+
+      if (existing) existing.quantity += qty;
+      else cart.push({...item,quantity:qty});
+
+      if (wasEmpty) cartExpanded = true;
+      renderCart();
+      renderMainProducts();
+    }
+
+    function changeQty(index,delta) {
+      const item = cart[index];
+      if (!item) return;
+
+      if (delta>0) {
+        if (item.id === "lottery") {
+          if (lotteryRemaining(true) <= 0) return alert("抽抽樂已完售");
+        } else if (item.inventoryKey) {
+          const stock = stockSource(item.inventoryKey);
+          if (!canAdd(stock,item.inventoryKey,1)) return alert("剩餘庫存不足");
+        }
+      }
+
+      item.quantity += delta;
+      if (item.quantity <= 0) cart.splice(index,1);
+
+      renderCart();
+      renderMainProducts();
+    }
+
+    function renderCart() {
+      const area = document.getElementById("cartItems");
+      area.innerHTML = "";
+
+      for (const [index,item] of cart.entries()) {
+        const d = document.createElement("div");
+        d.className = "cart-item";
+        d.innerHTML = `
+          <div class="cart-item-title">${esc(item.name)}</div>
+          ${item.signature ? `<div class="cart-item-meta">署名：${esc(item.signature)}</div>`:""}
+          <div class="cart-item-meta">歸屬：${esc(item.owner)}</div>
+          <div class="cart-item-row">
+            <span>$${money(item.price)} × ${item.quantity}</span>
+            <div class="qty">
+              <button onclick="changeQty(${index},-1)">−</button>
+              <button onclick="changeQty(${index},1)">＋</button>
+            </div>
+          </div>`;
+        area.appendChild(d);
+      }
+
+      document.getElementById("cartTotal").textContent = money(getCartTotal());
+      updateCartVisibility();
+    }
+
+    function getCartTotal() {
+      return cart.reduce((s,i)=>s+Number(i.price)*Number(i.quantity),0);
+    }
+
+    function clearCart() {
+      if (!cart.length) return;
+      if (!confirm("確定要清空購物車嗎？")) return;
+      cart = [];
+      cartExpanded = false;
+      document.getElementById("orderNote").value = "";
+      renderCart();
+      renderMainProducts();
+    }
+
+
+    /* -------------------- PAYMENT METHOD SETTINGS -------------------- */
+    function getPaymentMethodSettings() {
+      const settings =
+        getSettings();
+
+      return {
+        jko: true,
+        transfer: true,
+        linepay: true,
+        ...(settings.payments || {})
+      };
+    }
+
+    function renderPaymentMethodSettings() {
+      const payments =
+        getPaymentMethodSettings();
+
+      const jko =
+        document.getElementById(
+          "enableJko"
+        );
+
+      const transfer =
+        document.getElementById(
+          "enableTransfer"
+        );
+
+      const linepay =
+        document.getElementById(
+          "enableLinePay"
+        );
+
+      if (jko) {
+        jko.checked =
+          Boolean(
+            payments.jko
+          );
+      }
+
+      if (transfer) {
+        transfer.checked =
+          Boolean(
+            payments.transfer
+          );
+      }
+
+      if (linepay) {
+        linepay.checked =
+          Boolean(
+            payments.linepay
+          );
+      }
+    }
+
+    function savePaymentMethodSettings() {
+      const settings =
+        getSettings();
+
+      settings.payments = {
+        jko:
+          document.getElementById(
+            "enableJko"
+          ).checked,
+
+        transfer:
+          document.getElementById(
+            "enableTransfer"
+          ).checked,
+
+        linepay:
+          document.getElementById(
+            "enableLinePay"
+          ).checked
+      };
+
+      saveSettings(
+        settings
+      );
+
+      renderPaymentMethodSettings();
+    }
+
+    function renderPaymentChooserMethods() {
+      const payments =
+        getPaymentMethodSettings();
+
+      const map = {
+        paymentChoiceJko:
+          payments.jko,
+
+        paymentChoiceTransfer:
+          payments.transfer,
+
+        paymentChoiceLinePay:
+          payments.linepay
+      };
+
+      for (
+        const [
+          id,
+          enabled
+        ] of Object.entries(map)
+      ) {
+        const button =
+          document.getElementById(
+            id
+          );
+
+        if (!button) {
+          continue;
+        }
+
+        button.classList.toggle(
+          "hidden",
+          !enabled
+        );
+      }
+    }
+
+
+    /* -------------------- PAYMENT -------------------- */
+    function openPaymentChooser() {
+      if (!cart.length) return alert("購物車是空的");
+
+      renderPaymentChooserMethods();
+
+      document.getElementById("chooserTotal").textContent = money(getCartTotal());
+      document.getElementById("paymentChooserModal").classList.remove("hidden");
+    }
+
+    function choosePayment(type) {
+      closeModal("paymentChooserModal");
+
+      if (type === "cash") return openCash();
+      if (type === "jko") {
+        document.getElementById("jkoTotal").textContent = money(getCartTotal());
+        loadQrToUI("jko");
+        return document.getElementById("jkoModal").classList.remove("hidden");
+      }
+      if (type === "transfer") {
+        document.getElementById("transferTotal").textContent = money(getCartTotal());
+        loadQrToUI("transfer");
+        return document.getElementById("transferModal").classList.remove("hidden");
+      }
+      if (type === "linepay") {
+        document.getElementById("linepayTotal").textContent = money(getCartTotal());
+        loadQrToUI("linepay");
+        return document.getElementById("linepayModal").classList.remove("hidden");
+      }
+    }
+
+    function openCash() {
+      document.getElementById("cashTotal").textContent = money(getCartTotal());
+      document.getElementById("cashReceived").value = "";
+      document.getElementById("cashModal").classList.remove("hidden");
+      updateChange();
+    }
+
+    function setExactCash() {
+      document.getElementById("cashReceived").value = getCartTotal();
+      updateChange();
+    }
+
+    function setCash(v) {
+      document.getElementById("cashReceived").value = v;
+      updateChange();
+    }
+
+    function updateChange() {
+      const received = Number(document.getElementById("cashReceived").value)||0;
+      const diff = received - getCartTotal();
+      const box = document.getElementById("changeBox");
+      const button = document.getElementById("cashConfirm");
+
+      document.getElementById("changeAmount").textContent = money(Math.abs(diff));
+
+      if (diff<0) {
+        box.firstChild.textContent = "不足 NT$ ";
+        box.classList.add("insufficient");
+        button.classList.add("insufficient");
+        button.disabled = true;
+        button.textContent = "金額不足";
+      } else {
+        box.firstChild.textContent = "找零 NT$ ";
+        box.classList.remove("insufficient");
+        button.classList.remove("insufficient");
+        button.disabled = false;
+        button.textContent = "確認結帳";
+      }
+    }
+
+    function validateStock() {
+      if (lotteryInCart() > getSettings().lotteryMax - lotterySold()) {
+        alert("抽抽樂剩餘數量不足");
+        return false;
+      }
+
+      const grouped = {};
+      for (const i of cart) {
+        if (!i.inventoryKey) continue;
+        grouped[i.inventoryKey] = (grouped[i.inventoryKey]||0)+Number(i.quantity||0);
+      }
+
+      for (const [key,qty] of Object.entries(grouped)) {
+        const stock = stockSource(key);
+        if (stock === null || stock === undefined) continue;
+        const available = Number(stock) - getSoldByKey(key);
+        if (qty > available) {
+          alert("有商品剩餘庫存不足，請重新確認購物車");
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    function confirmCash() {
+      const received = Number(document.getElementById("cashReceived").value);
+      const total = getCartTotal();
+      if (!Number.isFinite(received) || received<total) return;
+      if (!validateStock()) return;
+
+      saveOrder("現金",{received,change:received-total});
+      closeModal("cashModal");
+      alert(`結帳完成\n\n應收：NT$ ${money(total)}\n實收：NT$ ${money(received)}\n找零：NT$ ${money(received-total)}`);
+    }
+
+    function confirmSimple(method,modalId) {
+      if (!validateStock()) return;
+      const total = getCartTotal();
+      saveOrder(method);
+      closeModal(modalId);
+      alert(`結帳完成\n\n${method}\nNT$ ${money(total)}`);
+    }
+
+    function saveOrder(payment,extra={}) {
+      const s = getCurrentSession();
+      const order = {
+        id:Date.now(),
+        time:nowISO(),
+        sessionId:currentSessionId,
+        sessionDate:s?.date||"",
+        sessionName:s?.name||"",
+        payment,
+        total:getCartTotal(),
+        note:document.getElementById("orderNote").value.trim(),
+        items:deepCopy(cart),
+        ...extra
+      };
+
+      const orders = getOrders();
+      orders.push(order);
+      saveOrders(orders);
+
+      cart = [];
+      cartExpanded = false;
+      document.getElementById("orderNote").value = "";
+      renderCart();
+      renderMainProducts();
+    }
+
+    /* -------------------- QR IMAGE STORE (IndexedDB) -------------------- */
+    function openAssetDB() {
+      return new Promise((resolve,reject) => {
+        const req = indexedDB.open("cash-register-assets-v1",1);
+        req.onupgradeneeded = () => {
+          const db = req.result;
+          if (!db.objectStoreNames.contains("images")) db.createObjectStore("images");
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function putQr(key,blob) {
+      const db = await openAssetDB();
+      await new Promise((resolve,reject) => {
+        const tx = db.transaction("images","readwrite");
+        tx.objectStore("images").put(blob,key);
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+      });
+      db.close();
+    }
+
+    async function getQr(key) {
+      const db = await openAssetDB();
+      const result = await new Promise((resolve,reject) => {
+        const tx = db.transaction("images","readonly");
+        const req = tx.objectStore("images").get(key);
+        req.onsuccess = () => resolve(req.result || null);
+        req.onerror = () => reject(req.error);
+      });
+      db.close();
+      return result;
+    }
+
+    async function deleteQr(key) {
+      const db = await openAssetDB();
+      await new Promise((resolve,reject) => {
+        const tx = db.transaction("images","readwrite");
+        tx.objectStore("images").delete(key);
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+      });
+      db.close();
+    }
+
+    function qrKey(type) {
+      if (type === "jko") {
+        return "jkoQr";
+      }
+
+      if (type === "transfer") {
+        return "transferQr";
+      }
+
+      return "linepayQr";
+    }
+
+    function pickQr(type) {
+      document.getElementById(`${type}QrInput`).click();
+    }
+
+    async function saveQrFile(type,file) {
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        alert("請選擇圖片檔");
+        return;
+      }
+
+      try {
+        await putQr(qrKey(type),file);
+        await loadQrToUI(type);
+      } catch (e) {
+        console.error(e);
+        alert("QR 圖片儲存失敗，請換一張圖片再試。");
+      }
+    }
+
+    async function loadQrToUI(type) {
+      const img = document.getElementById(`${type}QrImage`);
+      const placeholder = document.getElementById(`${type}QrPlaceholder`);
+      const remove = document.getElementById(`${type}QrRemove`);
+
+      if (img.dataset.objectUrl) {
+        URL.revokeObjectURL(img.dataset.objectUrl);
+        delete img.dataset.objectUrl;
+      }
+
+      try {
+        const blob = await getQr(qrKey(type));
+        if (!blob) {
+          img.classList.add("hidden");
+          placeholder.classList.remove("hidden");
+          remove.classList.add("hidden");
+          return;
+        }
+
+        const url = URL.createObjectURL(blob);
+        img.src = url;
+        img.dataset.objectUrl = url;
+        img.classList.remove("hidden");
+        placeholder.classList.add("hidden");
+        remove.classList.remove("hidden");
+      } catch {
+        img.classList.add("hidden");
+        placeholder.classList.remove("hidden");
+        remove.classList.add("hidden");
+      }
+    }
+
+    async function removeQr(type) {
+      if (!confirm("確定移除這張 QR 圖片嗎？")) return;
+      await deleteQr(qrKey(type));
+      await loadQrToUI(type);
+    }
+
+    /* -------------------- PRODUCT MANAGEMENT -------------------- */
+    function openManageProduct(id) {
+      const p = getProducts().find(x => x.id === id);
+      if (!p) return;
+
+      document.getElementById("manageProductTitle").textContent = p.name;
+      document.getElementById("manageProductInfo").textContent = `${p.custom?"自訂商品":"固定商品"} ・ ${p.visible?"顯示中":"已隱藏"}`;
+
+      const area = document.getElementById("manageProductActions");
+      area.innerHTML = "";
+
+      const vis = document.createElement("button");
+      vis.className = "clear-cart";
+      vis.textContent = p.visible ? "隱藏這個商品" : "顯示這個商品";
+      vis.onclick = () => {
+        const items = getProducts();
+        const idx = items.findIndex(x => x.id === id);
+        items[idx].visible = !items[idx].visible;
+        saveProducts(items);
+        closeModal("manageProductModal");
+        renderMainProducts();
+      };
+      area.appendChild(vis);
+
+      if (p.type === "simple" || p.type === "custom") {
+        const stock = document.createElement("button");
+        stock.className = "clear-cart";
+        stock.textContent = "修改庫存";
+        stock.onclick = () => {
+          closeModal("manageProductModal");
+          openStockModal({type:"product",id:p.id,name:p.name,stock:p.stock,key:inventoryKeyForProduct(p.id)});
+        };
+        area.appendChild(stock);
+      }
+
+      if (p.custom) {
+        const del = document.createElement("button");
+        del.className = "clear-cart danger-btn";
+        del.textContent = "永久刪除自訂商品";
+        del.onclick = () => {
+          if (!confirm(`確定永久刪除「${p.name}」嗎？`)) return;
+          saveProducts(getProducts().filter(x => x.id !== p.id));
+          closeModal("manageProductModal");
+          renderMainProducts();
+        };
+        area.appendChild(del);
+      }
+
+      document.getElementById("manageProductModal").classList.remove("hidden");
+    }
+
+    function openStockModal(context) {
+      stockContext = context;
+      const sold = getSoldByKey(context.key);
+      document.getElementById("stockTitle").textContent = `修改庫存｜${context.name}`;
+      document.getElementById("stockSoldText").textContent = `目前已售：${sold}`;
+      const unlimited = context.stock === null || context.stock === undefined;
+      document.getElementById("stockUnlimited").checked = unlimited;
+      document.getElementById("stockInitial").value = unlimited ? sold : context.stock;
+      toggleStockInput();
+      document.getElementById("stockModal").classList.remove("hidden");
+    }
+
+    function toggleStockInput() {
+      document.getElementById("stockInputArea").classList.toggle("hidden",document.getElementById("stockUnlimited").checked);
+    }
+
+    function saveStock() {
+      if (!stockContext) return;
+
+      const unlimited = document.getElementById("stockUnlimited").checked;
+      const value = unlimited ? null : Number(document.getElementById("stockInitial").value);
+      const sold = getSoldByKey(stockContext.key);
+
+      if (!unlimited && (!Number.isInteger(value) || value<sold)) return alert(`初始數量不能小於目前已售 ${sold}`);
+
+      if (stockContext.type === "product") {
+        const items = getProducts();
+        const idx = items.findIndex(x => x.id === stockContext.id);
+        if (idx>=0) items[idx].stock = value;
+        saveProducts(items);
+      } else if (stockContext.type === "photo") {
+        const data = getPhotoStock();
+        data[stockContext.id] = value;
+        savePhotoStock(data);
+      } else if (stockContext.type === "polaroid") {
+        const items = getPolaroids();
+        const idx = items.findIndex(x => x.id === stockContext.id);
+        if (idx>=0) items[idx].stock = value;
+        savePolaroids(items);
+      }
+
+      stockContext = null;
+      closeModal("stockModal");
+      renderMainProducts();
+      renderLibrary();
+    }
+
+    /* -------------------- LIBRARY -------------------- */
+    function renderLibrary() {
+      const body = document.getElementById("libraryBody");
+      body.innerHTML = "";
+
+      for (const p of getProducts()) {
+        let inventory = "—";
+        let stockBtn = "";
+
+        if (p.type === "simple" || p.type === "custom") {
+          const key = inventoryKeyForProduct(p.id);
+          const sold = getSoldByKey(key);
+          const r = remaining(p.stock,key,false);
+          inventory = p.stock == null
+            ? `<span class="pill">不限量</span><div class="subtle">已售 ${sold}</div>`
+            : `<span class="pill ${r<=5?"low":""}">剩餘 ${r} / ${p.stock}</span><div class="subtle">已售 ${sold}</div>`;
+          stockBtn = `<button class="small-btn" onclick="openStockModal({type:'product',id:'${p.id}',name:'${esc(p.name)}',stock:${p.stock===null?"null":p.stock},key:'${inventoryKeyForProduct(p.id)}'})">庫存</button>`;
+        }
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${esc(p.name)}</td>
+          <td>${esc(p.displayPrice || "$"+money(p.price))}</td>
+          <td>${esc(p.owner)}</td>
+          <td>${inventory}</td>
+          <td><span class="pill">${p.visible?"顯示中":"已隱藏"}</span></td>
+          <td>
+            <div class="library-actions">
+              <button class="small-btn" onclick="toggleProductVisibility('${p.id}')">${p.visible?"隱藏":"顯示"}</button>
+              ${stockBtn}
+              ${p.custom?`<button class="small-btn danger-btn" onclick="deleteCustomProduct('${p.id}')">刪除</button>`:""}
+            </div>
+          </td>`;
+        body.appendChild(tr);
+      }
+
+      const photoBody = document.getElementById("photoStockBody");
+      photoBody.innerHTML = "";
+      const photoStock = getPhotoStock();
+
+      for (const theme of ["公式款","警服款","變身服款"]) {
+        const key = inventoryKeyForPhoto(theme);
+        const sold = getSoldByKey(key);
+        const r = remaining(photoStock[theme],key,false);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${esc(theme)}</td>
+          <td>${sold}</td>
+          <td>${photoStock[theme]==null?'<span class="pill">不限量</span>':`<span class="pill ${r<=5?"low":""}">${r} / ${photoStock[theme]}</span>`}</td>
+          <td><button class="small-btn" onclick="openStockModal({type:'photo',id:'${theme}',name:'生寫真｜${theme}',stock:${photoStock[theme]===null?"null":photoStock[theme]},key:'${key}'})">修改</button></td>`;
+        photoBody.appendChild(tr);
+      }
+
+      const polBody = document.getElementById("polaroidLibraryBody");
+      polBody.innerHTML = "";
+
+      for (const p of getPolaroids()) {
+        const key = inventoryKeyForPolaroid(p.id);
+        const sold = getSoldByKey(key);
+        const r = remaining(p.stock,key,false);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${esc(p.name)}</td>
+          <td>$${money(p.price)}</td>
+          <td>${sold}</td>
+          <td>${p.stock==null?'<span class="pill">不限量</span>':`<span class="pill ${r<=5?"low":""}">${r} / ${p.stock}</span>`}</td>
+          <td><span class="pill">${p.visible?"顯示中":"已隱藏"}</span></td>
+          <td>
+            <div class="library-actions">
+              <button class="small-btn" onclick="togglePolaroidVisibility('${p.id}')">${p.visible?"隱藏":"顯示"}</button>
+              <button class="small-btn" onclick="openStockModal({type:'polaroid',id:'${p.id}',name:'拍立得｜${esc(p.name)}',stock:${p.stock===null?"null":p.stock},key:'${key}'})">庫存</button>
+              ${p.custom?`<button class="small-btn danger-btn" onclick="deleteCustomPolaroid('${p.id}')">刪除</button>`:""}
+            </div>
+          </td>`;
+        polBody.appendChild(tr);
+      }
+
+      document.getElementById("lotteryMaxText").textContent = getSettings().lotteryMax;
+      renderPaymentMethodSettings();
+      renderAuctionLibraryStatus();
+    }
+
+    function toggleProductVisibility(id) {
+      const items = getProducts();
+      const idx = items.findIndex(x => x.id === id);
+      if (idx<0) return;
+      items[idx].visible = !items[idx].visible;
+      saveProducts(items);
+      renderLibrary();
+      renderMainProducts();
+    }
+
+    function deleteCustomProduct(id) {
+      const p = getProducts().find(x => x.id === id);
+      if (!p?.custom) return;
+      if (!confirm(`確定刪除「${p.name}」嗎？`)) return;
+      saveProducts(getProducts().filter(x => x.id !== id));
+      renderLibrary();
+      renderMainProducts();
+    }
+
+    function togglePolaroidVisibility(id) {
+      const items = getPolaroids();
+      const idx = items.findIndex(x => x.id === id);
+      if (idx<0) return;
+      items[idx].visible = !items[idx].visible;
+      savePolaroids(items);
+      renderLibrary();
+    }
+
+    function deleteCustomPolaroid(id) {
+      const p = getPolaroids().find(x => x.id === id);
+      if (!p?.custom) return;
+      if (!confirm(`確定刪除「${p.name}」嗎？`)) return;
+      savePolaroids(getPolaroids().filter(x => x.id !== id));
+      renderLibrary();
+    }
+
+    function openLotterySetting() {
+      document.getElementById("lotteryMaxInput").value = getSettings().lotteryMax;
+      document.getElementById("lotterySettingModal").classList.remove("hidden");
+    }
+
+    function saveLotterySetting() {
+      const value = Number(document.getElementById("lotteryMaxInput").value);
+      if (!Number.isInteger(value) || value<0) return alert("請輸入正確數量");
+
+      let maxSold = 0;
+      for (const s of getSessions()) maxSold = Math.max(maxSold,lotterySold(s.id));
+      if (value<maxSold) return alert(`起始抽數不能小於已售出的 ${maxSold} 抽`);
+
+      saveSettings({...getSettings(),lotteryMax:value});
+      closeModal("lotterySettingModal");
+      renderLibrary();
+      renderMainProducts();
+    }
+
+
+    /* -------------------- AUCTION -------------------- */
+    function getAuctionSettings() {
+      const settings = getSettings();
+
+      return {
+        enabled: false,
+        title: "掛軸競標",
+        currentBid: 0,
+        step: 100,
+        startAt: "",
+        endAt: "",
+        ...(settings.auction || {})
+      };
+    }
+
+    function toLocalDateTimeInputValue(value) {
+      if (!value) return "";
+
+      const d = new Date(value);
+      if (Number.isNaN(d.getTime())) return "";
+
+      const pad = n => String(n).padStart(2,"0");
+
+      return (
+        `${d.getFullYear()}-` +
+        `${pad(d.getMonth()+1)}-` +
+        `${pad(d.getDate())}T` +
+        `${pad(d.getHours())}:` +
+        `${pad(d.getMinutes())}`
+      );
+    }
+
+    function parseLocalDateTime(value) {
+      if (!value) return null;
+
+      const d = new Date(value);
+
+      return Number.isNaN(d.getTime())
+        ? null
+        : d;
+    }
+
+    function formatAuctionDateTime(value) {
+      const d =
+        parseLocalDateTime(value);
+
+      if (!d) return "—";
+
+      return d.toLocaleString(
+        "zh-TW",
+        {
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false
+        }
+      );
+    }
+
+    function formatDuration(ms) {
+      const safe =
+        Math.max(
+          0,
+          Math.floor(ms / 1000)
+        );
+
+      const hours =
+        Math.floor(
+          safe / 3600
+        );
+
+      const minutes =
+        Math.floor(
+          (safe % 3600) / 60
+        );
+
+      const seconds =
+        safe % 60;
+
+      const pad =
+        value =>
+          String(value)
+            .padStart(2,"0");
+
+      return (
+        `${pad(hours)}:` +
+        `${pad(minutes)}:` +
+        `${pad(seconds)}`
+      );
+    }
+
+    function renderAuctionBanner() {
+      const auction =
+        getAuctionSettings();
+
+      const banner =
+        document.getElementById(
+          "auctionBanner"
+        );
+
+      if (!banner) return;
+
+      if (!auction.enabled) {
+        banner.classList.add(
+          "hidden"
+        );
+
+        renderAuctionLibraryStatus();
+
+        return;
+      }
+
+      banner.classList.remove(
+        "hidden"
+      );
+
+      document.getElementById(
+        "auctionBannerTitle"
+      ).textContent =
+        auction.title || "掛軸競標";
+
+      document.getElementById(
+        "auctionBidValue"
+      ).textContent =
+        money(
+          auction.currentBid || 0
+        );
+
+      document.getElementById(
+        "auctionStepText"
+      ).textContent =
+        `每標 + NT$ ${money(auction.step || 100)}`;
+
+      document.getElementById(
+        "auctionStartEndText"
+      ).textContent =
+        `${formatAuctionDateTime(auction.startAt)} ～ ${formatAuctionDateTime(auction.endAt)}`;
+
+      const status =
+        document.getElementById(
+          "auctionStatusText"
+        );
+
+      const countdownLabel =
+        document.getElementById(
+          "auctionCountdownLabel"
+        );
+
+      const countdown =
+        document.getElementById(
+          "auctionCountdownValue"
+        );
+
+      const now =
+        new Date();
+
+      const start =
+        parseLocalDateTime(
+          auction.startAt
+        );
+
+      const end =
+        parseLocalDateTime(
+          auction.endAt
+        );
+
+      status.classList.remove(
+        "live"
+      );
+
+      if (
+        !start ||
+        !end
+      ) {
+        status.textContent =
+          "時間尚未設定";
+
+        countdownLabel.textContent =
+          "倒數";
+
+        countdown.textContent =
+          "00:00:00";
+
+      } else if (
+        now < start
+      ) {
+        status.textContent =
+          "尚未開始";
+
+        countdownLabel.textContent =
+          "距離開始";
+
+        countdown.textContent =
+          formatDuration(
+            start - now
+          );
+
+      } else if (
+        now < end
+      ) {
+        status.textContent =
+          "競標中";
+
+        status.classList.add(
+          "live"
+        );
+
+        countdownLabel.textContent =
+          "距離結束";
+
+        countdown.textContent =
+          formatDuration(
+            end - now
+          );
+
+      } else {
+        status.textContent =
+          "競標結束";
+
+        countdownLabel.textContent =
+          "倒數";
+
+        countdown.textContent =
+          "00:00:00";
+      }
+
+      renderAuctionLibraryStatus();
+    }
+
+    function renderAuctionLibraryStatus() {
+      const status =
+        document.getElementById(
+          "auctionLibraryStatus"
+        );
+
+      const detail =
+        document.getElementById(
+          "auctionLibraryDetail"
+        );
+
+      if (
+        !status ||
+        !detail
+      ) {
+        return;
+      }
+
+      const auction =
+        getAuctionSettings();
+
+      if (!auction.enabled) {
+        status.textContent =
+          "未開啟";
+
+        detail.textContent =
+          "開啟後會固定顯示在收銀機上方。";
+
+        return;
+      }
+
+      status.textContent =
+        `${auction.title || "掛軸競標"}｜目前 NT$ ${money(auction.currentBid || 0)}`;
+
+      detail.textContent =
+        `${formatAuctionDateTime(auction.startAt)} ～ ${formatAuctionDateTime(auction.endAt)}`;
+    }
+
+    function openAuctionSetting() {
+      const auction =
+        getAuctionSettings();
+
+      document.getElementById(
+        "auctionEnabled"
+      ).checked =
+        Boolean(
+          auction.enabled
+        );
+
+      document.getElementById(
+        "auctionTitleInput"
+      ).value =
+        auction.title || "掛軸競標";
+
+      document.getElementById(
+        "auctionBidInput"
+      ).value =
+        Number(
+          auction.currentBid || 0
+        );
+
+      document.getElementById(
+        "auctionStepInput"
+      ).value =
+        Number(
+          auction.step || 100
+        );
+
+      document.getElementById(
+        "auctionStartInput"
+      ).value =
+        toLocalDateTimeInputValue(
+          auction.startAt
+        );
+
+      document.getElementById(
+        "auctionEndInput"
+      ).value =
+        toLocalDateTimeInputValue(
+          auction.endAt
+        );
+
+      document.getElementById(
+        "auctionSettingModal"
+      ).classList.remove(
+        "hidden"
+      );
+    }
+
+    function saveAuctionSetting() {
+      const enabled =
+        document.getElementById(
+          "auctionEnabled"
+        ).checked;
+
+      const title =
+        document.getElementById(
+          "auctionTitleInput"
+        ).value.trim() ||
+        "掛軸競標";
+
+      const currentBid =
+        Number(
+          document.getElementById(
+            "auctionBidInput"
+          ).value
+        );
+
+      const step =
+        Number(
+          document.getElementById(
+            "auctionStepInput"
+          ).value
+        );
+
+      const startAt =
+        document.getElementById(
+          "auctionStartInput"
+        ).value;
+
+      const endAt =
+        document.getElementById(
+          "auctionEndInput"
+        ).value;
+
+      if (
+        !Number.isFinite(currentBid) ||
+        currentBid < 0
+      ) {
+        alert(
+          "請輸入正確競標金額"
+        );
+
+        return;
+      }
+
+      if (
+        !Number.isFinite(step) ||
+        step <= 0
+      ) {
+        alert(
+          "請輸入正確的每標加價金額"
+        );
+
+        return;
+      }
+
+      if (enabled) {
+        const start =
+          parseLocalDateTime(
+            startAt
+          );
+
+        const end =
+          parseLocalDateTime(
+            endAt
+          );
+
+        if (
+          !start ||
+          !end
+        ) {
+          alert(
+            "開啟競標前請設定開始與結束時間"
+          );
+
+          return;
+        }
+
+        if (
+          end <= start
+        ) {
+          alert(
+            "結束時間必須晚於開始時間"
+          );
+
+          return;
+        }
+      }
+
+      const settings =
+        getSettings();
+
+      settings.auction = {
+        enabled,
+        title,
+        currentBid,
+        step,
+        startAt,
+        endAt
+      };
+
+      saveSettings(
+        settings
+      );
+
+      closeModal(
+        "auctionSettingModal"
+      );
+
+      renderAuctionBanner();
+
+      renderLibrary();
+    }
+
+    function openAuctionQuickEdit() {
+      const auction =
+        getAuctionSettings();
+
+      document.getElementById(
+        "auctionQuickBidInput"
+      ).value =
+        Number(
+          auction.currentBid || 0
+        );
+
+      document.getElementById(
+        "auctionAddStepButton"
+      ).textContent =
+        `＋ 一標（NT$ ${money(auction.step || 100)}）`;
+
+      document.getElementById(
+        "auctionQuickStepText"
+      ).textContent =
+        `每標加價：NT$ ${money(auction.step || 100)}`;
+
+      document.getElementById(
+        "auctionQuickEditModal"
+      ).classList.remove(
+        "hidden"
+      );
+    }
+
+    function addAuctionStep() {
+      const auction =
+        getAuctionSettings();
+
+      const input =
+        document.getElementById(
+          "auctionQuickBidInput"
+        );
+
+      const current =
+        Number(
+          input.value || 0
+        );
+
+      const step =
+        Number(
+          auction.step || 100
+        );
+
+      input.value =
+        Math.max(
+          0,
+          current
+        ) + step;
+    }
+
+
+    function saveAuctionQuickBid() {
+      const value =
+        Number(
+          document.getElementById(
+            "auctionQuickBidInput"
+          ).value
+        );
+
+      if (
+        !Number.isFinite(value) ||
+        value < 0
+      ) {
+        alert(
+          "請輸入正確競標金額"
+        );
+
+        return;
+      }
+
+      const settings =
+        getSettings();
+
+      settings.auction = {
+        ...getAuctionSettings(),
+        currentBid:
+          value
+      };
+
+      saveSettings(
+        settings
+      );
+
+      closeModal(
+        "auctionQuickEditModal"
+      );
+
+      renderAuctionBanner();
+
+      renderLibrary();
+    }
+
+    /* -------------------- STATS -------------------- */
+    function renderStats() {
+      const orders = getOrders();
+      let revenue=0, itemCount=0;
+      const owners={}, payments={}, products={};
+
+      for (const order of orders) {
+        revenue += Number(order.total||0);
+        payments[order.payment] ||= {count:0,revenue:0};
+        payments[order.payment].count++;
+        payments[order.payment].revenue += Number(order.total||0);
+
+        for (const item of order.items || []) {
+          const qty = Number(item.quantity||0);
+          const subtotal = Number(item.price)*qty;
+          itemCount += qty;
+          owners[item.owner] = (owners[item.owner]||0)+subtotal;
+
+          const key = `${item.name}||${item.owner}`;
+          products[key] ||= {name:item.name,owner:item.owner,quantity:0,revenue:0};
+          products[key].quantity += qty;
+          products[key].revenue += subtotal;
+        }
+      }
+
+      document.getElementById("statsRevenue").textContent = money(revenue);
+      document.getElementById("statsOrders").textContent = orders.length;
+      document.getElementById("statsItems").textContent = itemCount;
+      document.getElementById("statsYaki").textContent = money(owners["麻糬燒 Yaki"]||0);
+      document.getElementById("statsAyami").textContent = money(owners["阿芽咪 Ayami"]||0);
+      document.getElementById("statsDuo").textContent = money(owners["雙人"]||0);
+
+      const payBody = document.getElementById("paymentStatsBody");
+      payBody.innerHTML = "";
+      for (const method of ["現金","街口","轉帳","LINE Pay"]) {
+        const d = payments[method] || {count:0,revenue:0};
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${method}</td><td>${d.count}</td><td>$${money(d.revenue)}</td>`;
+        payBody.appendChild(tr);
+      }
+
+      const prodBody = document.getElementById("productStatsBody");
+      prodBody.innerHTML = "";
+      const values = Object.values(products);
+      if (!values.length) prodBody.innerHTML = `<tr><td colspan="4">尚無銷售紀錄</td></tr>`;
+      else for (const d of values) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${esc(d.name)}</td><td>${esc(d.owner)}</td><td>${d.quantity}</td><td>$${money(d.revenue)}</td>`;
+        prodBody.appendChild(tr);
+      }
+
+      const orderBody = document.getElementById("orderBody");
+      orderBody.innerHTML = "";
+      if (!orders.length) orderBody.innerHTML = `<tr><td colspan="5">尚無訂單</td></tr>`;
+      else for (const o of [...orders].reverse()) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${timeText(o.time)}</td>
+          <td>${esc(o.payment)}</td>
+          <td>$${money(o.total)}</td>
+          <td>${o.note?esc(o.note):"—"}</td>
+          <td><button class="small-btn danger-btn" onclick="deleteOrder(${o.id})">刪除</button></td>`;
+        orderBody.appendChild(tr);
+      }
+
+      updateSessionUI();
+    }
+
+    function deleteOrder(id) {
+      if (!confirm("確定刪除這筆訂單嗎？\n\n庫存與統計會同步更新。")) return;
+      saveOrders(getOrders().filter(x => x.id !== id));
+      renderStats();
+      renderMainProducts();
+      renderLibrary();
+    }
+
+    function undoLastOrder() {
+      const orders = getOrders();
+      if (!orders.length) return alert("目前沒有訂單");
+      if (!confirm("確定撤銷上一筆訂單嗎？")) return;
+      orders.pop();
+      saveOrders(orders);
+      renderStats();
+      renderMainProducts();
+      renderLibrary();
+    }
+
+    function resetCurrentSession() {
+      const s = getCurrentSession();
+      if (!s) return;
+      if (!confirm(`確定清除「${s.name}」的所有銷售紀錄嗎？`)) return;
+      localStorage.removeItem(sessionOrderKey(s.id));
+      renderStats();
+      renderMainProducts();
+      renderLibrary();
+    }
+
+    function renderOverview() {
+      const body = document.getElementById("overviewBody");
+      body.innerHTML = "";
+
+      let allRevenue=0, allOrders=0, allItems=0;
+
+      for (const s of sortSessions(getSessions())) {
+        const orders = getOrders(s.id);
+        let revenue=0, items=0;
+
+        for (const o of orders) {
+          revenue += Number(o.total||0);
+          for (const i of o.items||[]) items += Number(i.quantity||0);
+        }
+
+        allRevenue += revenue;
+        allOrders += orders.length;
+        allItems += items;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${esc(prettyDate(s.date))}</td><td>${esc(s.name)}</td><td>$${money(revenue)}</td><td>${orders.length}</td><td>${items}</td><td>${lotterySold(s.id)} / ${getSettings().lotteryMax}</td>`;
+        body.appendChild(tr);
+      }
+
+      document.getElementById("allRevenue").textContent = money(allRevenue);
+      document.getElementById("allOrders").textContent = allOrders;
+      document.getElementById("allItems").textContent = allItems;
+    }
+
+    /* -------------------- CSV -------------------- */
+    function exportCSV() {
+      const rows = [["日期","場次名稱","時間","付款方式","商品","歸屬","署名","單價","數量","小計","訂單總額","訂單備註"]];
+
+      for (const s of sortSessions(getSessions())) {
+        for (const o of getOrders(s.id)) {
+          for (const i of o.items||[]) {
+            rows.push([
+              s.date||"",
+              s.name||"",
+              new Date(o.time).toLocaleString("zh-TW"),
+              o.payment,
+              i.name,
+              i.owner,
+              i.signature||"",
+              i.price,
+              i.quantity,
+              Number(i.price)*Number(i.quantity),
+              o.total,
+              o.note||""
+            ]);
+          }
+        }
+      }
+
+      if (rows.length===1) return alert("目前沒有可以匯出的資料");
+
+      const csv = rows.map(row => row.map(v => `"${String(v??"").replaceAll('"','""')}"`).join(",")).join("\n");
+      const blob = new Blob(["\uFEFF",csv],{type:"text/csv;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "擺攤收銀紀錄.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    /* -------------------- INIT -------------------- */
+    ensureSession();
+    updateSessionUI();
+    renderMainProducts();
+    renderCart();
+    renderPaymentMethodSettings();
+    renderAuctionBanner();
+
+    setInterval(
+      renderAuctionBanner,
+      1000
+    );
+
+    if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1166,6 +1166,132 @@
       color: var(--danger) !important;
       -webkit-text-fill-color: var(--danger) !important;
     }
+
+    /* AUCTION WINNER / HISTORY */
+    .auction-banner.finished {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+      padding: 18px 20px;
+    }
+
+    .auction-banner.finished .auction-main,
+    .auction-banner.finished .auction-bid,
+    .auction-banner.finished .auction-countdown,
+    .auction-banner.finished .auction-edit {
+      display: none !important;
+    }
+
+    .auction-winner-message {
+      display: none;
+      width: 100%;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: .03em;
+      color: var(--text);
+    }
+
+    .auction-banner.finished .auction-winner-message {
+      display: block;
+    }
+
+    .auction-winner-amount {
+      display: block;
+      margin-top: 6px;
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .auction-close-button {
+      width: 100%;
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 11px;
+      background: var(--soft);
+      color: #777;
+      cursor: pointer;
+    }
+
+    .auction-history-empty {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 620px) {
+      .auction-winner-message {
+        font-size: 23px;
+      }
+    }
+
+    /* AUCTION BAR + CART ALIGNMENT */
+    .auction-banner {
+      transition:
+        margin-right .18s ease,
+        border-radius .18s ease;
+    }
+
+    .auction-banner.cart-compacted {
+      margin-right: 370px;
+      border-right: 1px solid var(--line);
+    }
+
+    @media (max-width: 850px) {
+      .auction-banner.cart-compacted {
+        margin-right: 0;
+        border-right: 0;
+      }
+    }
+
+    /* MANUAL QR CROP */
+    .qr-crop-stage {
+      position: relative;
+      width: min(78vw, 420px);
+      height: min(78vw, 420px);
+      margin: 0 auto 12px;
+      overflow: hidden;
+      background: #111;
+      border-radius: 16px;
+      touch-action: none;
+      user-select: none;
+    }
+
+    .qr-crop-stage img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      max-width: none;
+      max-height: none;
+      transform-origin: center center;
+      will-change: transform;
+      pointer-events: none;
+    }
+
+    .qr-crop-guide {
+      position: absolute;
+      inset: 12%;
+      border: 2px solid rgba(255,255,255,.95);
+      border-radius: 10px;
+      box-shadow:
+        0 0 0 9999px rgba(0,0,0,.46),
+        0 0 0 1px rgba(0,0,0,.12);
+      pointer-events: none;
+    }
+
+    .qr-crop-help {
+      margin: 8px 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .qr-crop-zoom {
+      width: 100%;
+      margin: 6px 0 4px;
+    }
 </style>
 </head>
 
@@ -1208,6 +1334,11 @@
     </div>
 
     <button class="auction-edit" onclick="openAuctionQuickEdit()">更新金額</button>
+
+    <div id="auctionWinnerMessage" class="auction-winner-message">
+      <span id="auctionWinnerMessageText">恭喜得標</span>
+      <span id="auctionWinnerAmount" class="auction-winner-amount"></span>
+    </div>
   </section>
 
 
@@ -1398,7 +1529,25 @@
       <div class="subtle" id="auctionLibraryDetail" style="margin-top:4px">開啟後會固定顯示在收銀機上方。</div>
       <div class="page-actions" style="margin-top:10px">
         <button onclick="openAuctionSetting()">設定競標</button>
+        <button id="auctionCloseButton" class="auction-close-button hidden" onclick="closeAuctionManually()">關閉競標</button>
       </div>
+    </div>
+
+    <h3>競標紀錄</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>場次</th>
+            <th>競標品</th>
+            <th>得標署名</th>
+            <th>最終金額</th>
+            <th>結束時間</th>
+          </tr>
+        </thead>
+        <tbody id="auctionHistoryBody"></tbody>
+      </table>
     </div>
   </section>
 
@@ -1577,6 +1726,31 @@
     </div>
   </div>
 
+
+  <!-- QR CROP -->
+  <div id="qrCropModal" class="modal hidden">
+    <div class="modal-box wide">
+      <h2>裁切 QR</h2>
+
+      <div class="qr-crop-help">
+        把 QR 移到白色方框中央。可拖曳圖片、用滑桿縮放；完成後只會保存方框內的 QR。
+      </div>
+
+      <div id="qrCropStage" class="qr-crop-stage">
+        <img id="qrCropImage" alt="">
+        <div class="qr-crop-guide"></div>
+      </div>
+
+      <label for="qrCropZoom">縮放</label>
+      <input id="qrCropZoom" class="qr-crop-zoom" type="range" min="0.5" max="4" step="0.01" value="1">
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="cancelQrCrop()">取消</button>
+        <button class="confirm" onclick="confirmQrCrop()">儲存 QR</button>
+      </div>
+    </div>
+  </div>
+
   <!-- PAYMENT CHOOSER -->
   <div id="paymentChooserModal" class="modal hidden">
     <div class="modal-box">
@@ -1641,7 +1815,7 @@
         </div>
 
         <input id="jkoQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('jko', this.files[0])">
-        <div class="qr-upload-note">從相簿／檔案選擇含 QR 的圖片，系統會自動偵測並只保留 QR。</div>
+        <div class="qr-upload-note">從相簿／檔案選擇圖片後，手動把 QR 裁到白色方框內。</div>
       </div>
 
       <div class="modal-note">確認款項已收到後，再按下「確認收到款項」。</div>
@@ -1673,7 +1847,7 @@
         </div>
 
         <input id="transferQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('transfer', this.files[0])">
-        <div class="qr-upload-note">從相簿／檔案選擇含 QR 的圖片，系統會自動偵測並只保留 QR。</div>
+        <div class="qr-upload-note">從相簿／檔案選擇圖片後，手動把 QR 裁到白色方框內。</div>
       </div>
 
       <div class="modal-note">請依畫面 QR Code 完成付款。非彰銀帳戶可能產生跨行手續費，<strong>請勿從應付金額中扣除。</strong></div>
@@ -1705,7 +1879,7 @@
         </div>
 
         <input id="linepayQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('linepay', this.files[0])">
-        <div class="qr-upload-note">從相簿／檔案選擇含 QR 的圖片，系統會自動偵測並只保留 QR。</div>
+        <div class="qr-upload-note">從相簿／檔案選擇圖片後，手動把 QR 裁到白色方框內。</div>
       </div>
 
       <div class="modal-note">確認款項已收到後，再按下「確認收到款項」。</div>
@@ -1805,10 +1979,7 @@
       </div>
     </div>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-
-  <script>
+<script>
     "use strict";
 
     /* -------------------- CONSTANTS -------------------- */
@@ -1820,7 +1991,8 @@
       photoStock: "cash-register-photo-stock-v3",
       settings: "cash-register-settings-v3",
       sessions: "cash-register-sessions-v3",
-      currentSession: "cash-register-current-session-v3"
+      currentSession: "cash-register-current-session-v3",
+      auctionHistory: "cash-register-auction-history-v1"
     };
 
     const DEFAULT_PRODUCTS = [
@@ -2595,6 +2767,8 @@
       const panel = document.getElementById("cartPanel");
       const reopen = document.getElementById("cartReopen");
       const pos = document.getElementById("posPage");
+      const auctionBanner = document.getElementById("auctionBanner");
+
       document.getElementById("cartReopenCount").textContent = getCartCount();
 
       if (!cart.length) {
@@ -2602,6 +2776,11 @@
         panel.classList.add("hidden");
         reopen.classList.add("hidden");
         pos.classList.add("cart-hidden");
+
+        if (auctionBanner) {
+          auctionBanner.classList.remove("cart-compacted");
+        }
+
         return;
       }
 
@@ -2609,10 +2788,19 @@
         panel.classList.remove("hidden");
         reopen.classList.add("hidden");
         pos.classList.remove("cart-hidden");
+
+        if (auctionBanner) {
+          auctionBanner.classList.add("cart-compacted");
+        }
+
       } else {
         panel.classList.add("hidden");
         reopen.classList.remove("hidden");
         pos.classList.add("cart-hidden");
+
+        if (auctionBanner) {
+          auctionBanner.classList.remove("cart-compacted");
+        }
       }
     }
 
@@ -3027,294 +3215,346 @@
       document.getElementById(`${type}QrInput`).click();
     }
 
-    async function fileToCanvas(file) {
-      const url =
-        URL.createObjectURL(
-          file
-        );
-
-      try {
-        const image =
-          await new Promise(
-            (resolve,reject) => {
-              const img =
-                new Image();
-
-              img.onload =
-                () =>
-                  resolve(img);
-
-              img.onerror =
-                reject;
-
-              img.src =
-                url;
-            }
-          );
-
-        const canvas =
-          document.createElement(
-            "canvas"
-          );
-
-        canvas.width =
-          image.naturalWidth;
-
-        canvas.height =
-          image.naturalHeight;
-
-        const ctx =
-          canvas.getContext(
-            "2d",
-            {
-              willReadFrequently: true
-            }
-          );
-
-        ctx.drawImage(
-          image,
-          0,
-          0
-        );
-
-        return canvas;
-
-      } finally {
-        URL.revokeObjectURL(
-          url
-        );
-      }
-    }
+    let qrCropState = {
+      type: null,
+      file: null,
+      objectUrl: null,
+      naturalWidth: 0,
+      naturalHeight: 0,
+      baseScale: 1,
+      zoom: 1,
+      x: 0,
+      y: 0,
+      dragging: false,
+      pointerId: null,
+      startX: 0,
+      startY: 0,
+      originX: 0,
+      originY: 0
+    };
 
 
-    function canvasBlob(canvas) {
+    function openQrCrop(type,file) {
       return new Promise(
         (resolve,reject) => {
-          canvas.toBlob(
-            blob => {
-              if (blob) {
-                resolve(blob);
-              } else {
-                reject(
-                  new Error(
-                    "圖片處理失敗"
-                  )
+          const url =
+            URL.createObjectURL(
+              file
+            );
+
+          const img =
+            document.getElementById(
+              "qrCropImage"
+            );
+
+          img.onload =
+            () => {
+              qrCropState = {
+                type,
+                file,
+                objectUrl:
+                  url,
+                naturalWidth:
+                  img.naturalWidth,
+                naturalHeight:
+                  img.naturalHeight,
+                baseScale:
+                  1,
+                zoom:
+                  1,
+                x:
+                  0,
+                y:
+                  0,
+                dragging:
+                  false,
+                pointerId:
+                  null,
+                startX:
+                  0,
+                startY:
+                  0,
+                originX:
+                  0,
+                originY:
+                  0,
+                resolve,
+                reject
+              };
+
+              const stage =
+                document.getElementById(
+                  "qrCropStage"
                 );
-              }
-            },
-            "image/png"
-          );
+
+              const stageSize =
+                stage.clientWidth;
+
+              qrCropState.baseScale =
+                Math.max(
+                  stageSize /
+                  img.naturalWidth,
+                  stageSize /
+                  img.naturalHeight
+                );
+
+              document.getElementById(
+                "qrCropZoom"
+              ).value =
+                "1";
+
+              updateQrCropTransform();
+
+              document.getElementById(
+                "qrCropModal"
+              ).classList.remove(
+                "hidden"
+              );
+            };
+
+          img.onerror =
+            () => {
+              URL.revokeObjectURL(
+                url
+              );
+
+              reject(
+                new Error(
+                  "圖片讀取失敗"
+                )
+              );
+            };
+
+          img.src =
+            url;
         }
       );
     }
 
 
-    function getQrCropBounds(location) {
-      const points = [
-        location.topLeftCorner,
-        location.topRightCorner,
-        location.bottomLeftCorner,
-        location.bottomRightCorner
-      ];
-
-      const xs =
-        points.map(
-          point =>
-            point.x
+    function updateQrCropTransform() {
+      const img =
+        document.getElementById(
+          "qrCropImage"
         );
 
-      const ys =
-        points.map(
-          point =>
-            point.y
-        );
+      const scale =
+        qrCropState.baseScale *
+        qrCropState.zoom;
 
-      return {
-        minX:
-          Math.min(...xs),
-
-        maxX:
-          Math.max(...xs),
-
-        minY:
-          Math.min(...ys),
-
-        maxY:
-          Math.max(...ys)
-      };
+      img.style.transform =
+        `translate(-50%, -50%) translate(${qrCropState.x}px, ${qrCropState.y}px) scale(${scale})`;
     }
 
 
-    async function cropQrFromImage(file) {
+    function cancelQrCrop() {
       if (
-        typeof jsQR !==
-        "function"
+        qrCropState.objectUrl
       ) {
-        throw new Error(
-          "QR 辨識元件尚未載入"
+        URL.revokeObjectURL(
+          qrCropState.objectUrl
         );
       }
 
-      const source =
-        await fileToCanvas(
-          file
-        );
+      const reject =
+        qrCropState.reject;
 
-      const ctx =
-        source.getContext(
-          "2d",
-          {
-            willReadFrequently: true
-          }
-        );
+      closeModal(
+        "qrCropModal"
+      );
 
-      const imageData =
-        ctx.getImageData(
-          0,
-          0,
-          source.width,
-          source.height
-        );
+      qrCropState = {
+        type: null
+      };
 
-      const result =
-        jsQR(
-          imageData.data,
-          imageData.width,
-          imageData.height,
-          {
-            inversionAttempts:
-              "attemptBoth"
-          }
-        );
-
-      if (
-        !result ||
-        !result.location
-      ) {
-        throw new Error(
-          "找不到 QR Code"
+      if (reject) {
+        reject(
+          new Error(
+            "cancelled"
+          )
         );
       }
+    }
 
-      const bounds =
-        getQrCropBounds(
-          result.location
+
+    async function confirmQrCrop() {
+      const stage =
+        document.getElementById(
+          "qrCropStage"
         );
 
-      const qrWidth =
-        bounds.maxX -
-        bounds.minX;
-
-      const qrHeight =
-        bounds.maxY -
-        bounds.minY;
-
-      const qrSide =
-        Math.max(
-          qrWidth,
-          qrHeight
+      const img =
+        document.getElementById(
+          "qrCropImage"
         );
 
-      /* 留白邊讓 QR 更好掃 */
-      const padding =
-        qrSide * 0.13;
+      const guideInset =
+        0.12;
 
-      let cropSide =
-        qrSide +
-        padding * 2;
+      const stageSize =
+        stage.clientWidth;
 
-      cropSide =
-        Math.min(
-          cropSide,
-          source.width,
-          source.height
-        );
-
-      const centerX =
+      const cropSizeOnStage =
+        stageSize *
         (
-          bounds.minX +
-          bounds.maxX
-        ) / 2;
+          1 -
+          guideInset * 2
+        );
 
-      const centerY =
+      const scale =
+        qrCropState.baseScale *
+        qrCropState.zoom;
+
+      const displayedWidth =
+        qrCropState.naturalWidth *
+        scale;
+
+      const displayedHeight =
+        qrCropState.naturalHeight *
+        scale;
+
+      const imgCenterX =
+        stageSize / 2 +
+        qrCropState.x;
+
+      const imgCenterY =
+        stageSize / 2 +
+        qrCropState.y;
+
+      const cropLeft =
+        stageSize *
+        guideInset;
+
+      const cropTop =
+        stageSize *
+        guideInset;
+
+      const sourceX =
         (
-          bounds.minY +
-          bounds.maxY
-        ) / 2;
-
-      let sx =
-        centerX -
-        cropSide / 2;
-
-      let sy =
-        centerY -
-        cropSide / 2;
-
-      sx =
-        Math.max(
-          0,
-          Math.min(
-            sx,
-            source.width -
-            cropSide
+          cropLeft -
+          (
+            imgCenterX -
+            displayedWidth / 2
           )
+        ) /
+        scale;
+
+      const sourceY =
+        (
+          cropTop -
+          (
+            imgCenterY -
+            displayedHeight / 2
+          )
+        ) /
+        scale;
+
+      const sourceSize =
+        cropSizeOnStage /
+        scale;
+
+      if (
+        sourceX < 0 ||
+        sourceY < 0 ||
+        sourceX + sourceSize >
+          qrCropState.naturalWidth ||
+        sourceY + sourceSize >
+          qrCropState.naturalHeight
+      ) {
+        alert(
+          "白色方框超出圖片範圍，請把圖片移回來或縮小一點。"
         );
 
-      sy =
-        Math.max(
-          0,
-          Math.min(
-            sy,
-            source.height -
-            cropSide
-          )
-        );
+        return;
+      }
 
-      const output =
+      const canvas =
         document.createElement(
           "canvas"
         );
 
-      output.width =
+      canvas.width =
         900;
 
-      output.height =
+      canvas.height =
         900;
 
-      const out =
-        output.getContext(
+      const ctx =
+        canvas.getContext(
           "2d"
         );
 
-      out.fillStyle =
+      ctx.fillStyle =
         "#ffffff";
 
-      out.fillRect(
+      ctx.fillRect(
         0,
         0,
-        output.width,
-        output.height
+        900,
+        900
       );
 
-      /* QR 保持銳利 */
-      out.imageSmoothingEnabled =
+      ctx.imageSmoothingEnabled =
         false;
 
-      out.drawImage(
-        source,
-        sx,
-        sy,
-        cropSide,
-        cropSide,
+      ctx.drawImage(
+        img,
+        sourceX,
+        sourceY,
+        sourceSize,
+        sourceSize,
         0,
         0,
-        output.width,
-        output.height
+        900,
+        900
       );
 
-      return await canvasBlob(
-        output
+      const blob =
+        await new Promise(
+          (resolve,reject) => {
+            canvas.toBlob(
+              result => {
+                if (result) {
+                  resolve(
+                    result
+                  );
+                } else {
+                  reject(
+                    new Error(
+                      "裁切失敗"
+                    )
+                  );
+                }
+              },
+              "image/png"
+            );
+          }
+        );
+
+      const resolve =
+        qrCropState.resolve;
+
+      if (
+        qrCropState.objectUrl
+      ) {
+        URL.revokeObjectURL(
+          qrCropState.objectUrl
+        );
+      }
+
+      closeModal(
+        "qrCropModal"
       );
+
+      qrCropState = {
+        type: null
+      };
+
+      if (resolve) {
+        resolve(
+          blob
+        );
+      }
     }
 
 
@@ -3337,7 +3577,8 @@
 
       try {
         const croppedQr =
-          await cropQrFromImage(
+          await openQrCrop(
+            type,
             file
           );
 
@@ -3351,12 +3592,20 @@
         );
 
       } catch (error) {
+        if (
+          error &&
+          error.message ===
+            "cancelled"
+        ) {
+          return;
+        }
+
         console.error(
           error
         );
 
         alert(
-          "這張圖片裡沒有找到可辨識的 QR Code。\n\n請從相簿或檔案選擇一張有完整 QR 的圖片。"
+          "QR 圖片處理失敗，請換一張圖片再試。"
         );
 
       } finally {
@@ -3648,6 +3897,277 @@
 
 
     /* -------------------- AUCTION -------------------- */
+
+    function getAuctionHistory() {
+      const data =
+        loadJSON(
+          KEYS.auctionHistory,
+          []
+        );
+
+      return Array.isArray(data)
+        ? data
+        : [];
+    }
+
+    function saveAuctionHistory(items) {
+      saveJSON(
+        KEYS.auctionHistory,
+        items
+      );
+    }
+
+    function auctionHistoryId(auction) {
+      return [
+        auction.title || "掛軸競標",
+        auction.startAt || "",
+        auction.endAt || ""
+      ].join("||");
+    }
+
+    function recordAuctionIfNeeded(auction) {
+      if (
+        !auction ||
+        !auction.endAt
+      ) {
+        return;
+      }
+
+      const end =
+        parseLocalDateTime(
+          auction.endAt
+        );
+
+      if (
+        !end ||
+        new Date() < end
+      ) {
+        return;
+      }
+
+      const history =
+        getAuctionHistory();
+
+      const id =
+        auctionHistoryId(
+          auction
+        );
+
+      if (
+        history.some(
+          item =>
+            item.id === id
+        )
+      ) {
+        return;
+      }
+
+      const session =
+        getCurrentSession();
+
+      history.push({
+        id,
+
+        date:
+          session?.date || "",
+
+        sessionName:
+          session?.name || "",
+
+        title:
+          auction.title || "掛軸競標",
+
+        winner:
+          auction.winner || "",
+
+        finalBid:
+          Number(
+            auction.currentBid || 0
+          ),
+
+        startAt:
+          auction.startAt || "",
+
+        endAt:
+          auction.endAt || "",
+
+        recordedAt:
+          nowISO()
+      });
+
+      saveAuctionHistory(
+        history
+      );
+    }
+
+    function shouldAutoCloseAuction(auction) {
+      if (
+        !auction ||
+        !auction.enabled ||
+        !auction.endAt
+      ) {
+        return false;
+      }
+
+      const end =
+        parseLocalDateTime(
+          auction.endAt
+        );
+
+      if (!end) {
+        return false;
+      }
+
+      const now =
+        new Date();
+
+      const endDate =
+        new Date(
+          end.getFullYear(),
+          end.getMonth(),
+          end.getDate()
+        );
+
+      const nextDay =
+        new Date(
+          endDate.getTime() +
+          24 * 60 * 60 * 1000
+        );
+
+      return (
+        now >= nextDay
+      );
+    }
+
+    function autoCloseAuctionIfNeeded() {
+      const settings =
+        getSettings();
+
+      const auction = {
+        enabled: false,
+        title: "掛軸競標",
+        currentBid: 0,
+        step: 100,
+        winner: "",
+        startAt: "",
+        endAt: "",
+        ...(settings.auction || {})
+      };
+
+      recordAuctionIfNeeded(
+        auction
+      );
+
+      if (
+        !shouldAutoCloseAuction(
+          auction
+        )
+      ) {
+        return;
+      }
+
+      settings.auction = {
+        ...auction,
+        enabled: false
+      };
+
+      saveSettings(
+        settings
+      );
+    }
+
+    function closeAuctionManually() {
+      const auction =
+        getAuctionSettings();
+
+      if (!auction.enabled) {
+        return;
+      }
+
+      if (
+        !confirm(
+          "確定要關閉目前競標嗎？\n\n已結束的競標仍會保留在競標紀錄。"
+        )
+      ) {
+        return;
+      }
+
+      recordAuctionIfNeeded(
+        auction
+      );
+
+      const settings =
+        getSettings();
+
+      settings.auction = {
+        ...auction,
+        enabled: false
+      };
+
+      saveSettings(
+        settings
+      );
+
+      renderAuctionBanner();
+      renderLibrary();
+    }
+
+    function renderAuctionHistory() {
+      const body =
+        document.getElementById(
+          "auctionHistoryBody"
+        );
+
+      if (!body) {
+        return;
+      }
+
+      const items =
+        [
+          ...getAuctionHistory()
+        ].reverse();
+
+      body.innerHTML =
+        "";
+
+      if (!items.length) {
+        body.innerHTML =
+          `
+            <tr>
+              <td colspan="6" class="auction-history-empty">
+                尚無競標紀錄
+              </td>
+            </tr>
+          `;
+
+        return;
+      }
+
+      for (
+        const item of items
+      ) {
+        const tr =
+          document.createElement(
+            "tr"
+          );
+
+        tr.innerHTML =
+          `
+            <td>${esc(prettyDate(item.date || ""))}</td>
+            <td>${esc(item.sessionName || "—")}</td>
+            <td>${esc(item.title || "掛軸競標")}</td>
+            <td>${esc(item.winner || "—")}</td>
+            <td>$${money(item.finalBid || 0)}</td>
+            <td>${esc(formatAuctionDateTime(item.endAt || ""))}</td>
+          `;
+
+        body.appendChild(
+          tr
+        );
+      }
+    }
+
+
     function getAuctionSettings() {
       const settings = getSettings();
 
@@ -3741,6 +4261,8 @@
     }
 
     function renderAuctionBanner() {
+      autoCloseAuctionIfNeeded();
+
       const auction =
         getAuctionSettings();
 
@@ -3756,13 +4278,18 @@
           "hidden"
         );
 
+        banner.classList.remove(
+          "finished"
+        );
+
         renderAuctionLibraryStatus();
 
         return;
       }
 
       banner.classList.remove(
-        "hidden"
+        "hidden",
+        "finished"
       );
 
       document.getElementById(
@@ -3866,6 +4393,10 @@
           );
 
       } else {
+        recordAuctionIfNeeded(
+          auction
+        );
+
         status.textContent =
           auction.winner
             ? `恭喜 ${auction.winner} 得標`
@@ -3882,9 +4413,26 @@
 
         countdown.textContent =
           "";
+
+        banner.classList.add(
+          "finished"
+        );
+
+        document.getElementById(
+          "auctionWinnerMessageText"
+        ).textContent =
+          auction.winner
+            ? `恭喜 ${auction.winner} 得標`
+            : "競標結束";
+
+        document.getElementById(
+          "auctionWinnerAmount"
+        ).textContent =
+          `最終得標金額 NT$ ${money(auction.currentBid || 0)}`;
       }
 
       renderAuctionLibraryStatus();
+      renderAuctionHistory();
     }
 
     function renderAuctionLibraryStatus() {
@@ -3908,12 +4456,25 @@
       const auction =
         getAuctionSettings();
 
+      const closeButton =
+        document.getElementById(
+          "auctionCloseButton"
+        );
+
       if (!auction.enabled) {
         status.textContent =
           "未開啟";
 
         detail.textContent =
           "開啟後會固定顯示在收銀機上方。";
+
+        if (closeButton) {
+          closeButton.classList.add(
+            "hidden"
+          );
+        }
+
+        renderAuctionHistory();
 
         return;
       }
@@ -3923,6 +4484,14 @@
 
       detail.textContent =
         `${auction.winner ? `署名：${auction.winner}｜` : ""}${formatAuctionDateTime(auction.startAt)} ～ ${formatAuctionDateTime(auction.endAt)}`;
+
+      if (closeButton) {
+        closeButton.classList.remove(
+          "hidden"
+        );
+      }
+
+      renderAuctionHistory();
     }
 
     function openAuctionSetting() {
@@ -4079,6 +4648,10 @@
 
       const settings =
         getSettings();
+
+      recordAuctionIfNeeded(
+        getAuctionSettings()
+      );
 
       settings.auction = {
         enabled,
@@ -4375,13 +4948,136 @@
       URL.revokeObjectURL(url);
     }
 
+
+    function initQrCropControls() {
+      const stage =
+        document.getElementById(
+          "qrCropStage"
+        );
+
+      const zoom =
+        document.getElementById(
+          "qrCropZoom"
+        );
+
+      if (
+        !stage ||
+        !zoom
+      ) {
+        return;
+      }
+
+      zoom.addEventListener(
+        "input",
+        () => {
+          qrCropState.zoom =
+            Number(
+              zoom.value
+            ) || 1;
+
+          updateQrCropTransform();
+        }
+      );
+
+      stage.addEventListener(
+        "pointerdown",
+        event => {
+          if (
+            !qrCropState.type
+          ) {
+            return;
+          }
+
+          qrCropState.dragging =
+            true;
+
+          qrCropState.pointerId =
+            event.pointerId;
+
+          qrCropState.startX =
+            event.clientX;
+
+          qrCropState.startY =
+            event.clientY;
+
+          qrCropState.originX =
+            qrCropState.x;
+
+          qrCropState.originY =
+            qrCropState.y;
+
+          stage.setPointerCapture(
+            event.pointerId
+          );
+        }
+      );
+
+      stage.addEventListener(
+        "pointermove",
+        event => {
+          if (
+            !qrCropState.dragging ||
+            event.pointerId !==
+              qrCropState.pointerId
+          ) {
+            return;
+          }
+
+          qrCropState.x =
+            qrCropState.originX +
+            (
+              event.clientX -
+              qrCropState.startX
+            );
+
+          qrCropState.y =
+            qrCropState.originY +
+            (
+              event.clientY -
+              qrCropState.startY
+            );
+
+          updateQrCropTransform();
+        }
+      );
+
+      const endDrag =
+        event => {
+          if (
+            event.pointerId !==
+              qrCropState.pointerId
+          ) {
+            return;
+          }
+
+          qrCropState.dragging =
+            false;
+
+          qrCropState.pointerId =
+            null;
+        };
+
+      stage.addEventListener(
+        "pointerup",
+        endDrag
+      );
+
+      stage.addEventListener(
+        "pointercancel",
+        endDrag
+      );
+    }
+
+
     /* -------------------- INIT -------------------- */
+    initQrCropControls();
     ensureSession();
     updateSessionUI();
     renderMainProducts();
     renderCart();
     renderPaymentMethodSettings();
     renderAuctionBanner();
+    renderAuctionHistory();
 
     setInterval(
       renderAuctionBanner,

@@ -2299,99 +2299,146 @@
       }
     }
 
+    .section-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .preorder-pickup-banner {
+      margin: 0 0 12px;
+      padding: 10px 12px;
+      border: 1px solid #c9b8a9;
+      border-radius: 11px;
+      background: #f5efe9;
+      color: #755f50;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    #preorderPickupToggle.active {
+      background: #75665d;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+
     .session-date-row {
-      display:grid;
-      grid-template-columns:minmax(0,1fr) 64px;
-      gap:8px;
-      align-items:center;
+      display: grid;
+      grid-template-columns: minmax(0,1fr) 58px;
+      gap: 8px;
+      align-items: center;
     }
+
     .session-date-row input {
-      width:100%;
-      min-width:0;
-      box-sizing:border-box;
-    }
-    .session-today-btn { height:42px; }
-
-    .preorder-reserve-reminder {
-      margin:10px 0;
-      padding:10px 12px;
-      border:1px solid #d8c3c3;
-      border-radius:10px;
-      background:#f5eeee;
-      color:#8b6666;
-      font-size:12px;
-      line-height:1.5;
-    }
-    .compact-reminder { margin:7px 0 12px; }
-
-    .preorder-pickup-btn {
-      background:var(--soft);
-      color:var(--text);
-    }
-    .preorder-pickup-note {
-      margin-top:7px;
-      color:var(--muted);
-      font-size:11px;
-      line-height:1.45;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
     }
 
-    .gift-settings-grid {
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:10px;
-    }
-    .gift-enable-row {
-      grid-column:1 / -1;
-      padding:10px 12px;
-      border:1px solid var(--line);
-      border-radius:10px;
-      background:var(--soft);
-    }
-    .gift-settings-grid input[type="text"],
-    .gift-settings-grid input[type="number"] {
-      width:100%;
-      box-sizing:border-box;
-      margin-top:6px;
+    .bundle-setting-card,
+    .shared-polaroid-card,
+    .preorder-reminder-card {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
     }
 
-    .shared-stock-row {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
+    .preorder-reminder-card {
+      margin-top: 0;
+      padding: 12px;
+      border: 1px solid #cdbbae;
+      border-radius: 12px;
+      background: #f7f1ed;
     }
 
-    .bundle-link-list {
-      display:grid;
-      gap:8px;
-      margin-top:10px;
+    .shared-stock-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-    .bundle-link-row {
-      display:grid;
-      grid-template-columns:minmax(0,1fr) 72px;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border:1px solid var(--line);
-      border-radius:10px;
-      background:var(--soft);
+
+    .bundle-component-list {
+      display: grid;
+      gap: 8px;
+      max-height: 52vh;
+      overflow-y: auto;
+      margin-top: 10px;
     }
-    .bundle-link-qty {
-      width:72px !important;
-      min-width:0 !important;
-      box-sizing:border-box;
-      text-align:center;
+
+    .bundle-component-row {
+      display: grid;
+      grid-template-columns: 22px minmax(0,1fr) 76px;
+      gap: 8px;
+      align-items: center;
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--soft);
     }
-    .gift-cart-label {
-      color:#87736e;
-      font-weight:600;
+
+    .bundle-component-row input[type="number"] {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .gift-auto-label {
+      display: inline-flex;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #eee6df;
+      color: #796759;
+      font-size: 10px;
+      margin-left: 6px;
+    }
+
+    .preorder-cart-item {
+      border-left: 3px solid #aa8d78;
+      padding-left: 9px;
     }
 
     @media (max-width:620px) {
-      .gift-settings-grid { grid-template-columns:1fr; }
-      .shared-stock-row {
-        align-items:flex-start;
-        flex-direction:column;
+      .bundle-setting-card,
+      .shared-polaroid-card,
+      .preorder-reminder-card {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .section-top-actions {
+        gap: 5px;
+      }
+    }
+
+    /* iPad：購物車內容不再被 flex 撐出大片空白 */
+    .cart {
+      align-self: start;
+      min-height: 0;
+      height: auto;
+      max-height: calc(100vh - 68px);
+      overflow-y: auto;
+      position: sticky;
+      top: 68px;
+      box-sizing: border-box;
+    }
+
+    #cartItems {
+      flex: 0 1 auto !important;
+      min-height: 0 !important;
+      max-height: 42vh;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: minmax(0,1fr) 330px;
+        align-items: start;
+      }
+
+      .cart {
+        max-height: calc(100dvh - 68px);
       }
     }
 </style>
@@ -2459,13 +2506,17 @@
     <main class="products">
       <div id="mainMenu">
         <div id="currentSessionLabel" class="current-session"></div>
-        <div class="preorder-reserve-reminder compact-reminder">
-          活動前提醒：預購保留數量要先從現場庫存扣除。
-        </div>
 
         <div class="section-top">
           <h2 class="section-title">選擇商品</h2>
-          <button id="manageToggle" class="manage-toggle" onclick="toggleManageMode()">管理</button>
+          <div class="section-top-actions">
+            <button id="preorderPickupToggle" class="manage-toggle" onclick="togglePreorderPickupMode()">預購取貨</button>
+            <button id="manageToggle" class="manage-toggle" onclick="toggleManageMode()">管理</button>
+          </div>
+        </div>
+
+        <div id="preorderPickupBanner" class="preorder-pickup-banner hidden">
+          預購取貨模式｜不計營收、不再次扣庫存
         </div>
 
         <div class="product-search-row">
@@ -2499,11 +2550,9 @@
       </div>
 
       <div class="cart-actions">
-        <button class="checkout-main" onclick="openPaymentChooser()">結帳</button>
-        <button class="preorder-pickup-btn" onclick="completePreorderPickup()">預購取貨</button>
+        <button id="checkoutMainButton" class="checkout-main" onclick="openPaymentChooser()">結帳</button>
         <button class="clear-cart" onclick="clearCart()">清空購物車</button>
       </div>
-      <div class="preorder-pickup-note">預購取貨：不計營收，也不會再次扣除現場庫存。</div>
     </aside>
   </div>
 
@@ -2644,6 +2693,18 @@
           </tfoot>
         </table>
       </div>
+
+      <div class="setting-action-card bundle-setting-card">
+        <div>
+          <div class="setting-action-title">大全套連動扣庫存</div>
+          <div class="subtle">開啟後，售出「終極大全套」時會依設定同步扣除內含商品庫存。</div>
+        </div>
+        <label class="checkbox-row">
+          <input id="ultimateBundleEnabled" type="checkbox" onchange="saveUltimateBundleEnabled()">
+          <span>開啟</span>
+        </label>
+        <button class="small-btn" onclick="openUltimateBundleModal()">設定內容</button>
+      </div>
     </section>
 
     <section class="library-section">
@@ -2690,17 +2751,22 @@
               <span>統一價格</span>
             </label>
           </div>
-          <div class="library-section-note">管理常駐拍立得選項、價格與庫存。</div>
+          <div class="library-section-note">管理常駐拍立得選項、價格、成員與庫存；單人／雙人也可共用同一庫存池。</div>
         </div>
       </div>
 
-      <div class="library-inline-settings compact">
-        <div class="shared-stock-row">
-          <div>
-            <div class="library-setting-label">共用拍立得庫存</div>
-            <div class="subtle">勾選「共用」的單人／雙人拍立得會一起扣這個庫存。</div>
-          </div>
-          <input id="polaroidSharedStockInput" class="inline-price-input" type="number" min="0" inputmode="numeric" placeholder="不限量" onchange="savePolaroidSharedStock(this.value)">
+      <div class="setting-action-card shared-polaroid-card">
+        <div>
+          <div class="setting-action-title">拍立得共用庫存</div>
+          <div class="subtle">勾選「共用」的拍立得選項會一起扣這個庫存。</div>
+        </div>
+        <div class="shared-stock-controls">
+          <label class="checkbox-row">
+            <input id="sharedPolaroidUnlimited" type="checkbox" onchange="saveSharedPolaroidStock()">
+            <span>不限量</span>
+          </label>
+          <input id="sharedPolaroidStock" class="inline-price-input" type="number" min="0" inputmode="numeric" placeholder="共用數量" onchange="saveSharedPolaroidStock()">
+          <span id="sharedPolaroidRemainingText" class="subtle"></span>
         </div>
       </div>
 
@@ -2714,38 +2780,6 @@
             </tr>
           </tfoot>
         </table>
-      </div>
-    </section>
-
-    <section class="library-section">
-      <div class="library-section-head">
-        <div>
-          <h3>贈品</h3>
-          <div class="library-section-note">消費達門檻時自動加入購物車，價格固定為 0 元並扣除贈品庫存。</div>
-        </div>
-      </div>
-
-      <div class="gift-settings-grid">
-        <label class="checkbox-row gift-enable-row">
-          <input id="giftEnabled" type="checkbox" onchange="saveGiftSettings()">
-          <span>開啟滿額贈品</span>
-        </label>
-
-        <div class="setting-action-card">
-          <label for="giftNameInput">贈品名稱</label>
-          <input id="giftNameInput" type="text" placeholder="例如：限定明信片" onchange="saveGiftSettings()">
-        </div>
-
-        <div class="setting-action-card">
-          <label for="giftThresholdInput">消費滿額</label>
-          <input id="giftThresholdInput" type="number" min="0" inputmode="numeric" onchange="saveGiftSettings()">
-        </div>
-
-        <div class="setting-action-card">
-          <label for="giftStockInput">贈品庫存</label>
-          <input id="giftStockInput" type="number" min="0" inputmode="numeric" onchange="saveGiftSettings()">
-          <div id="giftStockInfo" class="subtle"></div>
-        </div>
       </div>
     </section>
 
@@ -2790,8 +2824,39 @@
       </div>
     </section>
 
+    <section class="library-section">
+      <div class="library-section-head">
+        <div>
+          <h3>贈品</h3>
+          <div class="library-section-note">設定贈品庫存與滿額門檻；達到門檻後會自動加入購物車，價格為 NT$0。</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>贈品</th><th>滿額</th><th>已送</th><th>剩餘</th><th>狀態</th><th>操作</th></tr></thead>
+          <tbody id="giftLibraryBody"></tbody>
+          <tfoot>
+            <tr class="library-add-row">
+              <td colspan="6"><button class="library-inline-add" onclick="openGiftModal()">＋ 新增贈品</button></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
     <!-- 營運設定 -->
 
+
+    <section class="library-section">
+      <div class="preorder-reminder-card">
+        <div>
+          <div class="setting-action-title">預購庫存提醒</div>
+          <div class="subtle">活動前請先把「預購保留數量」從現場可售庫存扣除，避免現場超賣。預購取貨本身不會再次扣庫存。</div>
+        </div>
+        <span class="pill">活動前確認</span>
+      </div>
+    </section>
 
     <section class="library-section">
       <div class="library-section-head">
@@ -2936,11 +3001,7 @@
       <label for="sessionDate">日期</label>
       <div class="session-date-row">
         <input id="sessionDate" type="date">
-        <button type="button" class="small-btn session-today-btn" onclick="setSessionDateToday()">今日</button>
-      </div>
-
-      <div class="preorder-reserve-reminder">
-        活動前提醒：記得先把「預購保留數量」從現場庫存扣除，再開始現場販售。
+        <button type="button" class="small-btn" onclick="setSessionDateToday()">今日</button>
       </div>
 
       <label for="sessionName">場次名稱</label>
@@ -3078,7 +3139,7 @@
 
       <label class="checkbox-row">
         <input id="otherPolaroidSharedStock" type="checkbox">
-        <span>使用共用庫存</span>
+        <span>使用拍立得共用庫存</span>
       </label>
 
       <label id="otherPolaroidPermanentRow" class="checkbox-row">
@@ -3115,19 +3176,6 @@
       <div class="modal-actions">
         <button class="cancel" onclick="closeModal('polaroidOwnerModal')">取消</button>
         <button class="confirm" onclick="savePolaroidOwnerMulti()">儲存</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- BUNDLE LINKED INVENTORY -->
-  <div id="bundleLinkModal" class="modal hidden">
-    <div class="modal-box">
-      <h2 id="bundleLinkTitle">連動扣除設定</h2>
-      <div class="modal-note">例如「大全套」售出 1 份時，可自動連動扣除其他商品、生寫真或拍立得庫存。</div>
-      <div id="bundleLinkOptions" class="bundle-link-list"></div>
-      <div class="modal-actions">
-        <button class="cancel" onclick="closeModal('bundleLinkModal')">取消</button>
-        <button class="confirm" onclick="saveBundleLinks()">儲存</button>
       </div>
     </div>
   </div>
@@ -3506,6 +3554,52 @@
     </div>
   </div>
 
+  <!-- ULTIMATE BUNDLE LINKED STOCK -->
+  <div id="ultimateBundleModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>大全套連動扣庫存</h2>
+      <div class="modal-note">勾選大全套內含的商品，並設定每賣 1 套要扣除幾個。只影響庫存，不會增加訂單金額。</div>
+      <div id="ultimateBundleItems" class="bundle-component-list"></div>
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('ultimateBundleModal')">取消</button>
+        <button class="confirm" onclick="saveUltimateBundleComponents()">儲存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GIFT -->
+  <div id="giftModal" class="modal hidden">
+    <div class="modal-box">
+      <h2 id="giftModalTitle">新增贈品</h2>
+
+      <label for="giftName">贈品名稱</label>
+      <input id="giftName" type="text" placeholder="例如：滿額小卡">
+
+      <label for="giftThreshold">消費滿額</label>
+      <input id="giftThreshold" type="number" min="0" inputmode="numeric" placeholder="例如：500">
+
+      <label class="checkbox-row">
+        <input id="giftUnlimited" type="checkbox" onchange="toggleGiftStockInput()">
+        <span>不限量</span>
+      </label>
+
+      <div id="giftStockArea">
+        <label for="giftStock">庫存數量</label>
+        <input id="giftStock" type="number" min="0" inputmode="numeric" value="0">
+      </div>
+
+      <label class="checkbox-row">
+        <input id="giftEnabled" type="checkbox" checked>
+        <span>啟用自動贈送</span>
+      </label>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('giftModal')">取消</button>
+        <button class="confirm" onclick="saveGift()">儲存</button>
+      </div>
+    </div>
+  </div>
+
   <!-- LOTTERY SETTING -->
   <div id="lotterySettingModal" class="modal hidden">
     <div class="modal-box">
@@ -3557,6 +3651,8 @@
     let pendingPhotoTheme = null;
     let pendingPolaroid = null;
     let stockContext = null;
+    let preorderPickupMode = false;
+    let editingGiftId = null;
 
     /* -------------------- HELPERS -------------------- */
     function esc(value) {
@@ -3580,6 +3676,18 @@
       const d = new Date();
       const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
       return local.toISOString().slice(0,10);
+    }
+
+    function setSessionDateToday() {
+      const input =
+        document.getElementById(
+          "sessionDate"
+        );
+
+      if (input) {
+        input.value =
+          todayISO();
+      }
     }
 
     function prettyDate(value) {
@@ -3843,6 +3951,22 @@
         deletedPolaroidIds: Array.isArray(saved.deletedPolaroidIds) ? saved.deletedPolaroidIds : [],
         deletedPhotoThemes: Array.isArray(saved.deletedPhotoThemes) ? saved.deletedPhotoThemes : [],
 
+        ultimateBundle: {
+          enabled: false,
+          components: [],
+          ...(saved.ultimateBundle || {})
+        },
+
+        sharedPolaroidStock:
+          saved.sharedPolaroidStock === undefined
+            ? null
+            : saved.sharedPolaroidStock,
+
+        gifts:
+          Array.isArray(saved.gifts)
+            ? saved.gifts
+            : [],
+
         owners:
           Array.isArray(saved.owners)
             ? saved.owners
@@ -3850,20 +3974,6 @@
 
         photoOwners: {
           ...(saved.photoOwners || {})
-        },
-
-        polaroidSharedStock:
-          saved.polaroidSharedStock === null ||
-          Number.isInteger(saved.polaroidSharedStock)
-            ? saved.polaroidSharedStock
-            : null,
-
-        gift: {
-          enabled: false,
-          name: "滿額贈品",
-          threshold: 500,
-          stock: 0,
-          ...(saved.gift || {})
         },
 
         payments: {
@@ -4039,6 +4149,10 @@
           owner:
             ownerListLabel(
               owners
+            ),
+          sharedStock:
+            Boolean(
+              x.sharedStock
             ),
           stock:
             x.stock === undefined
@@ -4274,10 +4388,6 @@
       document.getElementById("statsSessionDate").textContent = `${prettyDate(s.date)}｜${sessionStatusLabel(s.status || "active")}`;
     }
 
-    function setSessionDateToday() {
-      document.getElementById("sessionDate").value = todayISO();
-    }
-
     function openSessionModal() {
       renderSessionPicker();
       editingSessionId = currentSessionId;
@@ -4442,22 +4552,44 @@
       return `photoset:${theme}`;
     }
 
-    function inventoryKeyForPolaroid(id) {
-      const item = getPolaroids().find(option => option.id === id);
-      return item?.sharedStock ? "polaroid:shared" : `polaroid:${id}`;
+    function inventoryKeyForPolaroid(id,item=null) {
+      const option =
+        item ||
+        getPolaroids()
+          .find(
+            candidate =>
+              candidate.id === id
+          );
+
+      return option?.sharedStock
+        ? "polaroid-shared:default"
+        : `polaroid:${id}`;
     }
 
     function getSoldByKey(key) {
       let sum = 0;
       for (const order of getAllOrders()) {
-        if (order.voided || order.preorderPickup) continue;
-        for (const item of order.items || []) {
-          if (item.inventoryKey === key) sum += Number(item.quantity||0);
+        if (
+          order.voided ||
+          order.preorderPickup
+        ) continue;
 
-          for (const effect of item.inventoryEffects || []) {
-            if (effect.key === key) {
-              sum += Number(item.quantity||1) * Number(effect.quantity||1);
-            }
+        for (const item of order.items || []) {
+          if (item.inventoryKey === key) {
+            sum += Number(item.quantity||0);
+          }
+        }
+
+        for (
+          const adjustment of
+          order.stockAdjustments || []
+        ) {
+          if (
+            adjustment.key === key
+          ) {
+            sum += Number(
+              adjustment.quantity || 0
+            );
           }
         }
       }
@@ -4465,15 +4597,7 @@
     }
 
     function getCartByKey(key) {
-      return cart.reduce((sum,item) => {
-        let used = item.inventoryKey === key ? Number(item.quantity||0) : 0;
-        for (const effect of item.inventoryEffects || []) {
-          if (effect.key === key) {
-            used += Number(item.quantity||1) * Number(effect.quantity||1);
-          }
-        }
-        return sum + used;
-      },0);
+      return cart.reduce((sum,item) => sum + (item.inventoryKey === key ? Number(item.quantity||0) : 0),0);
     }
 
     function remaining(stock,key,includeCart=false) {
@@ -4564,19 +4688,336 @@
       if (key.startsWith("photoset:")) {
         return getPhotoStock()[key.slice("photoset:".length)];
       }
-      if (key === "polaroid:shared") {
-        return getSettings().polaroidSharedStock;
+      if (
+        key ===
+        "polaroid-shared:default"
+      ) {
+        return getSettings()
+          .sharedPolaroidStock;
       }
+
       if (key.startsWith("polaroid:")) {
         const id = key.slice("polaroid:".length);
         const item = getPolaroids().find(x => x.id === id);
         return item ? item.stock : null;
       }
-      if (key === "gift:main") {
-        return Number(getSettings().gift?.stock || 0);
+
+      if (key.startsWith("gift:")) {
+        const id =
+          key.slice(
+            "gift:".length
+          );
+
+        const gift =
+          getGifts()
+            .find(
+              item =>
+                item.id === id
+            );
+
+        return gift
+          ? gift.stock
+          : null;
       }
+
       return null;
     }
+
+    function getUltimateBundleSettings() {
+      const settings =
+        getSettings();
+
+      return {
+        enabled:false,
+        components:[],
+        ...(settings.ultimateBundle || {})
+      };
+    }
+
+    function getBundleCandidates() {
+      const map =
+        new Map();
+
+      for (
+        const product of
+        getProducts()
+      ) {
+        if (
+          product.id ===
+            "ultimate" ||
+          !(
+            product.type ===
+              "simple" ||
+            product.type ===
+              "custom"
+          )
+        ) {
+          continue;
+        }
+
+        const key =
+          inventoryKeyForProduct(
+            product.id
+          );
+
+        map.set(
+          key,
+          {
+            key,
+            label:
+              product.name
+          }
+        );
+      }
+
+      for (
+        const [
+          theme
+        ] of
+        Object.entries(
+          getPhotoStock()
+        )
+      ) {
+        const key =
+          inventoryKeyForPhoto(
+            theme
+          );
+
+        map.set(
+          key,
+          {
+            key,
+            label:
+              `生寫真｜${theme}`
+          }
+        );
+      }
+
+      for (
+        const option of
+        getPolaroids()
+      ) {
+        const key =
+          inventoryKeyForPolaroid(
+            option.id
+          );
+
+        const label =
+          option.sharedStock
+            ? "拍立得｜共用庫存"
+            : `拍立得｜${option.name}`;
+
+        if (
+          !map.has(
+            key
+          )
+        ) {
+          map.set(
+            key,
+            {
+              key,
+              label
+            }
+          );
+        }
+      }
+
+      return Array.from(
+        map.values()
+      );
+    }
+
+    function saveUltimateBundleEnabled() {
+      const settings =
+        getSettings();
+
+      settings.ultimateBundle = {
+        ...getUltimateBundleSettings(),
+        enabled:
+          Boolean(
+            document.getElementById(
+              "ultimateBundleEnabled"
+            )?.checked
+          )
+      };
+
+      saveSettings(
+        settings
+      );
+    }
+
+    function openUltimateBundleModal() {
+      const area =
+        document.getElementById(
+          "ultimateBundleItems"
+        );
+
+      const bundle =
+        getUltimateBundleSettings();
+
+      const selected =
+        new Map(
+          (
+            bundle.components || []
+          ).map(
+            item => [
+              item.key,
+              Number(
+                item.quantity || 1
+              )
+            ]
+          )
+        );
+
+      area.innerHTML =
+        "";
+
+      const candidates =
+        getBundleCandidates();
+
+      if (!candidates.length) {
+        area.innerHTML =
+          `<div class="subtle">目前沒有可連動扣除的庫存商品。</div>`;
+      }
+
+      for (
+        const candidate of
+        candidates
+      ) {
+        const row =
+          document.createElement(
+            "div"
+          );
+
+        row.className =
+          "bundle-component-row";
+
+        row.innerHTML =
+          `
+            <input class="bundle-component-check" type="checkbox" data-key="${esc(candidate.key)}" ${selected.has(candidate.key) ? "checked" : ""}>
+            <span>${esc(candidate.label)}</span>
+            <input class="bundle-component-qty" data-key="${esc(candidate.key)}" type="number" min="1" inputmode="numeric" value="${selected.get(candidate.key) || 1}">
+          `;
+
+        area.appendChild(
+          row
+        );
+      }
+
+      document.getElementById(
+        "ultimateBundleModal"
+      ).classList.remove(
+        "hidden"
+      );
+    }
+
+    function saveUltimateBundleComponents() {
+      const components =
+        [];
+
+      for (
+        const check of
+        document.querySelectorAll(
+          "#ultimateBundleItems .bundle-component-check:checked"
+        )
+      ) {
+        const key =
+          check.dataset.key;
+
+        const qtyInput =
+          document.querySelector(
+            `#ultimateBundleItems .bundle-component-qty[data-key="${CSS.escape(key)}"]`
+          );
+
+        const quantity =
+          Math.max(
+            1,
+            Number(
+              qtyInput?.value || 1
+            )
+          );
+
+        components.push({
+          key,
+          quantity
+        });
+      }
+
+      const settings =
+        getSettings();
+
+      settings.ultimateBundle = {
+        ...getUltimateBundleSettings(),
+        components
+      };
+
+      saveSettings(
+        settings
+      );
+
+      closeModal(
+        "ultimateBundleModal"
+      );
+
+      renderLibrary();
+    }
+
+    function getBundleStockAdjustments(items=cart) {
+      const bundle =
+        getUltimateBundleSettings();
+
+      if (
+        !bundle.enabled ||
+        !Array.isArray(
+          bundle.components
+        ) ||
+        !bundle.components.length
+      ) {
+        return [];
+      }
+
+      const bundleQty =
+        items.reduce(
+          (sum,item) =>
+            sum +
+            (
+              item.id ===
+                "ultimate"
+                ? Number(
+                    item.quantity || 0
+                  )
+                : 0
+            ),
+          0
+        );
+
+      if (
+        bundleQty <= 0
+      ) {
+        return [];
+      }
+
+      return bundle.components
+        .filter(
+          item =>
+            item.key
+        )
+        .map(
+          item => ({
+            key:
+              item.key,
+            quantity:
+              bundleQty *
+              Math.max(
+                1,
+                Number(
+                  item.quantity || 1
+                )
+              )
+          })
+        );
+    }
+
 
     /* -------------------- PAGES -------------------- */
     function showPage(id, button=null) {
@@ -4596,11 +5037,530 @@
       if (id === "posPage") renderMainProducts();
     }
 
+    function getGifts() {
+      const settings =
+        getSettings();
+
+      return Array.isArray(
+        settings.gifts
+      )
+        ? settings.gifts
+        : [];
+    }
+
+    function saveGifts(items) {
+      const settings =
+        getSettings();
+
+      settings.gifts =
+        items;
+
+      saveSettings(
+        settings
+      );
+    }
+
+    function openGiftModal(id=null) {
+      editingGiftId =
+        id;
+
+      const gift =
+        id
+          ? getGifts()
+              .find(
+                item =>
+                  item.id === id
+              )
+          : null;
+
+      document.getElementById(
+        "giftModalTitle"
+      ).textContent =
+        gift
+          ? "修改贈品"
+          : "新增贈品";
+
+      document.getElementById(
+        "giftName"
+      ).value =
+        gift?.name || "";
+
+      document.getElementById(
+        "giftThreshold"
+      ).value =
+        gift
+          ? Number(
+              gift.threshold || 0
+            )
+          : "";
+
+      document.getElementById(
+        "giftUnlimited"
+      ).checked =
+        gift
+          ? gift.stock === null
+          : false;
+
+      document.getElementById(
+        "giftStock"
+      ).value =
+        gift?.stock === null ||
+        gift?.stock === undefined
+          ? 0
+          : Number(
+              gift.stock
+            );
+
+      document.getElementById(
+        "giftEnabled"
+      ).checked =
+        gift
+          ? Boolean(
+              gift.enabled
+            )
+          : true;
+
+      toggleGiftStockInput();
+
+      document.getElementById(
+        "giftModal"
+      ).classList.remove(
+        "hidden"
+      );
+    }
+
+    function toggleGiftStockInput() {
+      document.getElementById(
+        "giftStockArea"
+      ).classList.toggle(
+        "hidden",
+        document.getElementById(
+          "giftUnlimited"
+        ).checked
+      );
+    }
+
+    function saveGift() {
+      const name =
+        document.getElementById(
+          "giftName"
+        ).value.trim();
+
+      const threshold =
+        Number(
+          document.getElementById(
+            "giftThreshold"
+          ).value
+        );
+
+      const unlimited =
+        document.getElementById(
+          "giftUnlimited"
+        ).checked;
+
+      const stock =
+        unlimited
+          ? null
+          : Number(
+              document.getElementById(
+                "giftStock"
+              ).value
+            );
+
+      const enabled =
+        document.getElementById(
+          "giftEnabled"
+        ).checked;
+
+      if (!name) {
+        alert(
+          "請輸入贈品名稱"
+        );
+        return;
+      }
+
+      if (
+        !Number.isFinite(threshold) ||
+        threshold < 0
+      ) {
+        alert(
+          "請輸入正確滿額金額"
+        );
+        return;
+      }
+
+      if (
+        !unlimited &&
+        (
+          !Number.isInteger(stock) ||
+          stock < 0
+        )
+      ) {
+        alert(
+          "請輸入正確贈品庫存"
+        );
+        return;
+      }
+
+      const items =
+        getGifts();
+
+      if (editingGiftId) {
+        const index =
+          items.findIndex(
+            item =>
+              item.id ===
+              editingGiftId
+          );
+
+        if (index >= 0) {
+          items[index] = {
+            ...items[index],
+            name,
+            threshold,
+            stock,
+            enabled
+          };
+        }
+      } else {
+        items.push({
+          id:
+            "gift-" +
+            Date.now() +
+            "-" +
+            Math.random()
+              .toString(36)
+              .slice(2,6),
+          name,
+          threshold,
+          stock,
+          enabled
+        });
+      }
+
+      saveGifts(
+        items
+      );
+
+      editingGiftId =
+        null;
+
+      closeModal(
+        "giftModal"
+      );
+
+      syncAutoGifts();
+      renderCart();
+      renderLibrary();
+    }
+
+    function toggleGiftEnabled(id) {
+      const items =
+        getGifts();
+
+      const index =
+        items.findIndex(
+          item =>
+            item.id === id
+        );
+
+      if (index < 0) return;
+
+      items[index].enabled =
+        !items[index].enabled;
+
+      saveGifts(
+        items
+      );
+
+      syncAutoGifts();
+      renderCart();
+      renderLibrary();
+    }
+
+    function deleteGift(id) {
+      const gift =
+        getGifts()
+          .find(
+            item =>
+              item.id === id
+          );
+
+      if (
+        !gift ||
+        !confirmDanger(
+          `確定刪除贈品「${gift.name}」嗎？`
+        )
+      ) {
+        return;
+      }
+
+      saveGifts(
+        getGifts()
+          .filter(
+            item =>
+              item.id !== id
+          )
+      );
+
+      syncAutoGifts();
+      renderCart();
+      renderLibrary();
+    }
+
+    function getPaidCartSubtotal() {
+      return cart.reduce(
+        (sum,item) =>
+          sum +
+          (
+            item.autoGift ||
+            item.preorderPickup
+              ? 0
+              : Number(
+                  item.price || 0
+                ) *
+                Number(
+                  item.quantity || 0
+                )
+          ),
+        0
+      );
+    }
+
+    function syncAutoGifts() {
+      cart =
+        cart.filter(
+          item =>
+            !item.autoGift
+        );
+
+      if (
+        preorderPickupMode
+      ) {
+        return;
+      }
+
+      const subtotal =
+        getPaidCartSubtotal();
+
+      for (
+        const gift of
+        getGifts()
+          .filter(
+            item =>
+              item.enabled
+          )
+          .sort(
+            (a,b) =>
+              Number(a.threshold || 0) -
+              Number(b.threshold || 0)
+          )
+      ) {
+        if (
+          subtotal <
+          Number(
+            gift.threshold || 0
+          )
+        ) {
+          continue;
+        }
+
+        const key =
+          `gift:${gift.id}`;
+
+        if (
+          !canAdd(
+            gift.stock,
+            key,
+            1
+          )
+        ) {
+          continue;
+        }
+
+        cart.push({
+          id:
+            `auto-${gift.id}`,
+          inventoryKey:
+            key,
+          name:
+            `贈品｜${gift.name}`,
+          price:
+            0,
+          quantity:
+            1,
+          owner:
+            "",
+          autoGift:
+            true
+        });
+      }
+    }
+
+    function renderGiftLibrary() {
+      const body =
+        document.getElementById(
+          "giftLibraryBody"
+        );
+
+      if (!body) return;
+
+      body.innerHTML =
+        "";
+
+      const gifts =
+        getGifts();
+
+      if (!gifts.length) {
+        body.innerHTML =
+          `<tr><td colspan="6">尚未設定贈品</td></tr>`;
+        return;
+      }
+
+      for (const gift of gifts) {
+        const key =
+          `gift:${gift.id}`;
+
+        const sold =
+          getSoldByKey(
+            key
+          );
+
+        const r =
+          remaining(
+            gift.stock,
+            key,
+            false
+          );
+
+        const tr =
+          document.createElement(
+            "tr"
+          );
+
+        tr.innerHTML =
+          `
+            <td>${esc(gift.name)}</td>
+            <td>NT$ ${money(gift.threshold)}</td>
+            <td>${sold}</td>
+            <td>${gift.stock===null ? '<span class="pill">不限量</span>' : `<span class="pill ${r<=getStockWarningThreshold(key)?"low":""}">${r} / ${gift.stock}</span>`}</td>
+            <td><span class="pill">${gift.enabled ? "啟用" : "停用"}</span></td>
+            <td>
+              <div class="library-actions">
+                <button class="small-btn" onclick="openGiftModal('${gift.id}')">修改</button>
+                <button class="small-btn" onclick="toggleGiftEnabled('${gift.id}')">${gift.enabled ? "停用" : "啟用"}</button>
+                <button class="small-btn danger-btn" onclick="deleteGift('${gift.id}')">刪除</button>
+              </div>
+            </td>
+          `;
+
+        body.appendChild(
+          tr
+        );
+      }
+    }
+
+
+    function saveSharedPolaroidStock() {
+      const settings =
+        getSettings();
+
+      const unlimited =
+        Boolean(
+          document.getElementById(
+            "sharedPolaroidUnlimited"
+          )?.checked
+        );
+
+      const stockInput =
+        document.getElementById(
+          "sharedPolaroidStock"
+        );
+
+      if (stockInput) {
+        stockInput.disabled = unlimited;
+      }
+
+      const value =
+        Number(
+          document.getElementById(
+            "sharedPolaroidStock"
+          )?.value
+        );
+
+      if (
+        !unlimited &&
+        (
+          !Number.isInteger(value) ||
+          value < getSoldByKey(
+            "polaroid-shared:default"
+          )
+        )
+      ) {
+        alert(
+          `共用庫存不能小於目前已使用 ${getSoldByKey("polaroid-shared:default")}`
+        );
+
+        renderLibrary();
+        return;
+      }
+
+      settings.sharedPolaroidStock =
+        unlimited
+          ? null
+          : value;
+
+      saveSettings(
+        settings
+      );
+
+      renderLibrary();
+    }
+
+    function togglePolaroidSharedStock(id) {
+      if (!requireEditableSession()) return;
+
+      const items =
+        getPolaroids();
+
+      const index =
+        items.findIndex(
+          item =>
+            item.id === id
+        );
+
+      if (index < 0) return;
+
+      items[index].sharedStock =
+        !items[index].sharedStock;
+
+      savePolaroids(
+        items
+      );
+
+      renderLibrary();
+
+      if (
+        !document.getElementById(
+          "subMenu"
+        ).classList.contains(
+          "hidden"
+        ) &&
+        document.getElementById(
+          "subTitle"
+        ).textContent ===
+          "拍立得"
+      ) {
+        openPolaroid();
+      }
+    }
+
+
     /* -------------------- PRODUCTS -------------------- */
     function isMainProductSoldOut(p) {
-      if (p.type==="simple" || p.type==="custom") {
-        return stockInfo(p.stock,inventoryKeyForProduct(p.id),true).sold || !canAddBundle(p,1);
-      }
+      if (preorderPickupMode) return false;
+
+      if (p.type==="simple" || p.type==="custom") return stockInfo(p.stock,inventoryKeyForProduct(p.id),true).sold;
       if (p.type==="lottery") return lotteryRemaining(true)<=0;
       if (p.type==="photoset") {
         const stocks=getPhotoStock(), themes=Object.keys(stocks);
@@ -4610,7 +5570,11 @@
       if (p.type==="polaroid") {
         const opts=getPolaroids().filter(x=>x.visible);
         if (!opts.length) return true;
-        return opts.every(x=>x.stock!==null && remaining(x.stock,inventoryKeyForPolaroid(x.id),true)<=0);
+        return opts.every(x=>{
+          const key=inventoryKeyForPolaroid(x.id);
+          const stock=stockSource(key);
+          return stock!==null && remaining(stock,key,true)<=0;
+        });
       }
       return false;
     }
@@ -4751,125 +5715,32 @@
       grid.appendChild(wrap);
     }
 
-    let editingBundleProductId = null;
-
-    function getBundleInventoryOptions(productId) {
-      const result = [];
-
-      for (const product of getProducts()) {
-        if (product.id === productId) continue;
-        if (!(product.type === "simple" || product.type === "custom")) continue;
-        result.push({
-          key:inventoryKeyForProduct(product.id),
-          name:`一般商品｜${product.name}`
-        });
-      }
-
-      for (const theme of Object.keys(getPhotoStock())) {
-        result.push({
-          key:inventoryKeyForPhoto(theme),
-          name:`生寫真｜${theme}`
-        });
-      }
-
-      for (const option of getPolaroids()) {
-        result.push({
-          key:inventoryKeyForPolaroid(option.id),
-          name:`拍立得｜${option.name}${option.sharedStock ? "（共用）" : ""}`
-        });
-      }
-
-      const unique = new Map();
-      for (const item of result) {
-        if (!unique.has(item.key)) unique.set(item.key,item);
-      }
-      return Array.from(unique.values());
-    }
-
-    function openBundleLinks(productId) {
-      editingBundleProductId = productId;
-      const product = getProducts().find(item => item.id === productId);
-      if (!product) return;
-
-      document.getElementById("bundleLinkTitle").textContent = `連動扣除｜${product.name}`;
-      const area = document.getElementById("bundleLinkOptions");
-      area.innerHTML = "";
-
-      const current = new Map(
-        (product.bundleComponents || []).map(item => [item.key,Number(item.quantity||1)])
-      );
-
-      const options = getBundleInventoryOptions(productId);
-      if (!options.length) {
-        area.innerHTML = `<div class="subtle">目前沒有其他可連動的庫存品項。</div>`;
-      }
-
-      for (const option of options) {
-        const row = document.createElement("div");
-        row.className = "bundle-link-row";
-        const checked = current.has(option.key);
-        row.innerHTML = `
-          <label class="checkbox-row">
-            <input class="bundle-link-check" type="checkbox" data-key="${esc(option.key)}" ${checked ? "checked" : ""}>
-            <span>${esc(option.name)}</span>
-          </label>
-          <input class="bundle-link-qty" type="number" min="1" inputmode="numeric" value="${checked ? current.get(option.key) : 1}">
-        `;
-        area.appendChild(row);
-      }
-
-      document.getElementById("bundleLinkModal").classList.remove("hidden");
-    }
-
-    function saveBundleLinks() {
-      if (!editingBundleProductId) return;
-
-      const components = [];
-      for (const row of document.querySelectorAll("#bundleLinkOptions .bundle-link-row")) {
-        const check = row.querySelector(".bundle-link-check");
-        if (!check.checked) continue;
-        const quantity = Number(row.querySelector(".bundle-link-qty").value);
-        if (!Number.isInteger(quantity) || quantity < 1) {
-          alert("連動扣除數量至少要 1");
-          return;
-        }
-        components.push({key:check.dataset.key,quantity});
-      }
-
-      const products = getProducts();
-      const index = products.findIndex(product => product.id === editingBundleProductId);
-      if (index >= 0) products[index].bundleComponents = components;
-      saveProducts(products);
-
-      editingBundleProductId = null;
-      closeModal("bundleLinkModal");
-      renderLibrary();
-    }
-
-    function canAddBundle(product,qty=1) {
-      for (const effect of product.bundleComponents || []) {
-        const stock = stockSource(effect.key);
-        if (stock !== null && stock !== undefined &&
-            !canAdd(stock,effect.key,Number(effect.quantity||1)*qty)) {
-          return false;
-        }
-      }
-      return true;
-    }
-
     function activateProduct(p) {
       if (p.type === "photoset") return openPhotoSet();
       if (p.type === "polaroid") return openPolaroid();
       if (p.type === "lottery") return openLottery();
 
-      const key = inventoryKeyForProduct(p.id);
-      if (!canAdd(p.stock,key,1)) return alert("這個商品已完售");
-      if (!canAddBundle(p,1)) return alert("連動扣除品項其中一項庫存不足");
+      const key =
+        inventoryKeyForProduct(
+          p.id
+        );
+
+      if (
+        !preorderPickupMode &&
+        !canAdd(
+          p.stock,
+          key,
+          1
+        )
+      ) {
+        return alert(
+          "這個商品已完售"
+        );
+      }
 
       addToCart({
         id:p.id,
         inventoryKey:key,
-        inventoryEffects:deepCopy(p.bundleComponents || []),
         name:p.name,
         price:p.price,
         owner:p.owner
@@ -5173,13 +6044,15 @@
         const theme of themes
       ) {
         const info =
-          stockInfo(
-            stocks[theme],
-            inventoryKeyForPhoto(
-              theme
-            ),
-            true
-          );
+          preorderPickupMode
+            ? null
+            : stockInfo(
+                stocks[theme],
+                inventoryKeyForPhoto(
+                  theme
+                ),
+                true
+              );
 
         addOption(
           theme,
@@ -5241,7 +6114,18 @@
 
       const stocks = getPhotoStock();
       const key = inventoryKeyForPhoto(theme);
-      if (!canAdd(stocks[theme],key,1)) return alert(`${theme} 已完售`);
+      if (
+        !preorderPickupMode &&
+        !canAdd(
+          stocks[theme],
+          key,
+          1
+        )
+      ) {
+        return alert(
+          `${theme} 已完售`
+        );
+      }
 
       const basePrice =
         getPhotoThemePrice(theme);
@@ -5807,21 +6691,81 @@
 
       renderLotteryPrizeAlerts();
 
-      const r = lotteryRemaining(true);
+      const r =
+        lotteryRemaining(
+          true
+        );
+
+      const lotteryProduct =
+        getProducts()
+          .find(
+            item =>
+              item.id ===
+              "lottery-main"
+          );
+
+      const unitPrice =
+        Number(
+          lotteryProduct?.price || 0
+        );
 
       for (const qty of [1,3,5,10]) {
-        addOption(`${qty} 抽`,`$${qty*50}`,() => addLottery(qty),{
-          sold: qty>r,
-          low:r<=5 && r>0,
-          text:r>0?`剩餘 ${r}`:"SOLD OUT"
-        });
+        addOption(
+          `${qty} 抽`,
+          `$${qty * unitPrice}`,
+          () => addLottery(qty),
+          preorderPickupMode
+            ? null
+            : {
+                sold:
+                  qty > r,
+                low:
+                  r <= 5 &&
+                  r > 0,
+                text:
+                  r > 0
+                    ? `剩餘 ${r}`
+                    : "SOLD OUT"
+              }
+        );
       }
     }
 
     function addLottery(qty) {
-      const r = lotteryRemaining(true);
-      if (qty > r) return alert(`目前只剩 ${r} 抽`);
-      addToCart({id:"lottery",name:"抽抽樂",price:50,quantity:qty,owner:"雙人"});
+      const r =
+        lotteryRemaining(
+          true
+        );
+
+      if (
+        !preorderPickupMode &&
+        qty > r
+      ) {
+        return alert(
+          `目前只剩 ${r} 抽`
+        );
+      }
+
+      const lotteryProduct =
+        getProducts()
+          .find(
+            item =>
+              item.id ===
+              "lottery-main"
+          );
+
+      addToCart({
+        id:"lottery",
+        name:"抽抽樂",
+        price:
+          Number(
+            lotteryProduct?.price || 0
+          ),
+        quantity:qty,
+        owner:
+          lotteryProduct?.owner || ""
+      });
+
       openLottery();
     }
 
@@ -5829,19 +6773,70 @@
       showSub("拍立得");
 
       for (const p of getPolaroids().filter(x => x.visible)) {
-        const key = inventoryKeyForPolaroid(p.id);
-        const info = stockInfo(p.stock,key,true);
-        addOption(p.name,`$${money(p.price)}`,() => preparePolaroid(p),info);
+        const key =
+          inventoryKeyForPolaroid(
+            p.id,
+            p
+          );
+
+        const sourceStock =
+          stockSource(
+            key
+          );
+
+        const info =
+          preorderPickupMode
+            ? null
+            : stockInfo(
+                sourceStock,
+                key,
+                true
+              );
+
+        addOption(
+          p.name,
+          `$${money(p.price)}`,
+          () =>
+            preparePolaroid(
+              p
+            ),
+          info
+        );
       }
 
       addOption("＋","",openOtherPolaroidModal,null);
     }
 
     function preparePolaroid(p) {
-      const key = inventoryKeyForPolaroid(p.id);
-      if (!canAdd(p.stock,key,1)) return alert("這個拍立得選項已完售");
+      const key =
+        inventoryKeyForPolaroid(
+          p.id
+        );
 
-      pendingPolaroid = {...p,inventoryKey:key};
+      const sourceStock =
+        stockSource(
+          key
+        );
+
+      if (
+        !preorderPickupMode &&
+        !canAdd(
+          sourceStock,
+          key,
+          1
+        )
+      ) {
+        return alert(
+          "這個拍立得選項已完售"
+        );
+      }
+
+      pendingPolaroid = {
+        ...p,
+        stock:
+          sourceStock,
+        inventoryKey:key
+      };
       document.getElementById("signatureItem").textContent = `拍立得｜${p.name}　$${money(p.price)}`;
       document.getElementById("signatureName").value = "";
       document.getElementById("signatureModal").classList.remove("hidden");
@@ -5850,7 +6845,18 @@
     function confirmSignature(skip) {
       if (!pendingPolaroid) return;
 
-      if (!canAdd(pendingPolaroid.stock,pendingPolaroid.inventoryKey,1)) return alert("這個拍立得選項已完售");
+      if (
+        !preorderPickupMode &&
+        !canAdd(
+          pendingPolaroid.stock,
+          pendingPolaroid.inventoryKey,
+          1
+        )
+      ) {
+        return alert(
+          "這個拍立得選項已完售"
+        );
+      }
 
       const signature = skip ? "" : document.getElementById("signatureName").value.trim();
 
@@ -6056,9 +7062,9 @@
         []
       );
 
+      document.getElementById("otherPolaroidSharedStock").checked = false;
       document.getElementById("otherPolaroidName").value = "";
       document.getElementById("otherPolaroidPrice").value = "200";
-      document.getElementById("otherPolaroidSharedStock").checked = false;
       document.getElementById("otherPolaroidPermanent").checked = false;
       document.getElementById("otherPolaroidUnlimited").checked = true;
       document.getElementById("otherPolaroidStock").value = "0";
@@ -6081,6 +7087,12 @@
       const permanent = document.getElementById("otherPolaroidPermanent").checked;
       const unlimited = document.getElementById("otherPolaroidUnlimited").checked;
       const stock = unlimited ? null : Number(document.getElementById("otherPolaroidStock").value);
+      const sharedStock =
+        Boolean(
+          document.getElementById(
+            "otherPolaroidSharedStock"
+          ).checked
+        );
       const owners =
         getCheckedOwners(
           "otherPolaroidOwnerChecks"
@@ -6089,7 +7101,7 @@
       if (!name) return alert("請輸入名字");
       if (!Number.isFinite(price) || price<=0) return alert("請輸入正確金額");
       if (!owners.length) return alert("請至少選擇一個成員");
-      if (permanent && !unlimited && (!Number.isInteger(stock) || stock<0)) return alert("請輸入正確初始數量");
+      if (permanent && !sharedStock && !unlimited && (!Number.isInteger(stock) || stock<0)) return alert("請輸入正確初始數量");
 
       const p = {
         id:permanent?`polaroid-custom-${Date.now()}-${Math.random().toString(36).slice(2,7)}`:`polaroid-temp-${Date.now()}-${Math.random()}`,
@@ -6097,10 +7109,10 @@
         price,
         owners,
         owner:ownerListLabel(owners),
-        sharedStock:document.getElementById("otherPolaroidSharedStock").checked,
         visible:permanent,
         custom:true,
-        stock:permanent?stock:null
+        sharedStock,
+        stock:permanent?(sharedStock?null:stock):null
       };
 
       if (permanent) {
@@ -6179,134 +7191,288 @@
       updateCartVisibility();
     }
 
-    function getGiftSettings() {
-      return {
-        enabled:false,
-        name:"滿額贈品",
-        threshold:500,
-        stock:0,
-        ...(getSettings().gift || {})
+    function togglePreorderPickupMode() {
+      if (
+        cart.length &&
+        !confirm(
+          "切換預購取貨模式會清空目前購物車，確定繼續嗎？"
+        )
+      ) {
+        return;
+      }
+
+      preorderPickupMode =
+        !preorderPickupMode;
+
+      cart =
+        [];
+
+      cartExpanded =
+        false;
+
+      document.getElementById(
+        "orderNote"
+      ).value =
+        "";
+
+      updatePreorderPickupUI();
+      backToMain();
+      renderCart();
+      renderMainProducts();
+    }
+
+    function updatePreorderPickupUI() {
+      const button =
+        document.getElementById(
+          "preorderPickupToggle"
+        );
+
+      const banner =
+        document.getElementById(
+          "preorderPickupBanner"
+        );
+
+      const checkout =
+        document.getElementById(
+          "checkoutMainButton"
+        );
+
+      button?.classList.toggle(
+        "active",
+        preorderPickupMode
+      );
+
+      banner?.classList.toggle(
+        "hidden",
+        !preorderPickupMode
+      );
+
+      if (checkout) {
+        checkout.textContent =
+          preorderPickupMode
+            ? "確認預購取貨"
+            : "結帳";
+      }
+    }
+
+    function completePreorderPickup() {
+      if (!cart.length) {
+        alert(
+          "請先加入要取貨的預購商品"
+        );
+        return;
+      }
+
+      const s =
+        getCurrentSession();
+
+      const order = {
+        id:
+          Date.now(),
+        time:
+          nowISO(),
+        sessionId:
+          currentSessionId,
+        sessionDate:
+          s?.date || "",
+        sessionName:
+          s?.name || "",
+        payment:
+          "預購取貨",
+        total:
+          0,
+        preorderPickup:
+          true,
+        note:
+          document.getElementById(
+            "orderNote"
+          ).value.trim(),
+        items:
+          deepCopy(
+            cart
+          ),
+        stockAdjustments:
+          []
       };
+
+      const orders =
+        getOrders();
+
+      orders.push(
+        order
+      );
+
+      saveOrders(
+        orders
+      );
+
+      cart =
+        [];
+
+      cartExpanded =
+        false;
+
+      document.getElementById(
+        "orderNote"
+      ).value =
+        "";
+
+      renderCart();
+      renderMainProducts();
+
+      alert(
+        "預購取貨完成\n\n不計營收，且不會再次扣除現場庫存。"
+      );
     }
 
-    function saveGiftSettings() {
-      const settings = getSettings();
-      const enabled = document.getElementById("giftEnabled")?.checked || false;
-      const name = document.getElementById("giftNameInput")?.value.trim() || "滿額贈品";
-      const threshold = Number(document.getElementById("giftThresholdInput")?.value || 0);
-      const stock = Number(document.getElementById("giftStockInput")?.value || 0);
-
-      if (!Number.isFinite(threshold) || threshold < 0 || !Number.isInteger(stock) || stock < 0) {
-        alert("請輸入正確的贈品門檻與庫存");
-        renderGiftSettings();
-        return;
-      }
-
-      const sent = getSoldByKey("gift:main");
-      if (stock < sent) {
-        alert(`贈品庫存不能小於目前已送出 ${sent}`);
-        renderGiftSettings();
-        return;
-      }
-
-      settings.gift = {enabled,name,threshold,stock};
-      saveSettings(settings);
-      syncAutoGift();
-      renderGiftSettings();
-      renderLibrary();
-    }
-
-    function renderGiftSettings() {
-      const gift = getGiftSettings();
-      const enabled = document.getElementById("giftEnabled");
-      const name = document.getElementById("giftNameInput");
-      const threshold = document.getElementById("giftThresholdInput");
-      const stock = document.getElementById("giftStockInput");
-      const info = document.getElementById("giftStockInfo");
-
-      if (enabled) enabled.checked = Boolean(gift.enabled);
-      if (name) name.value = gift.name || "";
-      if (threshold) threshold.value = Number(gift.threshold || 0);
-      if (stock) stock.value = Number(gift.stock || 0);
-      if (info) {
-        const sent = getSoldByKey("gift:main");
-        info.textContent = `已送出 ${sent}｜剩餘 ${Math.max(0,Number(gift.stock||0)-sent)}`;
-      }
-    }
-
-    function getCartPaidSubtotal() {
-      return cart.reduce((sum,item) => {
-        if (item.isGift) return sum;
-        return sum + Number(item.price||0)*Number(item.quantity||0);
-      },0);
-    }
-
-    function syncAutoGift() {
-      const gift = getGiftSettings();
-      const existingIndex = cart.findIndex(item => item.isGift);
-      const qualifies =
-        gift.enabled &&
-        Number(gift.threshold||0) > 0 &&
-        getCartPaidSubtotal() >= Number(gift.threshold||0) &&
-        canAdd(Number(gift.stock||0),"gift:main",1);
-
-      if (qualifies && existingIndex < 0) {
-        cart.push({
-          id:"gift-main",
-          inventoryKey:"gift:main",
-          name:gift.name || "滿額贈品",
-          price:0,
-          quantity:1,
-          owner:"",
-          isGift:true
-        });
-      } else if (!qualifies && existingIndex >= 0) {
-        cart.splice(existingIndex,1);
-      }
-    }
 
     function addToCart(item) {
-      const wasEmpty = cart.length === 0;
-      const qty = Number(item.quantity || 1);
+      const wasEmpty =
+        cart.length === 0;
 
-      const mergeable = !String(item.name).startsWith("拍立得｜");
-      const existing = mergeable ? cart.find(x => x.id === item.id && x.inventoryKey === item.inventoryKey) : null;
+      const qty =
+        Number(
+          item.quantity || 1
+        );
 
-      if (existing) existing.quantity += qty;
-      else cart.push({...item,quantity:qty});
+      const nextItem =
+        preorderPickupMode
+          ? {
+              ...item,
+              originalInventoryKey:
+                item.inventoryKey ||
+                null,
+              originalPrice:
+                Number(
+                  item.price || 0
+                ),
+              inventoryKey:
+                null,
+              price:
+                0,
+              preorderPickup:
+                true
+            }
+          : {
+              ...item
+            };
 
-      if (wasEmpty) cartExpanded = true;
-      syncAutoGift();
+      const mergeable =
+        !String(
+          nextItem.name
+        ).startsWith(
+          "拍立得｜"
+        );
+
+      const existing =
+        mergeable
+          ? cart.find(
+              x =>
+                x.id ===
+                  nextItem.id &&
+                x.inventoryKey ===
+                  nextItem.inventoryKey &&
+                Boolean(
+                  x.preorderPickup
+                ) ===
+                  Boolean(
+                    nextItem.preorderPickup
+                  )
+            )
+          : null;
+
+      if (existing) {
+        existing.quantity +=
+          qty;
+      } else {
+        cart.push({
+          ...nextItem,
+          quantity:
+            qty
+        });
+      }
+
+      if (
+        !preorderPickupMode
+      ) {
+        syncAutoGifts();
+      }
+
+      if (wasEmpty) {
+        cartExpanded =
+          true;
+      }
+
       renderCart();
       renderMainProducts();
     }
 
     function changeQty(index,delta) {
-      const item = cart[index];
-      if (!item) return;
-      if (item.isGift) return;
+      const item =
+        cart[index];
 
-      if (delta>0) {
-        if (item.id === "lottery") {
-          if (lotteryRemaining(true) <= 0) return alert("抽抽樂已完售");
-        } else if (item.inventoryKey) {
-          const stock = stockSource(item.inventoryKey);
-          if (!canAdd(stock,item.inventoryKey,1)) return alert("剩餘庫存不足");
+      if (
+        !item ||
+        item.autoGift
+      ) return;
 
-          for (const effect of item.inventoryEffects || []) {
-            const effectStock = stockSource(effect.key);
-            if (effectStock !== null && effectStock !== undefined &&
-                !canAdd(effectStock,effect.key,Number(effect.quantity||1))) {
-              return alert("連動扣除商品庫存不足");
-            }
+      if (
+        delta > 0 &&
+        !item.preorderPickup
+      ) {
+        if (
+          item.id ===
+          "lottery"
+        ) {
+          if (
+            lotteryRemaining(
+              true
+            ) <= 0
+          ) {
+            return alert(
+              "抽抽樂已完售"
+            );
+          }
+        } else if (
+          item.inventoryKey
+        ) {
+          const stock =
+            stockSource(
+              item.inventoryKey
+            );
+
+          if (
+            !canAdd(
+              stock,
+              item.inventoryKey,
+              1
+            )
+          ) {
+            return alert(
+              "剩餘庫存不足"
+            );
           }
         }
       }
 
-      item.quantity += delta;
-      if (item.quantity <= 0) cart.splice(index,1);
+      item.quantity +=
+        delta;
 
-      syncAutoGift();
+      if (
+        item.quantity <= 0
+      ) {
+        cart.splice(
+          index,
+          1
+        );
+      }
+
+      if (
+        !preorderPickupMode
+      ) {
+        syncAutoGifts();
+      }
+
       renderCart();
       renderMainProducts();
     }
@@ -6317,15 +7483,30 @@
 
       for (const [index,item] of cart.entries()) {
         const d = document.createElement("div");
-        d.className = "cart-item";
+        d.className =
+          "cart-item" +
+          (
+            item.preorderPickup
+              ? " preorder-cart-item"
+              : ""
+          );
+
         d.innerHTML = `
-          <div class="cart-item-title">${esc(item.name)}</div>
+          <div class="cart-item-title">
+            ${esc(item.name)}
+            ${item.autoGift ? '<span class="gift-auto-label">自動贈品</span>' : ''}
+            ${item.preorderPickup ? '<span class="gift-auto-label">預購取貨</span>' : ''}
+          </div>
           ${item.signature ? `<div class="cart-item-meta">署名：${esc(item.signature)}</div>`:""}
-          ${item.owner ? `<div class="cart-item-meta">成員：${esc(item.owner)}</div>`:""}
-          ${item.isGift ? `<div class="cart-item-meta gift-cart-label">滿額自動贈送</div>`:""}
+          ${item.owner ? `<div class="cart-item-meta">成員：${esc(item.owner)}</div>` : ""}
           <div class="cart-item-row">
-            <span>$${money(item.price)} × ${item.quantity}</span>
-            ${item.isGift ? "" : `<div class="qty"><button onclick="changeQty(${index},-1)">−</button><button onclick="changeQty(${index},1)">＋</button></div>`}
+            <span>${item.preorderPickup ? "不計營收" : `$${money(item.price)} × ${item.quantity}`}</span>
+            ${item.autoGift ? '<span class="subtle">自動加入</span>' : `
+              <div class="qty">
+                <button onclick="changeQty(${index},-1)">−</button>
+                <button onclick="changeQty(${index},1)">＋</button>
+              </div>
+            `}
           </div>`;
         area.appendChild(d);
       }
@@ -6345,6 +7526,7 @@
       cartExpanded = false;
       document.getElementById("orderNote").value = "";
       renderCart();
+      updatePreorderPickupUI();
       renderMainProducts();
     }
 
@@ -6718,6 +7900,12 @@
 
     /* -------------------- PAYMENT -------------------- */
     function openPaymentChooser() {
+      if (
+        preorderPickupMode
+      ) {
+        return completePreorderPickup();
+      }
+
       if (!cart.length) return alert("購物車是空的");
 
       renderPaymentChooserMethods();
@@ -6795,9 +7983,35 @@
       }
 
       const grouped = {};
+
       for (const i of cart) {
-        if (!i.inventoryKey) continue;
-        grouped[i.inventoryKey] = (grouped[i.inventoryKey]||0)+Number(i.quantity||0);
+        if (
+          i.preorderPickup ||
+          !i.inventoryKey
+        ) continue;
+
+        grouped[i.inventoryKey] =
+          (
+            grouped[i.inventoryKey] || 0
+          ) +
+          Number(
+            i.quantity || 0
+          );
+      }
+
+      for (
+        const adjustment of
+        getBundleStockAdjustments(
+          cart
+        )
+      ) {
+        grouped[adjustment.key] =
+          (
+            grouped[adjustment.key] || 0
+          ) +
+          Number(
+            adjustment.quantity || 0
+          );
       }
 
       for (const [key,qty] of Object.entries(grouped)) {
@@ -6868,38 +8082,6 @@
     }
 
 
-    function completePreorderPickup() {
-      if (!cart.length) return alert("請先加入預購取貨商品");
-
-      if (!confirm("確認完成預購取貨？\n\n此筆不計營收，也不會再次扣除庫存。")) return;
-
-      const s = getCurrentSession();
-      const order = {
-        id:Date.now(),
-        time:nowISO(),
-        sessionId:currentSessionId,
-        sessionDate:s?.date||"",
-        sessionName:s?.name||"",
-        payment:"預購取貨",
-        total:0,
-        originalTotal:getCartTotal(),
-        note:document.getElementById("orderNote").value.trim(),
-        items:deepCopy(cart),
-        preorderPickup:true
-      };
-
-      const orders = getOrders();
-      orders.push(order);
-      saveOrders(orders);
-
-      cart = [];
-      cartExpanded = false;
-      document.getElementById("orderNote").value = "";
-      renderCart();
-      renderMainProducts();
-      alert("預購取貨完成：未計入營收、未再次扣庫存。");
-    }
-
     function saveOrder(payment,extra={}) {
       const s = getCurrentSession();
       const order = {
@@ -6912,6 +8094,10 @@
         total:getCartTotal(),
         note:document.getElementById("orderNote").value.trim(),
         items:deepCopy(cart),
+        stockAdjustments:
+          getBundleStockAdjustments(
+            cart
+          ),
         ...extra
       };
 
@@ -7815,43 +9001,6 @@
       );
     }
 
-
-    function savePolaroidSharedStock(value) {
-      const settings = getSettings();
-      const text = String(value ?? "").trim();
-
-      if (text === "") {
-        settings.polaroidSharedStock = null;
-      } else {
-        const stock = Number(text);
-        if (!Number.isInteger(stock) || stock < 0) {
-          alert("請輸入正確共用庫存");
-          renderLibrary();
-          return;
-        }
-        const sold = getSoldByKey("polaroid:shared");
-        if (stock < sold) {
-          alert(`共用庫存不能小於目前已售 ${sold}`);
-          renderLibrary();
-          return;
-        }
-        settings.polaroidSharedStock = stock;
-      }
-
-      saveSettings(settings);
-      renderLibrary();
-      renderMainProducts();
-    }
-
-    function togglePolaroidShared(id) {
-      const items = getPolaroids();
-      const index = items.findIndex(item => item.id === id);
-      if (index < 0) return;
-      items[index].sharedStock = !items[index].sharedStock;
-      savePolaroids(items);
-      renderLibrary();
-      renderMainProducts();
-    }
 
     function getPhotoPricing() {
       const settings = getSettings();
@@ -8868,7 +10017,6 @@
             <div class="library-actions">
               <button class="small-btn" onclick="toggleProductVisibility('${p.id}')">${p.visible?"隱藏":"顯示"}</button>
               ${stockBtn}
-              ${(p.type==="simple"||p.type==="custom") ? `<button class="small-btn" onclick="openBundleLinks('${p.id}')">連動扣庫</button>` : ""}
               <button class="small-btn danger-btn" onclick="deleteProductAny(\'${p.id}\')">刪除</button>
             </div>
           </td>`;
@@ -8876,11 +10024,6 @@
       }
 
       renderPhotoPricingControls();
-
-      const sharedStockInput = document.getElementById("polaroidSharedStockInput");
-      if (sharedStockInput) {
-        sharedStockInput.value = getSettings().polaroidSharedStock ?? "";
-      }
 
       const photoBody = document.getElementById("photoStockBody");
       photoBody.innerHTML = "";
@@ -8975,9 +10118,10 @@
       polBody.innerHTML = "";
 
       for (const p of getPolaroids()) {
-        const key = inventoryKeyForPolaroid(p.id);
+        const key = inventoryKeyForPolaroid(p.id,p);
+        const sourceStock = stockSource(key);
         const sold = getSoldByKey(key);
-        const r = remaining(p.stock,key,false);
+        const r = remaining(sourceStock,key,false);
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${esc(p.name)}</td>
@@ -9002,22 +10146,40 @@
           </td>
           <td>
             <label class="checkbox-row">
-              <input type="checkbox" ${p.sharedStock ? "checked" : ""} onchange="togglePolaroidShared('${p.id}')">
-              <span>${p.sharedStock ? "共用" : "個別"}</span>
+              <input type="checkbox" ${p.sharedStock?"checked":""} onchange="togglePolaroidSharedStock('${p.id}')">
+              <span>共用</span>
             </label>
           </td>
           <td>${sold}</td>
-          <td>${effectiveStock==null?'<span class="pill">不限量</span>':`<span class="pill ${r<=getStockWarningThreshold(key)?"low":""}">${r} / ${effectiveStock}</span>`}</td>
+          <td>${sourceStock==null?'<span class="pill">不限量</span>':`<span class="pill ${r<=getStockWarningThreshold(key)?"low":""}">${r} / ${sourceStock}</span>`}</td>
           <td><span class="pill">${p.visible?"顯示中":"已隱藏"}</span></td>
           <td>
             <div class="library-actions">
               <button class="small-btn" onclick="togglePolaroidVisibility('${p.id}')">${p.visible?"隱藏":"顯示"}</button>
-              <button class="small-btn" onclick="openStockModal({type:'polaroid',id:'${p.id}',name:'拍立得｜${esc(p.name)}',stock:${p.stock===null?"null":p.stock},key:'${key}'})">庫存</button>
+              ${p.sharedStock ? "" : `<button class="small-btn" onclick="openStockModal({type:'polaroid',id:'${p.id}',name:'拍立得｜${esc(p.name)}',stock:${p.stock===null?"null":p.stock},key:'${key}'})">庫存</button>`}
               <button class="small-btn danger-btn" onclick="deletePolaroidAny(\'${p.id}\')">刪除</button>
             </div>
           </td>`;
         polBody.appendChild(tr);
       }
+
+      const settings = getSettings();
+      const sharedUnlimited = settings.sharedPolaroidStock === null;
+      const sharedStockInput = document.getElementById("sharedPolaroidStock");
+      const sharedUnlimitedInput = document.getElementById("sharedPolaroidUnlimited");
+      if (sharedUnlimitedInput) sharedUnlimitedInput.checked = sharedUnlimited;
+      if (sharedStockInput) {
+        sharedStockInput.disabled = sharedUnlimited;
+        sharedStockInput.value = sharedUnlimited ? "" : Number(settings.sharedPolaroidStock || 0);
+      }
+      const sharedRemaining = remaining(settings.sharedPolaroidStock,"polaroid-shared:default",false);
+      const sharedText = document.getElementById("sharedPolaroidRemainingText");
+      if (sharedText) sharedText.textContent = sharedUnlimited ? "共用庫存：不限量" : `共用剩餘 ${sharedRemaining} / ${settings.sharedPolaroidStock}`;
+
+      const bundleEnabled = document.getElementById("ultimateBundleEnabled");
+      if (bundleEnabled) bundleEnabled.checked = Boolean(getUltimateBundleSettings().enabled);
+
+      renderGiftLibrary();
 
       document.getElementById("lotteryMaxText").textContent = getSettings().lotteryMax;
 
@@ -9032,7 +10194,6 @@
       }
 
       renderOwnerSettings();
-      renderGiftSettings();
       renderPaymentMethodSettings();
       renderLotteryPrizeLibrary();
       renderAuctionLibraryStatus();
@@ -11096,7 +12257,7 @@
 
     function getCurrentSessionSummary() {
       const orders =
-        getOrders().filter(order=>!order.voided && !order.preorderPickup);
+        getOrders().filter(order=>!order.voided);
 
       const payments = {};
       let revenue = 0;
@@ -11355,7 +12516,12 @@
 
     function renderStats() {
       const orders = getOrders();
-      const activeOrders = orders.filter(order=>!order.voided && !order.preorderPickup);
+      const activeOrders =
+        orders.filter(
+          order =>
+            !order.voided &&
+            !order.preorderPickup
+        );
       let revenue=0, itemCount=0;
       const owners={}, payments={}, products={};
 
@@ -11502,7 +12668,7 @@
         tr.innerHTML = `
           <td>${timeText(o.time)}${o.voided?'<div class="voided-label">已作廢</div>':""}</td>
           <td>${esc(o.payment)}</td>
-          <td>${o.preorderPickup ? `預購 NT$ ${money(o.originalTotal || 0)}<div class="subtle">不計營收</div>` : `$${money(o.total)}`}</td>
+          <td>$${money(o.total)}</td>
           <td>${o.note?esc(o.note):"—"}</td>
           <td><button class="small-btn ${o.voided?"":"danger-btn"}" onclick="toggleVoidOrder(${o.id})">${o.voided?"恢復":"作廢"}</button></td>`;
         orderBody.appendChild(tr);
@@ -11534,7 +12700,14 @@
         return;
       }
 
-      const last=[...orders].reverse().find(order=>!order.voided && !order.preorderPickup);
+      const last =
+        [...orders]
+          .reverse()
+          .find(
+            order =>
+              !order.voided &&
+              !order.preorderPickup
+          );
       if (!last) return alert("目前沒有可複製的有效訂單");
 
       const copied =
@@ -11596,7 +12769,13 @@
       let allRevenue=0, allOrders=0, allItems=0;
 
       for (const s of sortSessions(getSessions())) {
-        const orders = getOrders(s.id).filter(order=>!order.voided && !order.preorderPickup);
+        const orders =
+          getOrders(s.id)
+            .filter(
+              order =>
+                !order.voided &&
+                !order.preorderPickup
+            );
         let revenue=0, items=0;
 
         for (const o of orders) {
@@ -11624,7 +12803,7 @@
 
       for (const s of sortSessions(getSessions())) {
         for (const o of getOrders(s.id)) {
-          if (o.voided || o.preorderPickup) continue;
+          if (o.voided) continue;
           for (const i of o.items||[]) {
             rows.push([
               s.date||"",
@@ -11796,6 +12975,7 @@
     ensureSession();
     migrateLegacyDefaultPeople();
     updateSessionUI();
+    updatePreorderPickupUI();
     renderMainProducts();
     renderCart();
     renderPaymentMethodSettings();

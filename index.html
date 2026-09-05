@@ -2441,6 +2441,340 @@
         max-height: calc(100dvh - 68px);
       }
     }
+
+    /* v45 商品庫快速導覽 */
+    .library-quick-nav {
+      position: sticky;
+      top: 66px;
+      z-index: 20;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      margin: 0 0 14px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(250,248,248,.96);
+      -webkit-overflow-scrolling: touch;
+      backdrop-filter: blur(8px);
+    }
+    .library-quick-nav button {flex:0 0 auto;padding:7px 10px;border-radius:9px;background:#fff;color:var(--text);font-size:12px;white-space:nowrap}
+    .library-section {scroll-margin-top:125px}
+    .library-section-head {padding-bottom:10px;border-bottom:1px solid var(--line)}
+
+    /* 付款 QR 後台 */
+    .payment-qr-admin-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+    .payment-qr-admin-card {padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff;min-width:0}
+    .payment-qr-admin-head {margin-bottom:8px;line-height:1.35}
+    .payment-qr-admin-preview {width:100%;aspect-ratio:1/1;display:grid;place-items:center;overflow:hidden;padding:8px;box-sizing:border-box;border:1px solid var(--line);border-radius:10px;background:#fafafa}
+    .payment-qr-admin-preview img {width:100%;height:100%;object-fit:contain}
+    .payment-qr-admin-actions {display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+
+    /* QR 裁切：不再以黑底當載入畫面 */
+    .qr-crop-stage {background:linear-gradient(45deg,#f0eeee 25%,transparent 25%) 0 0/18px 18px,linear-gradient(-45deg,#f0eeee 25%,transparent 25%) 0 0/18px 18px,#fafafa !important}
+    .qr-crop-stage img {opacity:1;transition:opacity .12s ease}
+    .qr-crop-image-loading {opacity:0 !important}
+    .qr-crop-loading {position:absolute;z-index:2;inset:0;display:grid;place-items:center;color:#777;font-size:13px;pointer-events:none}
+    .qr-crop-secondary-actions {display:flex;gap:7px;justify-content:center;margin:8px 0 2px;flex-wrap:wrap}
+
+    /* iPad 購物車 */
+    .container {align-items:start !important}
+    .cart {grid-row:1;margin-top:0 !important;align-self:start !important;height:fit-content !important;min-height:0 !important}
+    #cartItems {min-height:0 !important;height:auto !important;flex-grow:0 !important}
+
+    @media (max-width:900px) {
+      .payment-qr-admin-grid {grid-template-columns:1fr}
+      .payment-qr-admin-preview {max-width:220px}
+      .library-quick-nav {top:60px}
+    }
+
+    /* ===== 預購名單 ===== */
+    .preorder-page-head,
+    .preorder-section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .preorder-page-head {
+      margin-bottom: 14px;
+    }
+
+    .preorder-page-head h2,
+    .preorder-section-head h3 {
+      margin-top: 0;
+      margin-bottom: 4px;
+    }
+
+    .preorder-stats-grid {
+      margin-bottom: 12px;
+    }
+
+    .preorder-reserve-panel,
+    .preorder-reserve-summary {
+      margin: 12px 0;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+    }
+
+    .preorder-reserve-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      background: #f8f2ed;
+      border-color: #d8c8bb;
+    }
+
+    .preorder-reserve-panel.confirmed {
+      background: #f3f5f1;
+      border-color: #cbd3c7;
+    }
+
+    .preorder-reserve-check {
+      flex: 0 0 auto;
+    }
+
+    .preorder-reserve-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 9px;
+    }
+
+    .preorder-reserve-chip {
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--soft);
+      font-size: 12px;
+    }
+
+    .preorder-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: space-between;
+      margin: 14px 0 10px;
+    }
+
+    .preorder-toolbar input {
+      width: min(420px,100%);
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .preorder-filter-group {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .preorder-filter.active {
+      background: var(--text);
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+
+    .preorder-status {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      white-space: nowrap;
+      background: var(--soft);
+    }
+
+    .preorder-status.picked {
+      background: #e9eee7;
+    }
+
+    .preorder-items-summary {
+      display: grid;
+      gap: 2px;
+      min-width: 150px;
+    }
+
+    .preorder-item-line {
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .preorder-item-editor {
+      display: grid;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .preorder-edit-row {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) 82px 42px;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .preorder-edit-row select,
+    .preorder-edit-row input {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .preorder-edit-remove {
+      width: 42px;
+      height: 42px;
+      padding: 0;
+    }
+
+    .preorder-add-line {
+      margin: 8px 0 12px;
+    }
+
+    .preorder-modal-box {
+      max-width: 720px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* ===== 場次模板 ===== */
+    .session-template-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 8px 0 12px;
+    }
+
+    .session-new.secondary {
+      background: var(--soft);
+      color: var(--text);
+    }
+
+    @media (max-width: 760px) {
+      .preorder-toolbar,
+      .preorder-reserve-panel {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .preorder-toolbar input {
+        width: 100%;
+      }
+
+      .preorder-table {
+        min-width: 820px;
+      }
+
+      .form-grid-2,
+      .session-template-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .preorder-edit-row {
+        grid-template-columns: minmax(0,1fr) 72px 40px;
+      }
+    }
+
+    .bundle-setting-info {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .bundle-setting-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .bundle-link-status {
+      display: inline-flex;
+      margin-top: 7px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .bundle-link-status.active {
+      background: #e8eee6;
+      color: #66715f;
+    }
+
+    .bundle-component-row {
+      grid-template-columns: 22px minmax(0,1fr) 118px !important;
+    }
+
+    .bundle-component-name {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .bundle-component-qty-wrap {
+      display: grid;
+      grid-template-columns: auto 52px;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .bundle-component-qty-wrap input {
+      width: 52px !important;
+      text-align: center;
+    }
+
+    @media (max-width:620px) {
+      .bundle-setting-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .bundle-component-row {
+        grid-template-columns: 22px minmax(0,1fr) !important;
+      }
+
+      .bundle-component-qty-wrap {
+        grid-column: 2;
+        justify-content: start;
+        grid-template-columns: auto 64px;
+      }
+    }
+
+    .product-category-filters{display:flex;gap:6px;overflow-x:auto;margin:0 0 12px;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+    .product-category-filter{flex:0 0 auto;padding:6px 10px;border-radius:999px;background:var(--soft);color:var(--muted);font-size:12px}
+    .product-category-filter.active{background:var(--text);color:#fff!important;-webkit-text-fill-color:#fff!important}
+    .order-search-row{margin:8px 0 10px}
+    .order-search-row input{width:min(480px,100%);box-sizing:border-box}
+    .preorder-head-actions,.preorder-reserve-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+    .operations-page-head{margin-bottom:14px}
+    .ops-card{margin:14px 0;padding:15px;border:1px solid var(--line);border-radius:14px;background:#fff}
+    .ops-card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .ops-card h3{margin:0 0 4px}
+    .ops-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}
+    .ops-summary-item{padding:10px;border-radius:10px;background:var(--soft);font-size:12px}
+    .ops-summary-item strong{display:block;margin-top:4px;font-size:18px}
+    .cloud-sync-grid,.form-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .cloud-sync-grid input,.form-grid-3 input,.form-grid-3 select{width:100%;box-sizing:border-box}
+    .refund-item-rows{display:grid;gap:7px;margin:10px 0}
+    .refund-item-row{display:grid;grid-template-columns:minmax(0,1fr) 90px;gap:8px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:10px;background:var(--soft)}
+    .cash-count-diff{margin-top:10px;padding:10px;border-radius:10px;background:var(--soft);font-size:15px;font-weight:500}
+    .stock-log-table{min-width:700px}
+    .category-select,.cost-input{min-width:86px;max-width:120px}
+    .order-no{font-variant-numeric:tabular-nums;font-weight:500}
+    .refund-note{display:block;margin-top:3px;color:var(--danger);font-size:11px}
+    @media(max-width:760px){
+      .cloud-sync-grid,.form-grid-3,.ops-summary-grid{grid-template-columns:1fr}
+      .ops-card-head{flex-direction:column}
+      .preorder-head-actions,.preorder-reserve-actions{align-items:stretch}
+    }
 </style>
 </head>
 
@@ -2457,6 +2791,8 @@
       <div class="tabs">
         <button class="tab-button active" data-page="posPage" onclick="showPage('posPage', this)">收銀</button>
         <button class="tab-button" data-page="statsPage" onclick="showPage('statsPage', this)">場次統計</button>
+        <button class="tab-button" data-page="preorderPage" onclick="showPage('preorderPage', this)">預購</button>
+        <button class="tab-button" data-page="operationsPage" onclick="showPage('operationsPage', this)">營運</button>
         <button class="tab-button" data-page="overviewPage" onclick="showPage('overviewPage', this)">全部總覽</button>
         <button class="tab-button" data-page="libraryPage" onclick="showPage('libraryPage', this)">商品庫</button>
       </div>
@@ -2522,6 +2858,7 @@
         <div class="product-search-row">
           <input id="productSearchInput" class="product-search-input" type="search" placeholder="搜尋商品" oninput="renderMainProducts()">
         </div>
+        <div id="productCategoryFilters" class="product-category-filters"></div>
         <div id="mainProductGrid" class="main-grid"></div>
       </div>
 
@@ -2567,6 +2904,8 @@
 
     <div class="stats-grid">
       <div class="card">營業額<div class="number">NT$ <span id="statsRevenue">0</span></div></div>
+      <div class="card">商品成本<div class="number">NT$ <span id="statsCost">0</span></div></div>
+      <div class="card">毛利<div class="number">NT$ <span id="statsProfit">0</span></div><div class="subtle">毛利率 <span id="statsMargin">0%</span></div></div>
       <div class="card">訂單<div class="number"><span id="statsOrders">0</span> 筆</div></div>
       <div class="card">已售數量<div class="number"><span id="statsItems">0</span></div></div>
     </div>
@@ -2593,9 +2932,12 @@
     </div>
 
     <h3>訂單明細</h3>
+    <div class="order-search-row">
+      <input id="orderSearchInput" type="search" placeholder="搜尋訂單編號、金額、商品、備註" oninput="renderStats()">
+    </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>時間</th><th>付款</th><th>金額</th><th>備註</th><th>操作</th></tr></thead>
+        <thead><tr><th>單號</th><th>時間</th><th>付款</th><th>原金額</th><th>退款</th><th>實收</th><th>備註</th><th>操作</th></tr></thead>
         <tbody id="orderBody"></tbody>
       </table>
     </div>
@@ -2614,6 +2956,153 @@
       <button onclick="openShiftCloseModal()">收攤</button>
       <button class="danger-btn" onclick="resetCurrentSession()">清除此場次紀錄</button>
     </div>
+  </section>
+
+  <!-- PREORDER -->
+  <section id="preorderPage" class="page hidden">
+    <div class="preorder-page-head">
+      <div>
+        <h2>預購名單</h2>
+        <div class="subtle">目前場次的預購名單獨立保存；取貨不計營收、不再次扣庫存。</div>
+      </div>
+      <div class="preorder-head-actions">
+        <button onclick="openPreorderModal()">＋ 新增預購</button>
+        <button class="small-btn" onclick="document.getElementById('preorderCsvInput').click()">匯入 CSV</button>
+        <button class="small-btn" onclick="exportPreorderTemplateCsv()">CSV 範本</button>
+      </div>
+      <input id="preorderCsvInput" class="hidden" type="file" accept=".csv,text/csv" onchange="importPreorderCsv(this.files[0])">
+    </div>
+
+    <div class="stats-grid preorder-stats-grid">
+      <div class="card">待取貨<div class="number"><span id="preorderPendingCount">0</span> 筆</div></div>
+      <div class="card">已取貨<div class="number"><span id="preorderPickedCount">0</span> 筆</div></div>
+      <div class="card">預購件數<div class="number"><span id="preorderItemCount">0</span></div></div>
+    </div>
+
+    <div id="preorderReserveWarning" class="preorder-reserve-panel">
+      <div>
+        <strong>活動前庫存確認</strong>
+        <div class="subtle">請先把下方「預購保留數量」從現場可售庫存扣除，取貨時系統不會再次扣庫存。</div>
+      </div>
+      <div class="preorder-reserve-actions">
+        <button id="applyPreorderReserveBtn" class="small-btn" onclick="applyPreorderReservations()">一鍵套用保留庫存</button>
+        <button id="releasePreorderReserveBtn" class="small-btn danger-btn" onclick="releasePreorderReservations()">解除保留</button>
+        <label class="checkbox-row preorder-reserve-check">
+          <input id="preorderReserveConfirmed" type="checkbox" onchange="savePreorderReserveConfirmed()">
+          <span>已確認保留庫存</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="preorder-reserve-summary">
+      <div class="preorder-section-head">
+        <h3>預購保留數量</h3>
+        <div class="subtle">依目前未刪除的預購名單統計。</div>
+      </div>
+      <div id="preorderReserveList" class="preorder-reserve-list"></div>
+    </div>
+
+    <div class="preorder-toolbar">
+      <input id="preorderSearch" type="search" placeholder="搜尋姓名、取貨編號、商品或備註" oninput="renderPreorderPage()">
+
+      <div class="preorder-filter-group">
+        <button class="small-btn preorder-filter active" data-filter="all" onclick="setPreorderFilter('all',this)">全部</button>
+        <button class="small-btn preorder-filter" data-filter="pending" onclick="setPreorderFilter('pending',this)">待取貨</button>
+        <button class="small-btn preorder-filter" data-filter="picked" onclick="setPreorderFilter('picked',this)">已取貨</button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="preorder-table">
+        <thead>
+          <tr>
+            <th>取貨編號</th>
+            <th>姓名</th>
+            <th>預購內容</th>
+            <th>付款</th>
+            <th>取貨狀態</th>
+            <th>備註</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="preorderBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- OPERATIONS -->
+  <section id="operationsPage" class="page hidden">
+    <div class="operations-page-head">
+      <div>
+        <h2>營運工具</h2>
+        <div class="subtle">庫存異動、現金盤點與選用的雲端同步集中在這裡。</div>
+      </div>
+    </div>
+
+    <section class="ops-card">
+      <div class="ops-card-head">
+        <div>
+          <h3>現金盤點</h3>
+          <div class="subtle">設定開場零用金，收攤時可比對理論現金與實際現金。</div>
+        </div>
+        <button class="small-btn" onclick="openCashCountModal()">開始盤點</button>
+      </div>
+      <div id="cashCountSummary" class="ops-summary-grid"></div>
+    </section>
+
+    <section class="ops-card">
+      <div class="ops-card-head">
+        <div>
+          <h3>庫存異動紀錄</h3>
+          <div class="subtle">紀錄手動調庫存、預購保留、訂單扣庫存、大全套連動、退款回補與作廢／恢復。</div>
+        </div>
+        <button class="small-btn" onclick="exportStockLogCsv()">匯出 CSV</button>
+      </div>
+      <div class="order-search-row">
+        <input id="stockLogSearch" type="search" placeholder="搜尋商品、原因或單號" oninput="renderStockLog()">
+      </div>
+      <div class="table-wrap">
+        <table class="stock-log-table">
+          <thead><tr><th>時間</th><th>商品</th><th>異動</th><th>原因</th><th>單號</th></tr></thead>
+          <tbody id="stockLogBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="ops-card">
+      <div class="ops-card-head">
+        <div>
+          <h3>雲端同步（選用）</h3>
+          <div class="subtle">可接 Supabase，同一組同步代碼讓 iPad／電腦共用資料。未設定時仍正常使用本機資料。</div>
+        </div>
+      </div>
+
+      <div class="cloud-sync-grid">
+        <div>
+          <label for="cloudUrl">Supabase Project URL</label>
+          <input id="cloudUrl" type="url" placeholder="https://xxxx.supabase.co">
+        </div>
+        <div>
+          <label for="cloudKey">Anon Key</label>
+          <input id="cloudKey" type="password" placeholder="anon public key">
+        </div>
+        <div>
+          <label for="cloudCode">同步代碼</label>
+          <input id="cloudCode" type="text" placeholder="例如：PF45-YAKI">
+        </div>
+      </div>
+
+      <div class="modal-note">
+        Supabase 請建立資料表 <code>pos_sync</code>：<code>sync_code text primary key</code>、<code>payload jsonb</code>、<code>updated_at timestamptz</code>。同步資料會先用你的同步代碼在裝置端加密，資料庫只收到代碼雜湊與加密內容；付款 QR 圖片仍只保存在裝置。
+      </div>
+
+      <div class="page-actions">
+        <button onclick="saveCloudSettings()">儲存設定</button>
+        <button onclick="pushCloudSync()">上傳到雲端</button>
+        <button onclick="pullCloudSync()">從雲端下載</button>
+      </div>
+      <div id="cloudSyncStatus" class="subtle"></div>
+    </section>
   </section>
 
   <!-- OVERVIEW -->
@@ -2645,6 +3134,19 @@
         <h2>商品庫</h2>
         <div class="subtle">目前場次的商品、價格、庫存與選項會獨立保存。</div>
       </div>
+    </div>
+
+    <div class="library-quick-nav">
+      <button onclick="scrollLibrarySection('成員設定')">成員</button>
+      <button onclick="scrollLibrarySection('一般商品')">商品</button>
+      <button onclick="scrollLibrarySection('生寫真')">生寫真</button>
+      <button onclick="scrollLibrarySection('拍立得')">拍立得</button>
+      <button onclick="scrollLibrarySection('抽抽樂')">抽抽樂</button>
+      <button onclick="scrollLibrarySection('贈品')">贈品</button>
+      <button onclick="scrollLibrarySection('付款方式')">付款</button>
+      <button onclick="scrollLibrarySection('競標')">競標</button>
+      <button onclick="scrollLibrarySection('資料管理')">資料</button>
+      <button onclick="showPage('operationsPage')">營運</button>
     </div>
 
     <section class="library-section">
@@ -2684,26 +3186,30 @@
 
       <div class="table-wrap">
         <table>
-          <thead><tr><th>商品</th><th>價格</th><th>成員</th><th>庫存</th><th>狀態</th><th>操作</th></tr></thead>
+          <thead><tr><th>商品</th><th>分類</th><th>價格</th><th>成本</th><th>成員</th><th>庫存</th><th>狀態</th><th>操作</th></tr></thead>
           <tbody id="libraryBody"></tbody>
           <tfoot>
             <tr class="library-add-row">
-              <td colspan="6"><button class="library-inline-add" onclick="openLibraryCustomModal()">＋ 新增一般商品</button></td>
+              <td colspan="8"><button class="library-inline-add" onclick="openLibraryCustomModal()">＋ 新增一般商品</button></td>
             </tr>
           </tfoot>
         </table>
       </div>
 
       <div class="setting-action-card bundle-setting-card">
-        <div>
+        <div class="bundle-setting-info">
           <div class="setting-action-title">大全套連動扣庫存</div>
-          <div class="subtle">開啟後，售出「終極大全套」時會依設定同步扣除內含商品庫存。</div>
+          <div class="subtle">售出「終極大全套」後，會同步扣除你勾選的零散商品庫存。</div>
+          <div id="ultimateBundleStatus" class="bundle-link-status">尚未設定連動內容</div>
         </div>
-        <label class="checkbox-row">
-          <input id="ultimateBundleEnabled" type="checkbox" onchange="saveUltimateBundleEnabled()">
-          <span>開啟</span>
-        </label>
-        <button class="small-btn" onclick="openUltimateBundleModal()">設定內容</button>
+
+        <div class="bundle-setting-actions">
+          <label class="checkbox-row">
+            <input id="ultimateBundleEnabled" type="checkbox" onchange="saveUltimateBundleEnabled()">
+            <span>啟用連動</span>
+          </label>
+          <button class="small-btn" onclick="openUltimateBundleModal()">設定連動內容</button>
+        </div>
       </div>
     </section>
 
@@ -2730,11 +3236,11 @@
 
       <div class="table-wrap">
         <table>
-          <thead><tr><th>款式</th><th>價格</th><th>成員</th><th>已售</th><th>剩餘</th><th>操作</th></tr></thead>
+          <thead><tr><th>款式</th><th>價格</th><th>成本</th><th>成員</th><th>已售</th><th>剩餘</th><th>操作</th></tr></thead>
           <tbody id="photoStockBody"></tbody>
           <tfoot>
             <tr class="library-add-row">
-              <td colspan="6"><button class="library-inline-add" onclick="openPhotoStyleModal()">＋ 新增生寫真款式</button></td>
+              <td colspan="7"><button class="library-inline-add" onclick="openPhotoStyleModal()">＋ 新增生寫真款式</button></td>
             </tr>
           </tfoot>
         </table>
@@ -2772,11 +3278,11 @@
 
       <div class="table-wrap">
         <table>
-          <thead><tr><th>名字</th><th>價格</th><th>成員</th><th>共用</th><th>已售</th><th>剩餘</th><th>狀態</th><th>操作</th></tr></thead>
+          <thead><tr><th>名字</th><th>價格</th><th>成本</th><th>成員</th><th>共用</th><th>已售</th><th>剩餘</th><th>狀態</th><th>操作</th></tr></thead>
           <tbody id="polaroidLibraryBody"></tbody>
           <tfoot>
             <tr class="library-add-row">
-              <td colspan="8"><button class="library-inline-add" onclick="openLibraryPolaroidModal()">＋ 新增拍立得選項</button></td>
+              <td colspan="9"><button class="library-inline-add" onclick="openLibraryPolaroidModal()">＋ 新增拍立得選項</button></td>
             </tr>
           </tfoot>
         </table>
@@ -2906,6 +3412,44 @@
           </label>
         </div>
 
+        <div class="payment-qr-admin-grid">
+          <div class="payment-qr-admin-card">
+            <div class="payment-qr-admin-head"><strong>街口 QR</strong><div class="subtle">建議使用 QR 截圖（PNG／JPG／WebP）</div></div>
+            <div class="payment-qr-admin-preview">
+              <img id="jkoQrAdminImage" class="hidden" alt="街口 QR 預覽">
+              <div id="jkoQrAdminPlaceholder" class="qr-placeholder">尚未上傳</div>
+            </div>
+            <div class="payment-qr-admin-actions">
+              <button class="small-btn" onclick="pickQr('jko')">上傳／更換</button>
+              <button id="jkoQrAdminRemove" class="small-btn danger-btn hidden" onclick="removeQr('jko')">移除</button>
+            </div>
+          </div>
+
+          <div class="payment-qr-admin-card">
+            <div class="payment-qr-admin-head"><strong>轉帳 QR</strong><div class="subtle">可搭配下方銀行帳號一起顯示</div></div>
+            <div class="payment-qr-admin-preview">
+              <img id="transferQrAdminImage" class="hidden" alt="轉帳 QR 預覽">
+              <div id="transferQrAdminPlaceholder" class="qr-placeholder">尚未上傳</div>
+            </div>
+            <div class="payment-qr-admin-actions">
+              <button class="small-btn" onclick="pickQr('transfer')">上傳／更換</button>
+              <button id="transferQrAdminRemove" class="small-btn danger-btn hidden" onclick="removeQr('transfer')">移除</button>
+            </div>
+          </div>
+
+          <div class="payment-qr-admin-card">
+            <div class="payment-qr-admin-head"><strong>LINE Pay QR</strong><div class="subtle">建議先截圖，只保留付款 QR 附近</div></div>
+            <div class="payment-qr-admin-preview">
+              <img id="linepayQrAdminImage" class="hidden" alt="LINE Pay QR 預覽">
+              <div id="linepayQrAdminPlaceholder" class="qr-placeholder">尚未上傳</div>
+            </div>
+            <div class="payment-qr-admin-actions">
+              <button class="small-btn" onclick="pickQr('linepay')">上傳／更換</button>
+              <button id="linepayQrAdminRemove" class="small-btn danger-btn hidden" onclick="removeQr('linepay')">移除</button>
+            </div>
+          </div>
+        </div>
+
         <div class="transfer-account-settings">
           <div class="library-setting-label">轉帳帳戶</div>
           <div class="form-grid-3">
@@ -2966,14 +3510,14 @@
       <div class="library-section-head">
         <div>
           <h3>資料管理</h3>
-          <div class="library-section-note">備份或還原商品、場次、訂單、競標與付款資料。</div>
+          <div class="library-section-note">備份或還原商品、場次、訂單、退款、預購、庫存異動、競標與付款資料。</div>
         </div>
       </div>
 
       <div class="data-management-grid">
         <div class="setting-action-card">
           <div class="setting-action-title">完整備份 JSON</div>
-          <div class="subtle">下載目前所有場次、商品、訂單、競標與設定資料。</div>
+          <div class="subtle">下載目前所有場次、商品、訂單、退款、預購、庫存異動、競標與設定資料。</div>
           <button onclick="exportFullBackup()">下載備份</button>
         </div>
 
@@ -2996,7 +3540,14 @@
       <label for="sessionPicker">已建立場次</label>
       <select id="sessionPicker" onchange="loadPickedSession()"></select>
 
-      <button class="session-new" onclick="newSessionForm()">＋ 新增場次</button>
+      <div class="session-template-actions">
+        <button class="session-new" onclick="newSessionForm()">＋ 空白場次</button>
+        <button class="session-new secondary" onclick="duplicateSessionForm()">複製所選場次設定</button>
+      </div>
+
+      <div id="sessionTemplateHint" class="modal-note hidden">
+        新場次會複製商品、成員、價格、庫存、付款、贈品與競標基本設定；不複製訂單、預購名單、競標出價紀錄。
+      </div>
 
       <label for="sessionDate">日期</label>
       <div class="session-date-row">
@@ -3033,6 +3584,62 @@
     </div>
   </div>
 
+  <!-- PREORDER EDIT -->
+  <div id="preorderModal" class="modal hidden">
+    <div class="modal-box preorder-modal-box">
+      <h2 id="preorderModalTitle">新增預購</h2>
+
+      <div class="form-grid-2">
+        <div>
+          <label for="preorderCustomer">取貨姓名 *</label>
+          <input id="preorderCustomer" type="text" placeholder="例如：小明">
+        </div>
+
+        <div>
+          <label for="preorderCode">取貨編號</label>
+          <input id="preorderCode" type="text" placeholder="例如：A001">
+        </div>
+      </div>
+
+      <div class="form-grid-3">
+        <div>
+          <label for="preorderPaymentStatus">付款狀態</label>
+          <select id="preorderPaymentStatus">
+            <option value="unpaid">未付款</option>
+            <option value="deposit">已付訂金</option>
+            <option value="paid">已付款</option>
+          </select>
+        </div>
+        <div>
+          <label for="preorderPaidAmount">已收金額</label>
+          <input id="preorderPaidAmount" type="number" min="0" inputmode="numeric" value="0">
+        </div>
+        <div>
+          <label for="preorderPaymentMethod">付款方式</label>
+          <select id="preorderPaymentMethod">
+            <option value="">未設定</option>
+            <option value="現金">現金</option>
+            <option value="街口">街口</option>
+            <option value="轉帳">轉帳</option>
+            <option value="LINE Pay">LINE Pay</option>
+          </select>
+        </div>
+      </div>
+
+      <label>預購商品 *</label>
+      <div id="preorderItemEditor" class="preorder-item-editor"></div>
+      <button class="small-btn preorder-add-line" onclick="addPreorderItemRow()">＋ 新增商品</button>
+
+      <label for="preorderNote">備註</label>
+      <textarea id="preorderNote" placeholder="付款狀況、特殊需求、聯絡資訊等"></textarea>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('preorderModal')">取消</button>
+        <button class="confirm" onclick="savePreorder()">儲存</button>
+      </div>
+    </div>
+  </div>
+
   <!-- PHOTO STYLE -->
   <div id="photoStyleModal" class="modal hidden">
     <div class="modal-box">
@@ -3041,6 +3648,9 @@
       <input id="photoStyleName" type="text" placeholder="例如：女僕服">
       <label for="photoStylePrice">價格</label>
       <input id="photoStylePrice" type="number" min="0" inputmode="numeric" placeholder="留空＝目前統一價格">
+
+      <label for="photoStyleCost">單位成本</label>
+      <input id="photoStyleCost" type="number" min="0" inputmode="numeric" value="0">
 
       <label for="photoStyleStock">庫存</label>
       <input id="photoStyleStock" type="number" min="0" inputmode="numeric" placeholder="留空＝不限量">
@@ -3092,6 +3702,17 @@
       <label for="customPrice">單價</label>
       <input id="customPrice" type="number" inputmode="numeric">
 
+      <div class="form-grid-2">
+        <div>
+          <label for="customCost">單位成本</label>
+          <input id="customCost" type="number" min="0" inputmode="numeric" value="0">
+        </div>
+        <div>
+          <label for="customCategory">商品分類</label>
+          <input id="customCategory" type="text" value="一般" placeholder="例如：周邊">
+        </div>
+      </div>
+
       <div id="customQtyArea">
         <label for="customQty">數量</label>
         <input id="customQty" type="number" inputmode="numeric" min="1" value="1">
@@ -3133,6 +3754,9 @@
 
       <label for="otherPolaroidPrice">單價</label>
       <input id="otherPolaroidPrice" type="number" inputmode="numeric" value="200">
+
+      <label for="otherPolaroidCost">單位成本</label>
+      <input id="otherPolaroidCost" type="number" min="0" inputmode="numeric" value="0">
 
       <label>成員（可複選）</label>
       <div id="otherPolaroidOwnerChecks" class="owner-check-grid"></div>
@@ -3245,11 +3869,17 @@
 
       <div id="qrCropStage" class="qr-crop-stage">
         <img id="qrCropImage" alt="">
+        <div id="qrCropLoading" class="qr-crop-loading">圖片載入中…</div>
         <div class="qr-crop-guide"></div>
       </div>
 
       <label for="qrCropZoom">縮放</label>
       <input id="qrCropZoom" class="qr-crop-zoom" type="range" min="0.5" max="4" step="0.01" value="1">
+
+      <div class="qr-crop-secondary-actions">
+        <button class="small-btn" onclick="resetQrCrop()">重新置中</button>
+        <button class="small-btn" onclick="useOriginalQrImage()">直接使用整張</button>
+      </div>
 
       <div class="modal-actions">
         <button class="cancel" onclick="cancelQrCrop()">取消</button>
@@ -3321,8 +3951,8 @@
           <button id="jkoQrRemove" class="hidden" onclick="removeQr('jko')">移除</button>
         </div>
 
-        <input id="jkoQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('jko', this.files[0])">
-        <div class="qr-upload-note">從相簿／檔案選擇圖片後，手動把 QR 裁到白色方框內。</div>
+        <input id="jkoQrInput" class="qr-file-input" type="file" accept="image/png,image/jpeg,image/webp" onchange="saveQrFile('jko', this.files[0])">
+        <div class="qr-upload-note">請使用 PNG／JPG／WebP。iPhone 建議直接截圖後上傳，再把 QR 移到白色方框內。</div>
       </div>
 
       <div class="modal-note">確認款項已收到後，再按下「確認收到款項」。</div>
@@ -3356,8 +3986,8 @@
           <button id="transferQrRemove" class="hidden" onclick="removeQr('transfer')">移除</button>
         </div>
 
-        <input id="transferQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('transfer', this.files[0])">
-        <div class="qr-upload-note">從相簿／檔案選擇圖片後，手動把 QR 裁到白色方框內。</div>
+        <input id="transferQrInput" class="qr-file-input" type="file" accept="image/png,image/jpeg,image/webp" onchange="saveQrFile('transfer', this.files[0])">
+        <div class="qr-upload-note">請使用 PNG／JPG／WebP。iPhone 建議直接截圖後上傳，再把 QR 移到白色方框內。</div>
       </div>
 
       <div class="modal-note">請依畫面資訊完成付款。跨行轉帳可能依各家銀行規定產生手續費，<strong>請勿從應付金額中扣除。</strong></div>
@@ -3388,8 +4018,8 @@
           <button id="linepayQrRemove" class="hidden" onclick="removeQr('linepay')">移除</button>
         </div>
 
-        <input id="linepayQrInput" class="qr-file-input" type="file" accept="image/*" onchange="saveQrFile('linepay', this.files[0])">
-        <div class="qr-upload-note">從相簿／檔案選擇圖片後，手動把 QR 裁到白色方框內。</div>
+        <input id="linepayQrInput" class="qr-file-input" type="file" accept="image/png,image/jpeg,image/webp" onchange="saveQrFile('linepay', this.files[0])">
+        <div class="qr-upload-note">請使用 PNG／JPG／WebP。iPhone 建議直接截圖後上傳，再把 QR 移到白色方框內。</div>
       </div>
 
       <div class="modal-note">確認款項已收到後，再按下「確認收到款項」。</div>
@@ -3537,6 +4167,80 @@
     </div>
   </div>
 
+  <!-- GENERIC BUNDLE -->
+  <div id="genericBundleModal" class="modal hidden">
+    <div class="modal-box wide">
+      <h2 id="genericBundleTitle">套組內容設定</h2>
+      <div class="modal-note">任何一般商品都能變成套組。每售出 1 個此商品，會依設定連動扣除零散商品庫存。</div>
+      <div id="genericBundleItems" class="bundle-component-list"></div>
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('genericBundleModal')">取消</button>
+        <button class="confirm" onclick="saveGenericBundle()">儲存套組</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFUND / RETURN -->
+  <div id="refundModal" class="modal hidden">
+    <div class="modal-box wide">
+      <h2 id="refundModalTitle">退款／換貨</h2>
+      <div id="refundOrderInfo" class="modal-note"></div>
+
+      <label for="refundType">處理方式</label>
+      <select id="refundType">
+        <option value="refund">退款並回補庫存</option>
+        <option value="return_only">只回補庫存（換貨／補登）</option>
+        <option value="refund_no_stock">只退款、不回補庫存</option>
+      </select>
+
+      <div id="refundItemRows" class="refund-item-rows"></div>
+
+      <label for="refundAmount">退款金額</label>
+      <input id="refundAmount" type="number" min="0" inputmode="numeric" value="0">
+
+      <label for="refundReason">原因</label>
+      <input id="refundReason" type="text" placeholder="例如：瑕疵換貨">
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('refundModal')">取消</button>
+        <button class="confirm" onclick="saveRefund()">確認處理</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASH COUNT -->
+  <div id="cashCountModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>現金盤點</h2>
+
+      <label for="openingCashInput">開場零用金</label>
+      <input id="openingCashInput" type="number" min="0" inputmode="numeric" value="0">
+
+      <div class="shift-summary" id="cashCountExpected"></div>
+
+      <label for="actualCashInput">實際現金</label>
+      <input id="actualCashInput" type="number" min="0" inputmode="numeric" value="0" oninput="updateCashCountDiff()">
+
+      <div id="cashCountDiff" class="cash-count-diff"></div>
+
+      <div class="modal-actions">
+        <button class="cancel" onclick="closeModal('cashCountModal')">取消</button>
+        <button class="confirm" onclick="saveCashCount()">儲存盤點</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GIFT CHOICE -->
+  <div id="giftChoiceModal" class="modal hidden">
+    <div class="modal-box">
+      <h2 id="giftChoiceTitle">選擇贈品</h2>
+      <div id="giftChoiceOptions" class="payment-grid"></div>
+      <div class="modal-actions" style="grid-template-columns:1fr">
+        <button class="cancel" onclick="closeModal('giftChoiceModal')">稍後再選</button>
+      </div>
+    </div>
+  </div>
+
   <!-- SHIFT CLOSE -->
   <div id="shiftCloseModal" class="modal hidden">
     <div class="modal-box">
@@ -3544,6 +4248,7 @@
       <div id="shiftSummary" class="shift-summary"></div>
       <div class="modal-note">收攤會關閉目前競標並保留已完成的競標紀錄。建議同時下載 CSV 與完整備份。</div>
       <div class="cart-actions">
+        <button class="clear-cart" onclick="openCashCountModal()">現金盤點</button>
         <button class="clear-cart" onclick="exportCSV()">先下載 CSV</button>
         <button class="clear-cart" onclick="exportFullBackup()">完整備份 JSON</button>
       </div>
@@ -3558,7 +4263,10 @@
   <div id="ultimateBundleModal" class="modal hidden">
     <div class="modal-box">
       <h2>大全套連動扣庫存</h2>
-      <div class="modal-note">勾選大全套內含的商品，並設定每賣 1 套要扣除幾個。只影響庫存，不會增加訂單金額。</div>
+      <div class="modal-note">
+        勾選大全套內含的零散商品，並設定「每賣 1 套要扣幾個」。儲存後會自動啟用連動。<br>
+        例如：大全套內含公式服生寫真 1 套 → 勾選「生寫真｜公式服」，數量填 1。
+      </div>
       <div id="ultimateBundleItems" class="bundle-component-list"></div>
       <div class="modal-actions">
         <button class="cancel" onclick="closeModal('ultimateBundleModal')">取消</button>
@@ -3577,6 +4285,26 @@
 
       <label for="giftThreshold">消費滿額</label>
       <input id="giftThreshold" type="number" min="0" inputmode="numeric" placeholder="例如：500">
+
+      <div class="form-grid-2">
+        <div>
+          <label for="giftRuleType">贈送規則</label>
+          <select id="giftRuleType">
+            <option value="once">達標送一次</option>
+            <option value="repeat">每滿額送一次</option>
+          </select>
+        </div>
+        <div>
+          <label for="giftPerThresholdQty">每次贈送數量</label>
+          <input id="giftPerThresholdQty" type="number" min="1" inputmode="numeric" value="1">
+        </div>
+      </div>
+
+      <label for="giftChoiceGroup">擇一組（選填）</label>
+      <input id="giftChoiceGroup" type="text" placeholder="同一組名稱的贈品達標後讓現場選一款">
+
+      <label for="giftCost">單位成本</label>
+      <input id="giftCost" type="number" min="0" inputmode="numeric" value="0">
 
       <label class="checkbox-row">
         <input id="giftUnlimited" type="checkbox" onchange="toggleGiftStockInput()">
@@ -3652,7 +4380,16 @@
     let pendingPolaroid = null;
     let stockContext = null;
     let preorderPickupMode = false;
+    let activePreorderPickupId = null;
+    let editingPreorderId = null;
+    let preorderEditRows = [];
+    let preorderFilter = "all";
+    let sessionTemplateSourceId = null;
     let editingGiftId = null;
+    let productCategoryFilter = "全部";
+    let editingBundleProductId = null;
+    let refundOrderId = null;
+    let giftChoiceSelections = {};
 
     /* -------------------- HELPERS -------------------- */
     function esc(value) {
@@ -3928,6 +4665,10 @@
         lotteryMax: 60,
         defaultStockWarning: 5,
         stockWarningThresholds: {},
+        preorderReserveConfirmed:
+          Boolean(
+            saved.preorderReserveConfirmed
+          ),
 
         lotteryPrizes: Array.isArray(saved.lotteryPrizes)
           ? saved.lotteryPrizes
@@ -4011,6 +4752,23 @@
             ? saved.clearedAuctionHistoryIds
             : [],
 
+        photoCosts: {
+          ...(saved.photoCosts || {})
+        },
+
+        preorderReservations: {
+          ...(saved.preorderReservations || {})
+        },
+
+        preorderReserveApplied:
+          Boolean(saved.preorderReserveApplied),
+
+        openingCash:
+          Number(saved.openingCash || 0),
+
+        cashCount:
+          saved.cashCount || null,
+
         ...saved
       };
     }
@@ -4087,6 +4845,25 @@
       items = items.map(x => {
         const item = {
           ...x,
+          category:
+            x.category ||
+            (
+              x.id === "ultimate"
+                ? "套組"
+                : x.type === "lottery"
+                  ? "抽抽樂"
+                  : x.type === "polaroid"
+                    ? "拍立得"
+                    : x.type === "photoset"
+                      ? "生寫真"
+                      : "一般"
+            ),
+          cost:
+            Number(x.cost || 0),
+          bundleComponents:
+            Array.isArray(x.bundleComponents)
+              ? x.bundleComponents
+              : [],
           stock:
             x.stock === undefined
               ? null
@@ -4154,6 +4931,8 @@
             Boolean(
               x.sharedStock
             ),
+          cost:
+            Number(x.cost || 0),
           stock:
             x.stock === undefined
               ? null
@@ -4414,7 +5193,31 @@
       }
     }
 
+    function nextSessionDay(day) {
+      const match =
+        String(
+          day || ""
+        ).match(
+          /^Day\s+(\d+)$/
+        );
+
+      if (!match) {
+        return "";
+      }
+
+      const next =
+        Number(
+          match[1]
+        ) + 1;
+
+      return next <= 5
+        ? `Day ${next}`
+        : "";
+    }
+
     function fillSessionForm(s) {
+      sessionTemplateSourceId = null;
+      document.getElementById("sessionTemplateHint").classList.add("hidden");
       document.getElementById("sessionDate").value = s.date || "";
       document.getElementById("sessionName").value = s.name || "";
       document.getElementById("sessionDay").value = s.day || "";
@@ -4432,11 +5235,122 @@
 
     function newSessionForm() {
       editingSessionId = null;
+      sessionTemplateSourceId = null;
+
+      document.getElementById(
+        "sessionTemplateHint"
+      ).classList.add(
+        "hidden"
+      );
+
       document.getElementById("sessionDate").value = todayISO();
       document.getElementById("sessionName").value = "";
       document.getElementById("sessionDay").value = "";
       document.getElementById("sessionStatus").value = "upcoming";
       document.getElementById("sessionDelete").disabled = true;
+    }
+
+    function duplicateSessionForm() {
+      const selectedId =
+        document.getElementById(
+          "sessionPicker"
+        ).value ||
+        editingSessionId ||
+        currentSessionId;
+
+      const source =
+        getSessions()
+          .find(
+            session =>
+              session.id === selectedId
+          );
+
+      if (!source) {
+        alert(
+          "請先選擇要複製的場次"
+        );
+        return;
+      }
+
+      editingSessionId = null;
+      sessionTemplateSourceId =
+        source.id;
+
+      document.getElementById(
+        "sessionTemplateHint"
+      ).classList.remove(
+        "hidden"
+      );
+
+      document.getElementById(
+        "sessionDate"
+      ).value =
+        source.date ||
+        todayISO();
+
+      document.getElementById(
+        "sessionName"
+      ).value =
+        source.name || "";
+
+      document.getElementById(
+        "sessionDay"
+      ).value =
+        nextSessionDay(
+          source.day
+        );
+
+      document.getElementById(
+        "sessionStatus"
+      ).value =
+        "upcoming";
+
+      document.getElementById(
+        "sessionDelete"
+      ).disabled =
+        true;
+    }
+
+    function resetCopiedSessionRuntimeSettings(id) {
+      const key =
+        sessionDataKey(
+          "settings",
+          id
+        );
+
+      const settings =
+        loadJSON(
+          key,
+          {}
+        );
+
+      if (
+        settings.auction
+      ) {
+        settings.auction = {
+          ...settings.auction,
+          enabled:false,
+          currentBid:
+            Number(
+              settings.auction.startingBid || 0
+            ),
+          winner:"",
+          bidHistory:[],
+          startAt:"",
+          endAt:""
+        };
+      }
+
+      settings.clearedAuctionHistoryIds =
+        [];
+
+      settings.preorderReserveConfirmed =
+        false;
+
+      saveJSON(
+        key,
+        settings
+      );
     }
 
     function saveSession() {
@@ -4456,14 +5370,35 @@
         if (idx >= 0) sessions[idx] = {...sessions[idx],date,name,day,status};
       } else {
         const sourceSessionId =
-          currentSessionId;
+          sessionTemplateSourceId;
 
         id = createSessionId();
-        sessions.push({id,date,name,day,status,createdAt:Date.now()});
+
+        sessions.push({
+          id,
+          date,
+          name,
+          day,
+          status,
+          createdAt:Date.now()
+        });
 
         initializeSessionData(
           id,
           sourceSessionId
+        );
+
+        if (
+          sourceSessionId
+        ) {
+          resetCopiedSessionRuntimeSettings(
+            id
+          );
+        }
+
+        savePreorders(
+          [],
+          id
         );
       }
 
@@ -4484,6 +5419,8 @@
         document.getElementById("orderNote").value = "";
         renderCart();
       }
+
+      sessionTemplateSourceId = null;
 
       updateSessionUI();
       closeModal("sessionModal");
@@ -4509,7 +5446,7 @@
 
       for (
         const type of
-        ["products","polaroids","photo-stock","settings"]
+        ["products","polaroids","photo-stock","settings","preorders","stock-log"]
       ) {
         localStorage.removeItem(
           sessionDataKey(
@@ -4580,9 +5517,69 @@
           }
         }
 
+        let adjustments =
+          Array.isArray(
+            order.stockAdjustments
+          )
+            ? order.stockAdjustments
+            : [];
+
+        if (
+          !adjustments.length &&
+          order.bundleLinkSnapshot?.enabled &&
+          Array.isArray(
+            order.bundleLinkSnapshot
+              .components
+          )
+        ) {
+          const bundleQty =
+            (
+              order.items || []
+            ).reduce(
+              (total,item) => {
+                const isBundle =
+                  item.id ===
+                    "ultimate" ||
+                  item.inventoryKey ===
+                    "product:ultimate" ||
+                  item.name ===
+                    "終極大全套";
+
+                return total +
+                  (
+                    isBundle
+                      ? Number(
+                          item.quantity || 0
+                        )
+                      : 0
+                  );
+              },
+              0
+            );
+
+          adjustments =
+            order.bundleLinkSnapshot
+              .components
+              .map(
+                component => ({
+                  key:
+                    component.key,
+                  quantity:
+                    bundleQty *
+                    Math.max(
+                      1,
+                      Number(
+                        component.quantity ||
+                        1
+                      )
+                    )
+                })
+              );
+        }
+
         for (
           const adjustment of
-          order.stockAdjustments || []
+          adjustments
         ) {
           if (
             adjustment.key === key
@@ -4592,8 +5589,18 @@
             );
           }
         }
+
+        for(const refund of order.refunds||[]){
+          if(refund.type==="refund_no_stock")continue;
+          for(const line of refund.items||[]){
+            if(line.inventoryKey===key)sum-=Number(line.quantity||0);
+          }
+          for(const adjustment of refund.bundleReturnAdjustments||[]){
+            if(adjustment.key===key)sum-=Number(adjustment.quantity||0);
+          }
+        }
       }
-      return sum;
+      return Math.max(0,sum);
     }
 
     function getCartByKey(key) {
@@ -4601,8 +5608,22 @@
     }
 
     function remaining(stock,key,includeCart=false) {
-      if (stock === null || stock === undefined) return null;
-      return Math.max(0, Number(stock) - getSoldByKey(key) - (includeCart ? getCartByKey(key) : 0));
+      const effectiveStock =
+        key
+          ? stockSource(key)
+          : stock;
+
+      if (
+        effectiveStock === null ||
+        effectiveStock === undefined
+      ) return null;
+
+      return Math.max(
+        0,
+        Number(effectiveStock) -
+        getSoldByKey(key) -
+        (includeCart ? getCartByKey(key) : 0)
+      );
     }
 
     function getDefaultStockWarning() {
@@ -4679,49 +5700,11 @@
     }
 
     function stockSource(key) {
-      if (!key) return null;
-      if (key.startsWith("product:")) {
-        const id = key.slice("product:".length);
-        const item = getProducts().find(x => x.id === id);
-        return item ? item.stock : null;
-      }
-      if (key.startsWith("photoset:")) {
-        return getPhotoStock()[key.slice("photoset:".length)];
-      }
-      if (
-        key ===
-        "polaroid-shared:default"
-      ) {
-        return getSettings()
-          .sharedPolaroidStock;
-      }
-
-      if (key.startsWith("polaroid:")) {
-        const id = key.slice("polaroid:".length);
-        const item = getPolaroids().find(x => x.id === id);
-        return item ? item.stock : null;
-      }
-
-      if (key.startsWith("gift:")) {
-        const id =
-          key.slice(
-            "gift:".length
-          );
-
-        const gift =
-          getGifts()
-            .find(
-              item =>
-                item.id === id
-            );
-
-        return gift
-          ? gift.stock
-          : null;
-      }
-
-      return null;
+      const raw=getRawStockSource(key);
+      if(raw===null||raw===undefined)return null;
+      return Math.max(0,Number(raw)-getPreorderReservationForKey(key));
     }
+
 
     function getUltimateBundleSettings() {
       const settings =
@@ -4743,8 +5726,6 @@
         getProducts()
       ) {
         if (
-          product.id ===
-            "ultimate" ||
           !(
             product.type ===
               "simple" ||
@@ -4827,6 +5808,221 @@
       );
     }
 
+    function getBundleCandidateLabel(key) {
+      return (
+        getBundleCandidates()
+          .find(
+            item =>
+              item.key === key
+          )?.label ||
+        key
+      );
+    }
+
+    function getMaxBundleQuantityAllowed(
+      items = cart
+    ) {
+      const bundle =
+        getUltimateBundleSettings();
+
+      if (
+        !bundle.enabled ||
+        !Array.isArray(
+          bundle.components
+        ) ||
+        !bundle.components.length
+      ) {
+        return Infinity;
+      }
+
+      let max =
+        Infinity;
+
+      for (
+        const component of
+        bundle.components
+      ) {
+        const stock =
+          stockSource(
+            component.key
+          );
+
+        if (
+          stock === null ||
+          stock === undefined
+        ) {
+          continue;
+        }
+
+        const available =
+          Math.max(
+            0,
+            Number(stock) -
+            getSoldByKey(
+              component.key
+            )
+          );
+
+        const directInCart =
+          items.reduce(
+            (sum,item) =>
+              item.inventoryKey ===
+                component.key &&
+              !(
+                item.id ===
+                  "ultimate" ||
+                item.inventoryKey ===
+                  "product:ultimate" ||
+                item.name ===
+                  "終極大全套"
+              ) &&
+              !item.preorderPickup
+                ? sum +
+                  Number(
+                    item.quantity || 0
+                  )
+                : sum,
+            0
+          );
+
+        const perBundle =
+          Math.max(
+            1,
+            Number(
+              component.quantity || 1
+            )
+          );
+
+        max =
+          Math.min(
+            max,
+            Math.floor(
+              Math.max(
+                0,
+                available -
+                directInCart
+              ) /
+              perBundle
+            )
+          );
+      }
+
+      return max;
+    }
+
+    function validateBundleStockForCart(
+      items = cart,
+      showAlert = true
+    ) {
+      const bundle =
+        getUltimateBundleSettings();
+
+      if (
+        !bundle.enabled ||
+        !bundle.components?.length
+      ) {
+        return true;
+      }
+
+      const bundleQty =
+        items.reduce(
+          (sum,item) => {
+            const isBundle =
+              item.id ===
+                "ultimate" ||
+              item.inventoryKey ===
+                "product:ultimate" ||
+              item.name ===
+                "終極大全套";
+
+            return sum +
+              (
+                isBundle
+                  ? Number(
+                      item.quantity || 0
+                    )
+                  : 0
+              );
+          },
+          0
+        );
+
+      if (
+        bundleQty <= 0
+      ) {
+        return true;
+      }
+
+      for (
+        const component of
+        bundle.components
+      ) {
+        const stock =
+          stockSource(
+            component.key
+          );
+
+        if (
+          stock === null ||
+          stock === undefined
+        ) {
+          continue;
+        }
+
+        const available =
+          Math.max(
+            0,
+            Number(stock) -
+            getSoldByKey(
+              component.key
+            )
+          );
+
+        const directInCart =
+          items.reduce(
+            (sum,item) =>
+              item.inventoryKey ===
+                component.key &&
+              !item.preorderPickup
+                ? sum +
+                  Number(
+                    item.quantity || 0
+                  )
+                : sum,
+            0
+          );
+
+        const bundleNeeded =
+          bundleQty *
+          Math.max(
+            1,
+            Number(
+              component.quantity || 1
+            )
+          );
+
+        const totalNeeded =
+          directInCart +
+          bundleNeeded;
+
+        if (
+          totalNeeded >
+          available
+        ) {
+          if (showAlert) {
+            alert(
+              `大全套連動庫存不足：${getBundleCandidateLabel(component.key)}\n\n目前可用 ${available}，購物車合計需要 ${totalNeeded}。`
+            );
+          }
+
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+
     function saveUltimateBundleEnabled() {
       const settings =
         getSettings();
@@ -4892,11 +6088,36 @@
         row.className =
           "bundle-component-row";
 
+        const stock =
+          stockSource(
+            candidate.key
+          );
+
+        const sold =
+          getSoldByKey(
+            candidate.key
+          );
+
+        const left =
+          stock === null ||
+          stock === undefined
+            ? null
+            : Math.max(
+                0,
+                Number(stock) - sold
+              );
+
         row.innerHTML =
           `
             <input class="bundle-component-check" type="checkbox" data-key="${esc(candidate.key)}" ${selected.has(candidate.key) ? "checked" : ""}>
-            <span>${esc(candidate.label)}</span>
-            <input class="bundle-component-qty" data-key="${esc(candidate.key)}" type="number" min="1" inputmode="numeric" value="${selected.get(candidate.key) || 1}">
+            <div class="bundle-component-name">
+              <span>${esc(candidate.label)}</span>
+              <span class="subtle">${left === null ? "不限量" : `目前剩餘 ${left}`}</span>
+            </div>
+            <div class="bundle-component-qty-wrap">
+              <span class="subtle">每套扣</span>
+              <input class="bundle-component-qty" data-key="${esc(candidate.key)}" type="number" min="1" inputmode="numeric" value="${selected.get(candidate.key) || 1}">
+            </div>
           `;
 
         area.appendChild(
@@ -4948,6 +6169,8 @@
 
       settings.ultimateBundle = {
         ...getUltimateBundleSettings(),
+        enabled:
+          components.length > 0,
         components
       };
 
@@ -4960,68 +6183,522 @@
       );
 
       renderLibrary();
+
+      if (components.length) {
+        alert(
+          `已設定大全套連動 ${components.length} 個零散庫存項目，連動已自動開啟。`
+        );
+      }
     }
 
     function getBundleStockAdjustments(items=cart) {
-      const bundle =
-        getUltimateBundleSettings();
-
-      if (
-        !bundle.enabled ||
-        !Array.isArray(
-          bundle.components
-        ) ||
-        !bundle.components.length
-      ) {
-        return [];
-      }
-
-      const bundleQty =
-        items.reduce(
-          (sum,item) =>
-            sum +
-            (
-              item.id ===
-                "ultimate"
-                ? Number(
-                    item.quantity || 0
-                  )
-                : 0
-            ),
-          0
-        );
-
-      if (
-        bundleQty <= 0
-      ) {
-        return [];
-      }
-
-      return bundle.components
-        .filter(
-          item =>
-            item.key
-        )
-        .map(
-          item => ({
-            key:
-              item.key,
-            quantity:
-              bundleQty *
-              Math.max(
-                1,
-                Number(
-                  item.quantity || 1
-                )
-              )
-          })
-        );
+      return getAllBundleAdjustments(items);
     }
 
 
+    function scrollLibrarySection(title) {
+      const headings = Array.from(document.querySelectorAll("#libraryPage .library-section h3"));
+      const heading = headings.find(item => item.textContent.trim().startsWith(title));
+      heading?.closest(".library-section")?.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+
+
+
+    function getSaleUnitCost(product,seen=new Set()) {
+      if(!product)return 0;
+      if(seen.has(product.id))return Number(product.cost||0);
+
+      const nextSeen=new Set(seen);
+      nextSeen.add(product.id);
+
+      let total=Number(product.cost||0);
+
+      for(const component of product.bundleComponents||[]){
+        total+=getProductCostByInventoryKey(component.key,nextSeen)*Math.max(1,Number(component.quantity||1));
+      }
+
+      if(product.id==="ultimate" && getUltimateBundleSettings().enabled){
+        for(const component of getUltimateBundleSettings().components||[]){
+          total+=getProductCostByInventoryKey(component.key,nextSeen)*Math.max(1,Number(component.quantity||1));
+        }
+      }
+
+      return total;
+    }
+
+    function getProductCostByInventoryKey(key,seen=new Set()) {
+      if (!key) return 0;
+      if (key.startsWith("product:")) {
+        const id=key.slice("product:".length);
+        return getSaleUnitCost(getProducts().find(item=>item.id===id),seen);
+      }
+      if (key.startsWith("photoset:")) {
+        const theme=key.slice("photoset:".length);
+        return Number(getSettings().photoCosts?.[theme]||0);
+      }
+      if (key.startsWith("polaroid:")) {
+        const id=key.slice("polaroid:".length);
+        return Number(getPolaroids().find(item=>item.id===id)?.cost||0);
+      }
+      if (key.startsWith("gift:")) {
+        const id=key.slice("gift:".length);
+        return Number(getGifts().find(item=>item.id===id)?.cost||0);
+      }
+      return 0;
+    }
+
+    function getPhotoCost(theme) {
+      return Number(getSettings().photoCosts?.[theme]||0);
+    }
+
+    function getStockLogs(sessionId=currentSessionId) {
+      return loadJSON(sessionDataKey("stock-log",sessionId),[]);
+    }
+
+    function saveStockLogs(items,sessionId=currentSessionId) {
+      saveJSON(sessionDataKey("stock-log",sessionId),items);
+    }
+
+    function appendStockLog({key="",name="",delta=0,reason="",orderNo="",meta={}}={}) {
+      if(!currentSessionId || !Number(delta)) return;
+      const items=getStockLogs();
+      items.push({
+        id:"stock-log-"+Date.now()+"-"+Math.random().toString(36).slice(2,6),
+        time:nowISO(),key,
+        name:name||getBundleCandidateLabel(key),
+        delta:Number(delta),reason,orderNo,meta
+      });
+      if(items.length>2000)items.splice(0,items.length-2000);
+      saveStockLogs(items);
+    }
+
+    function getPreorderReservationForKey(key) {
+      return Number(getSettings().preorderReservations?.[key]||0);
+    }
+
+    function getRawStockSource(key) {
+      if(!key)return null;
+      if(key.startsWith("product:")){
+        const id=key.slice("product:".length);
+        const item=getProducts().find(x=>x.id===id);
+        return item?item.stock:null;
+      }
+      if(key.startsWith("photoset:")){
+        const theme=key.slice("photoset:".length);
+        const stock=getPhotoStock();
+        return Object.prototype.hasOwnProperty.call(stock,theme)?stock[theme]:null;
+      }
+      if(key==="polaroid-shared:default"){
+        return getSettings().sharedPolaroidStock;
+      }
+      if(key.startsWith("polaroid:")){
+        const id=key.slice("polaroid:".length);
+        const item=getPolaroids().find(x=>x.id===id);
+        return item?item.stock:null;
+      }
+      if(key.startsWith("gift:")){
+        const id=key.slice("gift:".length);
+        const gift=getGifts().find(x=>x.id===id);
+        return gift?gift.stock:null;
+      }
+      return null;
+    }
+
+    function buildPreorderReservationMap() {
+      const map={};
+      for(const preorder of getPreorders()){
+        if(preorder.status==="cancelled")continue;
+        for(const item of preorder.items||[]){
+          const key=item.inventoryKey;
+          if(!key)continue;
+          map[key]=(map[key]||0)+Number(item.quantity||0);
+        }
+      }
+      return map;
+    }
+
+    function applyPreorderReservations() {
+      if(!requireEditableSession())return;
+      const next=buildPreorderReservationMap();
+      if(!Object.keys(next).length)return alert("目前沒有可套用的預購庫存。");
+
+      for(const [key,qty] of Object.entries(next)){
+        const raw=getRawStockSource(key);
+        if(raw!==null && raw!==undefined){
+          const sold=getSoldByKey(key);
+          if(Number(qty)+sold>Number(raw)){
+            return alert(`無法套用預購保留：${getBundleCandidateLabel(key)}\n現有庫存 ${raw}，已售 ${sold}，預購需保留 ${qty}。`);
+          }
+        }
+      }
+
+      const settings=getSettings();
+      const previous=settings.preorderReservations||{};
+      for(const [key,qty] of Object.entries(previous)){
+        if(qty)appendStockLog({key,delta:Number(qty),reason:"重新套用預購保留前解除舊保留"});
+      }
+
+      settings.preorderReservations=next;
+      settings.preorderReserveApplied=true;
+      settings.preorderReserveConfirmed=true;
+      saveSettings(settings);
+
+      for(const [key,qty] of Object.entries(next)){
+        appendStockLog({key,delta:-Number(qty),reason:"套用預購保留"});
+      }
+
+      renderPreorderPage();
+    renderOperationsPage();renderLibrary();renderMainProducts();
+      alert("已套用預購保留數量，現場可售庫存已自動扣除。");
+    }
+
+    function releasePreorderReservations() {
+      const settings=getSettings();
+      const previous=settings.preorderReservations||{};
+      if(!Object.keys(previous).length)return alert("目前沒有已套用的預購保留。");
+      if(!confirm("確定解除目前的預購保留庫存嗎？"))return;
+      for(const [key,qty] of Object.entries(previous)){
+        appendStockLog({key,delta:Number(qty),reason:"解除預購保留"});
+      }
+      settings.preorderReservations={};
+      settings.preorderReserveApplied=false;
+      settings.preorderReserveConfirmed=false;
+      saveSettings(settings);
+      renderPreorderPage();renderLibrary();renderMainProducts();
+    }
+
+    function generateOrderNo() {
+      const session=getCurrentSession();
+      const prefix=(session?.day||session?.name||"ORD")
+        .replace(/\s+/g,"")
+        .replace(/[^A-Za-z0-9\u4e00-\u9fff]/g,"")
+        .slice(0,6).toUpperCase()||"ORD";
+      return `${prefix}-${String(getOrders().length+1).padStart(3,"0")}`;
+    }
+
+    function orderNumber(order,index=0) {
+      return order.orderNo||`OLD-${String(index+1).padStart(3,"0")}`;
+    }
+
+    function getOrderRefundTotal(order) {
+      return (order.refunds||[]).reduce((sum,item)=>sum+(item.type==="return_only"?0:Number(item.amount||0)),0);
+    }
+
+    function getOrderNetTotal(order) {
+      return Math.max(0,Number(order.total||0)-getOrderRefundTotal(order));
+    }
+
+    function getOrderCost(order) {
+      let cost=0;
+      for(const item of order.items||[])cost+=Number(item.unitCost||0)*Number(item.quantity||0);
+      for(const refund of order.refunds||[]){
+        if(refund.type==="refund_no_stock")continue;
+        for(const line of refund.items||[])cost-=Number(line.unitCost||0)*Number(line.quantity||0);
+      }
+      return Math.max(0,cost);
+    }
+
+    function saveProductCategory(id,value) {
+      const items=getProducts(), index=items.findIndex(item=>item.id===id);
+      if(index<0)return;
+      items[index].category=(value||"一般").trim()||"一般";
+      saveProducts(items);renderLibrary();renderMainProducts();
+    }
+
+    function saveProductCost(id,value) {
+      const items=getProducts(), index=items.findIndex(item=>item.id===id);
+      if(index<0)return;
+      items[index].cost=Math.max(0,Number(value||0));
+      saveProducts(items);renderLibrary();
+    }
+
+    function savePhotoCost(theme,value) {
+      const settings=getSettings();
+      settings.photoCosts={...(settings.photoCosts||{}),[theme]:Math.max(0,Number(value||0))};
+      saveSettings(settings);renderLibrary();
+    }
+
+    function savePolaroidCost(id,value) {
+      const items=getPolaroids(), index=items.findIndex(item=>item.id===id);
+      if(index<0)return;
+      items[index].cost=Math.max(0,Number(value||0));
+      savePolaroids(items);renderLibrary();
+    }
+
+    function getProductCategories() {
+      const set=new Set(["全部"]);
+      for(const p of getProducts().filter(item=>item.visible))set.add(p.category||"一般");
+      return Array.from(set);
+    }
+
+    function setProductCategoryFilter(value) {
+      productCategoryFilter=value||"全部";
+      renderMainProducts();
+    }
+
+    function renderProductCategoryFilters() {
+      const area=document.getElementById("productCategoryFilters");
+      if(!area)return;
+      area.innerHTML="";
+      for(const category of getProductCategories()){
+        const b=document.createElement("button");
+        b.type="button";
+        b.className="product-category-filter"+(category===productCategoryFilter?" active":"");
+        b.textContent=category;
+        b.onclick=()=>setProductCategoryFilter(category);
+        area.appendChild(b);
+      }
+    }
+
+    function openGenericBundle(id) {
+      const product=getProducts().find(item=>item.id===id);
+      if(!product)return;
+      editingBundleProductId=id;
+      document.getElementById("genericBundleTitle").textContent=`套組內容｜${product.name}`;
+      const selected=new Map((product.bundleComponents||[]).map(item=>[item.key,Number(item.quantity||1)]));
+      const area=document.getElementById("genericBundleItems");area.innerHTML="";
+      for(const candidate of getBundleCandidates().filter(item=>item.key!==inventoryKeyForProduct(id))){
+        const row=document.createElement("div");row.className="bundle-component-row";
+        row.innerHTML=`<input class="generic-bundle-check" type="checkbox" data-key="${esc(candidate.key)}" ${selected.has(candidate.key)?"checked":""}>
+          <div class="bundle-component-name"><span>${esc(candidate.label)}</span></div>
+          <div class="bundle-component-qty-wrap"><span class="subtle">每個扣</span><input class="generic-bundle-qty" data-key="${esc(candidate.key)}" type="number" min="1" value="${selected.get(candidate.key)||1}"></div>`;
+        area.appendChild(row);
+      }
+      document.getElementById("genericBundleModal").classList.remove("hidden");
+    }
+
+    function saveGenericBundle() {
+      if(!editingBundleProductId)return;
+      const components=[];
+      for(const check of document.querySelectorAll("#genericBundleItems .generic-bundle-check:checked")){
+        const key=check.dataset.key;
+        const input=document.querySelector(`#genericBundleItems .generic-bundle-qty[data-key="${CSS.escape(key)}"]`);
+        components.push({key,quantity:Math.max(1,Number(input?.value||1))});
+      }
+      const products=getProducts(),index=products.findIndex(item=>item.id===editingBundleProductId);
+      if(index<0)return;
+      products[index].bundleComponents=components;
+      if(components.length&&(!products[index].category||products[index].category==="一般"))products[index].category="套組";
+      saveProducts(products);
+      editingBundleProductId=null;closeModal("genericBundleModal");renderLibrary();renderMainProducts();
+    }
+
+    function getBundleProductAvailable(product) {
+      if(!product?.bundleComponents?.length)return Infinity;
+      let max=Infinity;
+      for(const component of product.bundleComponents){
+        const stock=stockSource(component.key);
+        if(stock===null||stock===undefined)continue;
+        const available=Math.max(0,Number(stock)-getSoldByKey(component.key));
+        const per=Math.max(1,Number(component.quantity||1));
+        max=Math.min(max,Math.floor(available/per));
+      }
+      return max;
+    }
+
+    function getAllBundleAdjustments(items=cart) {
+      const result=new Map();
+      const add=(key,qty)=>{if(key&&Number(qty))result.set(key,(result.get(key)||0)+Number(qty));};
+
+      const legacy=getUltimateBundleSettings();
+      if(legacy.enabled&&legacy.components?.length){
+        const qty=items.reduce((sum,item)=>{
+          const match=item.id==="ultimate"||item.inventoryKey==="product:ultimate"||item.name==="終極大全套";
+          return sum+(match?Number(item.quantity||0):0);
+        },0);
+        for(const c of legacy.components)add(c.key,qty*Math.max(1,Number(c.quantity||1)));
+      }
+
+      const productMap=new Map(getProducts().map(p=>[p.id,p]));
+      for(const item of items){
+        const product=productMap.get(item.id);
+        if(!product?.bundleComponents?.length)continue;
+        for(const c of product.bundleComponents)add(c.key,Number(item.quantity||0)*Math.max(1,Number(c.quantity||1)));
+      }
+      return Array.from(result,([key,quantity])=>({key,quantity}));
+    }
+
+    function renderOperationsPage() {
+      renderStockLog();renderCashCountSummary();loadCloudSettingsToUI();
+    }
+
+    function renderStockLog() {
+      const body=document.getElementById("stockLogBody");if(!body)return;
+      const q=(document.getElementById("stockLogSearch")?.value||"").trim().toLowerCase();
+      const rows=[...getStockLogs()].reverse().filter(item=>!q||[item.name,item.reason,item.orderNo,item.key].join(" ").toLowerCase().includes(q));
+      body.innerHTML="";
+      if(!rows.length){body.innerHTML='<tr><td colspan="5">尚無庫存異動紀錄</td></tr>';return;}
+      for(const item of rows){
+        const tr=document.createElement("tr");
+        tr.innerHTML=`<td>${esc(new Date(item.time).toLocaleString("zh-TW"))}</td><td>${esc(item.name||getBundleCandidateLabel(item.key))}</td><td>${Number(item.delta)>0?"+":""}${Number(item.delta)}</td><td>${esc(item.reason||"—")}</td><td>${esc(item.orderNo||"—")}</td>`;
+        body.appendChild(tr);
+      }
+    }
+
+    function downloadCsv(rows,filename) {
+      const csv=rows.map(row=>row.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(",")).join("\n");
+      const blob=new Blob(["\uFEFF",csv],{type:"text/csv;charset=utf-8"});
+      const url=URL.createObjectURL(blob),a=document.createElement("a");
+      a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+    }
+
+    function exportStockLogCsv() {
+      const rows=[["時間","商品","異動","原因","單號"]];
+      for(const item of getStockLogs())rows.push([new Date(item.time).toLocaleString("zh-TW"),item.name||getBundleCandidateLabel(item.key),item.delta,item.reason||"",item.orderNo||""]);
+      downloadCsv(rows,"庫存異動紀錄.csv");
+    }
+
+    function getCashRevenue() {
+      return getOrders().filter(order=>!order.voided&&!order.preorderPickup).reduce((sum,order)=>sum+(order.payment==="現金"?getOrderNetTotal(order):0),0);
+    }
+
+    function renderCashCountSummary() {
+      const area=document.getElementById("cashCountSummary");if(!area)return;
+      const settings=getSettings(),opening=Number(settings.openingCash||0),sales=getCashRevenue(),expected=opening+sales,actual=settings.cashCount?.actual;
+      const diff=actual===undefined||actual===null?null:Number(actual)-expected;
+      area.innerHTML=`<div class="ops-summary-item">開場零用金<strong>NT$ ${money(opening)}</strong></div>
+        <div class="ops-summary-item">現金銷售<strong>NT$ ${money(sales)}</strong></div>
+        <div class="ops-summary-item">理論現金<strong>NT$ ${money(expected)}</strong></div>
+        <div class="ops-summary-item">實際現金<strong>${actual===undefined||actual===null?"尚未盤點":"NT$ "+money(actual)}</strong></div>
+        <div class="ops-summary-item">差額<strong>${diff===null?"—":(diff>=0?"+":"")+"NT$ "+money(diff)}</strong></div>`;
+    }
+
+    function openCashCountModal() {
+      const settings=getSettings(),opening=Number(settings.openingCash||0),expected=opening+getCashRevenue();
+      document.getElementById("openingCashInput").value=opening;
+      document.getElementById("actualCashInput").value=settings.cashCount?.actual??expected;
+      document.getElementById("cashCountExpected").innerHTML=`<div class="shift-summary-row"><span>現金銷售</span><strong>NT$ ${money(getCashRevenue())}</strong></div><div class="shift-summary-row"><span>理論現金</span><strong id="cashExpectedValue">NT$ ${money(expected)}</strong></div>`;
+      document.getElementById("cashCountModal").classList.remove("hidden");updateCashCountDiff();
+    }
+
+    function updateCashCountDiff() {
+      const opening=Number(document.getElementById("openingCashInput")?.value||0),actual=Number(document.getElementById("actualCashInput")?.value||0),expected=opening+getCashRevenue(),diff=actual-expected;
+      const e=document.getElementById("cashExpectedValue");if(e)e.textContent=`NT$ ${money(expected)}`;
+      const d=document.getElementById("cashCountDiff");if(d)d.textContent=`差額：${diff>=0?"+":""}NT$ ${money(diff)}`;
+    }
+
+    function saveCashCount() {
+      const settings=getSettings(),opening=Math.max(0,Number(document.getElementById("openingCashInput").value||0)),actual=Math.max(0,Number(document.getElementById("actualCashInput").value||0));
+      settings.openingCash=opening;settings.cashCount={actual,expected:opening+getCashRevenue(),countedAt:nowISO()};
+      saveSettings(settings);closeModal("cashCountModal");renderCashCountSummary();
+    }
+
+    function getCloudSettings() {return loadJSON("cash-register-cloud-settings-v1",{url:"",key:"",code:""});}
+    function saveCloudSettings() {
+      const data={url:(document.getElementById("cloudUrl")?.value||"").trim().replace(/\/$/,""),key:(document.getElementById("cloudKey")?.value||"").trim(),code:(document.getElementById("cloudCode")?.value||"").trim()};
+      saveJSON("cash-register-cloud-settings-v1",data);setCloudStatus("雲端同步設定已儲存。");
+    }
+    function loadCloudSettingsToUI() {
+      const data=getCloudSettings(),url=document.getElementById("cloudUrl");if(!url)return;
+      url.value=data.url||"";document.getElementById("cloudKey").value=data.key||"";document.getElementById("cloudCode").value=data.code||"";
+    }
+    function setCloudStatus(text){const e=document.getElementById("cloudSyncStatus");if(e)e.textContent=text;}
+    function buildCloudPayload() {
+      const storage={};
+      for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(key&&(key.startsWith("cash-register")||key.startsWith("ff46"))&&key!=="cash-register-cloud-settings-v1")storage[key]=localStorage.getItem(key);}
+      return {version:2,updatedAt:nowISO(),storage};
+    }
+    function bytesToBase64(bytes){
+      let binary="";
+      const arr=new Uint8Array(bytes);
+      for(const b of arr)binary+=String.fromCharCode(b);
+      return btoa(binary);
+    }
+
+    function base64ToBytes(value){
+      const binary=atob(value);
+      const bytes=new Uint8Array(binary.length);
+      for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+      return bytes;
+    }
+
+    async function sha256Hex(value){
+      const digest=await crypto.subtle.digest(
+        "SHA-256",
+        new TextEncoder().encode(value)
+      );
+      return Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,"0")).join("");
+    }
+
+    async function deriveCloudKey(code,salt){
+      const material=await crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(code),
+        "PBKDF2",
+        false,
+        ["deriveKey"]
+      );
+      return crypto.subtle.deriveKey(
+        {name:"PBKDF2",salt,iterations:150000,hash:"SHA-256"},
+        material,
+        {name:"AES-GCM",length:256},
+        false,
+        ["encrypt","decrypt"]
+      );
+    }
+
+    async function encryptCloudPayload(payload,code){
+      const salt=crypto.getRandomValues(new Uint8Array(16));
+      const iv=crypto.getRandomValues(new Uint8Array(12));
+      const key=await deriveCloudKey(code,salt);
+      const encrypted=await crypto.subtle.encrypt(
+        {name:"AES-GCM",iv},
+        key,
+        new TextEncoder().encode(JSON.stringify(payload))
+      );
+      return {
+        encrypted:true,
+        salt:bytesToBase64(salt),
+        iv:bytesToBase64(iv),
+        data:bytesToBase64(encrypted)
+      };
+    }
+
+    async function decryptCloudPayload(payload,code){
+      if(!payload?.encrypted)return payload;
+      const salt=base64ToBytes(payload.salt);
+      const iv=base64ToBytes(payload.iv);
+      const key=await deriveCloudKey(code,salt);
+      const decrypted=await crypto.subtle.decrypt(
+        {name:"AES-GCM",iv},
+        key,
+        base64ToBytes(payload.data)
+      );
+      return JSON.parse(new TextDecoder().decode(decrypted));
+    }
+
+    async function pushCloudSync() {
+      saveCloudSettings();const cfg=getCloudSettings();
+      if(!cfg.url||!cfg.key||!cfg.code)return alert("請先填寫 Supabase URL、Anon Key 與同步代碼。");
+      setCloudStatus("上傳中…");
+      try{
+        const rowCode=await sha256Hex(cfg.code);
+        const encryptedPayload=await encryptCloudPayload(buildCloudPayload(),cfg.code);
+        const res=await fetch(`${cfg.url}/rest/v1/pos_sync?on_conflict=sync_code`,{method:"POST",headers:{apikey:cfg.key,Authorization:`Bearer ${cfg.key}`,"Content-Type":"application/json",Prefer:"resolution=merge-duplicates"},body:JSON.stringify({sync_code:rowCode,payload:encryptedPayload,updated_at:nowISO()})});
+        if(!res.ok)throw new Error(await res.text());setCloudStatus(`已上傳｜${new Date().toLocaleString("zh-TW")}`);
+      }catch(error){console.error(error);setCloudStatus("上傳失敗。請檢查 Supabase 資料表、RLS 權限與連線設定。");}
+    }
+    async function pullCloudSync() {
+      saveCloudSettings();const cfg=getCloudSettings();
+      if(!cfg.url||!cfg.key||!cfg.code)return alert("請先填寫 Supabase URL、Anon Key 與同步代碼。");
+      if(!confirm("從雲端下載會覆蓋這台裝置目前的收銀資料，確定繼續嗎？"))return;
+      setCloudStatus("下載中…");
+      try{
+        const rowCode=await sha256Hex(cfg.code);
+        const res=await fetch(`${cfg.url}/rest/v1/pos_sync?sync_code=eq.${encodeURIComponent(rowCode)}&select=payload,updated_at&limit=1`,{headers:{apikey:cfg.key,Authorization:`Bearer ${cfg.key}`}});
+        if(!res.ok)throw new Error(await res.text());
+        const rows=await res.json();
+        const payload=await decryptCloudPayload(rows?.[0]?.payload,cfg.code);
+        if(!payload?.storage)throw new Error("找不到同步資料或同步代碼不正確");
+        for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&(key.startsWith("cash-register")||key.startsWith("ff46"))&&key!=="cash-register-cloud-settings-v1")localStorage.removeItem(key);}
+        for(const [key,value] of Object.entries(payload.storage))localStorage.setItem(key,value);
+        alert("雲端資料已下載，頁面將重新載入。");location.reload();
+      }catch(error){console.error(error);setCloudStatus("下載失敗。請檢查同步代碼與 Supabase 設定。");}
+    }
+
     /* -------------------- PAGES -------------------- */
     function showPage(id, button=null) {
-      for (const el of document.querySelectorAll("#posPage,#statsPage,#overviewPage,#libraryPage")) el.classList.add("hidden");
+      for (const el of document.querySelectorAll("#posPage,#statsPage,#preorderPage,#operationsPage,#overviewPage,#libraryPage")) el.classList.add("hidden");
       document.getElementById(id).classList.remove("hidden");
 
       document.querySelectorAll(".tab-button").forEach(x => x.classList.remove("active"));
@@ -5032,10 +6709,1232 @@
       }
 
       if (id === "statsPage") renderStats();
+      if (id === "preorderPage") renderPreorderPage();
+      if (id === "operationsPage") renderOperationsPage();
       if (id === "overviewPage") renderOverview();
       if (id === "libraryPage") renderLibrary();
       if (id === "posPage") renderMainProducts();
     }
+
+    function getPreorders(
+      sessionId =
+        currentSessionId
+    ) {
+      if (!sessionId) {
+        return [];
+      }
+
+      const value =
+        loadJSON(
+          sessionDataKey(
+            "preorders",
+            sessionId
+          ),
+          []
+        );
+
+      return Array.isArray(
+        value
+      )
+        ? value
+        : [];
+    }
+
+    function savePreorders(
+      items,
+      sessionId =
+        currentSessionId
+    ) {
+      if (!sessionId) {
+        return;
+      }
+
+      saveJSON(
+        sessionDataKey(
+          "preorders",
+          sessionId
+        ),
+        items
+      );
+    }
+
+    function getPreorderCatalog() {
+      const items =
+        [];
+
+      for (
+        const product of
+        getProducts()
+          .filter(
+            item =>
+              item.visible
+          )
+      ) {
+        if (
+          product.type ===
+            "simple" ||
+          product.type ===
+            "custom"
+        ) {
+          items.push({
+            key:
+              `product:${product.id}`,
+            id:
+              product.id,
+            name:
+              product.name,
+            price:
+              Number(
+                product.price || 0
+              ),
+            owner:
+              product.owner || "",
+            unitCost:
+              getSaleUnitCost(product),
+            inventoryKey:
+              inventoryKeyForProduct(
+                product.id
+              )
+          });
+        }
+
+        if (
+          product.type ===
+            "lottery"
+        ) {
+          items.push({
+            key:
+              "lottery",
+            id:
+              "lottery",
+            name:
+              "抽抽樂",
+            price:
+              Number(
+                product.price || 0
+              ),
+            owner:
+              product.owner || "",
+            unitCost:
+              Number(product.cost||0),
+            inventoryKey:
+              null
+          });
+        }
+      }
+
+      for (
+        const theme of
+        Object.keys(
+          getPhotoStock()
+        )
+      ) {
+        const base =
+          getPhotoThemePrice(
+            theme
+          );
+
+        const addon =
+          Number(
+            getPhotoPricing()
+              .digitalAddon || 0
+          );
+
+        items.push({
+          key:
+            `photo:${theme}:normal`,
+          id:
+            `photoset-${theme}-normal`,
+          name:
+            `生寫真套組｜${theme}`,
+          price:
+            base,
+          owner:
+            getPhotoOwner(
+              theme
+            ),
+          unitCost:
+            getPhotoCost(theme),
+          inventoryKey:
+            inventoryKeyForPhoto(
+              theme
+            )
+        });
+
+        items.push({
+          key:
+            `photo:${theme}:digital`,
+          id:
+            `photoset-${theme}-digital`,
+          name:
+            `生寫真套組｜${theme}＋電子檔`,
+          price:
+            base + addon,
+          owner:
+            getPhotoOwner(
+              theme
+            ),
+          unitCost:
+            getPhotoCost(theme),
+          inventoryKey:
+            inventoryKeyForPhoto(
+              theme
+            )
+        });
+      }
+
+      for (
+        const option of
+        getPolaroids()
+          .filter(
+            item =>
+              item.visible
+          )
+      ) {
+        items.push({
+          key:
+            `polaroid:${option.id}`,
+          id:
+            option.id,
+          name:
+            `拍立得｜${option.name}`,
+          price:
+            Number(
+              option.price || 0
+            ),
+          owner:
+            ownerListLabel(
+              normalizeOwnerList(
+                option
+              )
+            ),
+          owners:
+            normalizeOwnerList(
+              option
+            ),
+          unitCost:
+            Number(option.cost||0),
+          inventoryKey:
+            inventoryKeyForPolaroid(
+              option.id,
+              option
+            )
+        });
+      }
+
+      return items;
+    }
+
+    function preorderCatalogOptions(
+      selectedKey = ""
+    ) {
+      const catalog =
+        getPreorderCatalog();
+
+      return [
+        `<option value="">請選擇商品</option>`,
+        ...catalog.map(
+          item =>
+            `<option value="${esc(item.key)}" ${item.key===selectedKey?"selected":""}>${esc(item.name)}</option>`
+        )
+      ].join("");
+    }
+
+    function addPreorderItemRow(
+      selectedKey = "",
+      quantity = 1
+    ) {
+      preorderEditRows.push({
+        rowId:
+          "pre-row-" +
+          Date.now() +
+          "-" +
+          Math.random()
+            .toString(36)
+            .slice(2,6),
+        key:
+          selectedKey,
+        quantity:
+          Math.max(
+            1,
+            Number(
+              quantity || 1
+            )
+          )
+      });
+
+      renderPreorderItemEditor();
+    }
+
+    function updatePreorderItemRow(
+      rowId,
+      field,
+      value
+    ) {
+      const row =
+        preorderEditRows
+          .find(
+            item =>
+              item.rowId ===
+              rowId
+          );
+
+      if (!row) {
+        return;
+      }
+
+      if (
+        field ===
+        "quantity"
+      ) {
+        row.quantity =
+          Math.max(
+            1,
+            Number(
+              value || 1
+            )
+          );
+      } else {
+        row[field] =
+          value;
+      }
+    }
+
+    function removePreorderItemRow(
+      rowId
+    ) {
+      preorderEditRows =
+        preorderEditRows
+          .filter(
+            item =>
+              item.rowId !==
+              rowId
+          );
+
+      if (
+        !preorderEditRows.length
+      ) {
+        addPreorderItemRow();
+        return;
+      }
+
+      renderPreorderItemEditor();
+    }
+
+    function renderPreorderItemEditor() {
+      const area =
+        document.getElementById(
+          "preorderItemEditor"
+        );
+
+      if (!area) {
+        return;
+      }
+
+      area.innerHTML =
+        "";
+
+      for (
+        const row of
+        preorderEditRows
+      ) {
+        const div =
+          document.createElement(
+            "div"
+          );
+
+        div.className =
+          "preorder-edit-row";
+
+        div.innerHTML =
+          `
+            <select onchange="updatePreorderItemRow('${row.rowId}','key',this.value)">
+              ${preorderCatalogOptions(row.key)}
+            </select>
+            <input type="number" min="1" inputmode="numeric" value="${Number(row.quantity || 1)}" onchange="updatePreorderItemRow('${row.rowId}','quantity',this.value)">
+            <button type="button" class="small-btn danger-btn preorder-edit-remove" onclick="removePreorderItemRow('${row.rowId}')">×</button>
+          `;
+
+        area.appendChild(
+          div
+        );
+      }
+    }
+
+    function openPreorderModal(
+      id = null
+    ) {
+      editingPreorderId =
+        id;
+
+      const item =
+        id
+          ? getPreorders()
+              .find(
+                preorder =>
+                  preorder.id === id
+              )
+          : null;
+
+      document.getElementById(
+        "preorderModalTitle"
+      ).textContent =
+        item
+          ? "修改預購"
+          : "新增預購";
+
+      document.getElementById(
+        "preorderCustomer"
+      ).value =
+        item?.customer || "";
+
+      document.getElementById(
+        "preorderCode"
+      ).value =
+        item?.code || "";
+
+      document.getElementById("preorderPaymentStatus").value=item?.paymentStatus||"unpaid";
+      document.getElementById("preorderPaidAmount").value=Number(item?.paidAmount||0);
+      document.getElementById("preorderPaymentMethod").value=item?.paymentMethod||"";
+
+      document.getElementById(
+        "preorderNote"
+      ).value =
+        item?.note || "";
+
+      preorderEditRows =
+        (
+          item?.items || []
+        ).map(
+          line => ({
+            rowId:
+              "pre-row-" +
+              Date.now() +
+              "-" +
+              Math.random()
+                .toString(36)
+                .slice(2,6),
+            key:
+              line.catalogKey ||
+              "",
+            quantity:
+              Number(
+                line.quantity || 1
+              )
+          })
+        );
+
+      if (
+        !preorderEditRows.length
+      ) {
+        preorderEditRows =
+          [];
+
+        addPreorderItemRow();
+      } else {
+        renderPreorderItemEditor();
+      }
+
+      document.getElementById(
+        "preorderModal"
+      ).classList.remove(
+        "hidden"
+      );
+    }
+
+    function refreshAppliedPreorderReservations(reason="預購名單更新") {
+      const settings=getSettings();
+      if(!settings.preorderReserveApplied)return;
+
+      const previous=settings.preorderReservations||{};
+      const next=buildPreorderReservationMap();
+
+      const keys=new Set([...Object.keys(previous),...Object.keys(next)]);
+      for(const key of keys){
+        const delta=Number(previous[key]||0)-Number(next[key]||0);
+        if(delta){
+          appendStockLog({
+            key,
+            delta,
+            reason:`${reason}｜同步預購保留`
+          });
+        }
+      }
+
+      settings.preorderReservations=next;
+      settings.preorderReserveConfirmed=true;
+      saveSettings(settings);
+    }
+
+    function savePreorder() {
+      const customer =
+        document.getElementById(
+          "preorderCustomer"
+        ).value.trim();
+
+      const code =
+        document.getElementById(
+          "preorderCode"
+        ).value.trim();
+
+      const note =
+        document.getElementById(
+          "preorderNote"
+        ).value.trim();
+
+      const paymentStatus=document.getElementById("preorderPaymentStatus").value||"unpaid";
+      const paidAmount=Math.max(0,Number(document.getElementById("preorderPaidAmount").value||0));
+      const paymentMethod=document.getElementById("preorderPaymentMethod").value||"";
+
+      if (!customer) {
+        alert(
+          "請輸入取貨姓名"
+        );
+        return;
+      }
+
+      const catalog =
+        new Map(
+          getPreorderCatalog()
+            .map(
+              item => [
+                item.key,
+                item
+              ]
+            )
+        );
+
+      const lines =
+        [];
+
+      for (
+        const row of
+        preorderEditRows
+      ) {
+        const source =
+          catalog.get(
+            row.key
+          );
+
+        if (!source) {
+          continue;
+        }
+
+        lines.push({
+          catalogKey:
+            source.key,
+          id:
+            source.id,
+          name:
+            source.name,
+          price:
+            Number(
+              source.price || 0
+            ),
+          owner:
+            source.owner || "",
+          owners:
+            Array.isArray(
+              source.owners
+            )
+              ? source.owners
+              : undefined,
+          inventoryKey:
+            source.inventoryKey ||
+            null,
+          unitCost:
+            Number(
+              source.unitCost ??
+              getProductCostByInventoryKey(source.inventoryKey)
+            ),
+          quantity:
+            Math.max(
+              1,
+              Number(
+                row.quantity || 1
+              )
+            )
+        });
+      }
+
+      if (!lines.length) {
+        alert(
+          "請至少選擇一個預購商品"
+        );
+        return;
+      }
+
+      const items =
+        getPreorders();
+
+      if (
+        editingPreorderId
+      ) {
+        const index =
+          items.findIndex(
+            item =>
+              item.id ===
+              editingPreorderId
+          );
+
+        if (index >= 0) {
+          items[index] = {
+            ...items[index],
+            customer,
+            code,
+            note,
+            paymentStatus,
+            paidAmount,
+            paymentMethod,
+            items:
+              lines,
+            updatedAt:
+              nowISO()
+          };
+        }
+      } else {
+        items.push({
+          id:
+            "preorder-" +
+            Date.now() +
+            "-" +
+            Math.random()
+              .toString(36)
+              .slice(2,6),
+          customer,
+          code,
+          note,
+          paymentStatus,
+          paidAmount,
+          paymentMethod,
+          items:
+            lines,
+          status:
+            "pending",
+          createdAt:
+            nowISO(),
+          pickedAt:
+            null
+        });
+      }
+
+      savePreorders(
+        items
+      );
+
+      refreshAppliedPreorderReservations("新增／修改預購");
+
+      editingPreorderId =
+        null;
+
+      closeModal(
+        "preorderModal"
+      );
+
+      renderPreorderPage();
+    }
+
+    function deletePreorder(id) {
+      const preorder =
+        getPreorders()
+          .find(
+            item =>
+              item.id === id
+          );
+
+      if (
+        !preorder ||
+        !confirmDanger(
+          `確定刪除「${preorder.customer}」的預購資料嗎？`
+        )
+      ) {
+        return;
+      }
+
+      savePreorders(
+        getPreorders()
+          .filter(
+            item =>
+              item.id !== id
+          )
+      );
+
+      refreshAppliedPreorderReservations("刪除預購");
+      renderPreorderPage();
+    }
+
+    function resetPreorderPickup(id) {
+      const items =
+        getPreorders();
+
+      const index =
+        items.findIndex(
+          item =>
+            item.id === id
+        );
+
+      if (index < 0) {
+        return;
+      }
+
+      if (
+        !confirm(
+          "要把這筆預購改回「待取貨」嗎？"
+        )
+      ) {
+        return;
+      }
+
+      items[index] = {
+        ...items[index],
+        status:
+          "pending",
+        pickedAt:
+          null,
+        pickupOrderId:
+          null
+      };
+
+      savePreorders(
+        items
+      );
+
+      renderPreorderPage();
+    }
+
+    function setPreorderFilter(
+      filter,
+      button = null
+    ) {
+      preorderFilter =
+        filter;
+
+      document.querySelectorAll(
+        ".preorder-filter"
+      ).forEach(
+        item =>
+          item.classList.toggle(
+            "active",
+            item.dataset.filter ===
+              filter
+          )
+      );
+
+      if (button) {
+        button.classList.add(
+          "active"
+        );
+      }
+
+      renderPreorderPage();
+    }
+
+    function getPreorderReserveSummary() {
+      const summary =
+        new Map();
+
+      for (
+        const preorder of
+        getPreorders()
+      ) {
+        for (
+          const item of
+          preorder.items || []
+        ) {
+          const key =
+            item.name ||
+            item.catalogKey ||
+            "未命名商品";
+
+          summary.set(
+            key,
+            (
+              summary.get(
+                key
+              ) || 0
+            ) +
+            Number(
+              item.quantity || 0
+            )
+          );
+        }
+      }
+
+      return Array.from(
+        summary.entries()
+      )
+        .sort(
+          (a,b) =>
+            a[0].localeCompare(
+              b[0],
+              "zh-Hant"
+            )
+        );
+    }
+
+    function savePreorderReserveConfirmed() {
+      const settings =
+        getSettings();
+
+      settings.preorderReserveConfirmed =
+        Boolean(
+          document.getElementById(
+            "preorderReserveConfirmed"
+          )?.checked
+        );
+
+      saveSettings(
+        settings
+      );
+
+      renderPreorderPage();
+    }
+
+    function startPreorderPickup(id) {
+      const preorder =
+        getPreorders()
+          .find(
+            item =>
+              item.id === id
+          );
+
+      if (!preorder) {
+        return;
+      }
+
+      const remainingPayment=Math.max(0,getPreorderTotal(preorder)-Number(preorder.paidAmount||0));
+      if(remainingPayment>0 && !confirm(`這筆預購還有 NT$ ${money(remainingPayment)} 未收款。\n\n預購取貨模式本身不計營收，確定仍要開始取貨嗎？`)){
+        return;
+      }
+
+      if (
+        preorder.status ===
+          "picked" &&
+        !confirm(
+          "這筆已經標記為已取貨。仍要再次開啟取貨嗎？"
+        )
+      ) {
+        return;
+      }
+
+      if (
+        cart.length &&
+        !confirm(
+          "開始預購取貨會清空目前購物車，確定繼續嗎？"
+        )
+      ) {
+        return;
+      }
+
+      activePreorderPickupId =
+        preorder.id;
+
+      preorderPickupMode =
+        true;
+
+      cart =
+        (
+          preorder.items || []
+        ).map(
+          item => ({
+            id:
+              `preorder-pickup-${item.catalogKey || item.id || Date.now()}`,
+            name:
+              item.name,
+            price:
+              0,
+            quantity:
+              Number(
+                item.quantity || 1
+              ),
+            owner:
+              item.owner || "",
+            owners:
+              item.owners,
+            inventoryKey:
+              null,
+            originalInventoryKey:
+              item.inventoryKey ||
+              null,
+            originalPrice:
+              Number(
+                item.price || 0
+              ),
+            unitCost:
+              Number(item.unitCost||0),
+            preorderPickup:
+              true
+          })
+        );
+
+      cartExpanded =
+        true;
+
+      document.getElementById(
+        "orderNote"
+      ).value =
+        [
+          `預購：${preorder.customer}`,
+          preorder.code
+            ? `取貨編號：${preorder.code}`
+            : "",
+          preorder.note || ""
+        ]
+          .filter(Boolean)
+          .join(
+            "｜"
+          );
+
+      updatePreorderPickupUI();
+      renderCart();
+      renderMainProducts();
+      showPage(
+        "posPage"
+      );
+    }
+
+    function exportPreorderTemplateCsv() {
+      downloadCsv(
+        [["取貨姓名","取貨編號","商品名稱","數量","付款狀態","已收金額","付款方式","備註"],
+         ["小明","A001","生寫真套組｜公式服","1","已付款","350","轉帳",""]],
+        "預購匯入範本.csv"
+      );
+    }
+
+    function parseCsvText(text) {
+      const rows=[];
+      let row=[],field="",quote=false;
+      for(let i=0;i<text.length;i++){
+        const ch=text[i];
+        if(quote){
+          if(ch==='"' && text[i+1]==='"'){field+='"';i++;}
+          else if(ch==='"')quote=false;
+          else field+=ch;
+        }else{
+          if(ch==='"')quote=true;
+          else if(ch===","){row.push(field);field="";}
+          else if(ch==="\n"){row.push(field.replace(/\r$/,""));rows.push(row);row=[];field="";}
+          else field+=ch;
+        }
+      }
+      if(field.length||row.length){row.push(field.replace(/\r$/,""));rows.push(row);}
+      return rows;
+    }
+
+    async function importPreorderCsv(file) {
+      if(!file)return;
+      try{
+        const rows=parseCsvText(await file.text()).filter(row=>row.some(cell=>String(cell).trim()));
+        if(rows.length<2)throw new Error("CSV 沒有資料");
+
+        const header=rows[0].map(x=>String(x).trim());
+        const idx=name=>header.indexOf(name);
+        const catalog=getPreorderCatalog();
+        const byName=new Map(catalog.map(item=>[item.name,item]));
+        const grouped=new Map();
+
+        for(const row of rows.slice(1)){
+          const customer=String(row[idx("取貨姓名")]||"").trim();
+          const code=String(row[idx("取貨編號")]||"").trim();
+          const productName=String(row[idx("商品名稱")]||"").trim();
+          const qty=Math.max(1,Number(row[idx("數量")]||1));
+          if(!customer||!productName)continue;
+
+          const source=byName.get(productName);
+          if(!source)continue;
+
+          const key=`${customer}||${code}`;
+          if(!grouped.has(key)){
+            const statusText=String(row[idx("付款狀態")]||"未付款").trim();
+            grouped.set(key,{
+              id:"preorder-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),
+              customer,code,
+              note:String(row[idx("備註")]||"").trim(),
+              paymentStatus:statusText==="已付款"?"paid":statusText==="已付訂金"?"deposit":"unpaid",
+              paidAmount:Math.max(0,Number(row[idx("已收金額")]||0)),
+              paymentMethod:String(row[idx("付款方式")]||"").trim(),
+              items:[],status:"pending",createdAt:nowISO(),pickedAt:null
+            });
+          }
+
+          grouped.get(key).items.push({
+            catalogKey:source.key,id:source.id,name:source.name,price:Number(source.price||0),
+            owner:source.owner||"",owners:source.owners,inventoryKey:source.inventoryKey||null,
+            quantity:qty,unitCost:Number(source.unitCost??getProductCostByInventoryKey(source.inventoryKey))
+          });
+        }
+
+        const imported=Array.from(grouped.values());
+        if(!imported.length)throw new Error("沒有成功對應到目前商品庫的商品名稱");
+
+        savePreorders([...getPreorders(),...imported]);
+        refreshAppliedPreorderReservations("CSV 匯入預購");
+        renderPreorderPage();
+        alert(`已匯入 ${imported.length} 筆預購。`);
+      }catch(error){
+        console.error(error);
+        alert(`預購 CSV 匯入失敗：${error.message||"格式不正確"}`);
+      }finally{
+        const input=document.getElementById("preorderCsvInput");if(input)input.value="";
+      }
+    }
+
+    function getPreorderTotal(preorder) {
+      return (preorder.items||[]).reduce(
+        (sum,item)=>sum+Number(item.price||0)*Number(item.quantity||0),
+        0
+      );
+    }
+
+    function renderPreorderPage() {
+      const items =
+        getPreorders();
+
+      const pending =
+        items.filter(
+          item =>
+            item.status !==
+            "picked"
+        );
+
+      const picked =
+        items.filter(
+          item =>
+            item.status ===
+            "picked"
+        );
+
+      const itemCount =
+        items.reduce(
+          (sum,preorder) =>
+            sum +
+            (
+              preorder.items || []
+            ).reduce(
+              (subtotal,item) =>
+                subtotal +
+                Number(
+                  item.quantity || 0
+                ),
+              0
+            ),
+          0
+        );
+
+      document.getElementById(
+        "preorderPendingCount"
+      ).textContent =
+        pending.length;
+
+      document.getElementById(
+        "preorderPickedCount"
+      ).textContent =
+        picked.length;
+
+      document.getElementById(
+        "preorderItemCount"
+      ).textContent =
+        itemCount;
+
+      const confirmed =
+        Boolean(
+          getSettings()
+            .preorderReserveConfirmed
+        );
+
+      const confirmedInput =
+        document.getElementById(
+          "preorderReserveConfirmed"
+        );
+
+      if (confirmedInput) {
+        confirmedInput.checked =
+          Boolean(
+            getSettings().preorderReserveApplied ||
+            confirmed
+          );
+      }
+
+      const applied=Boolean(getSettings().preorderReserveApplied);
+      const applyBtn=document.getElementById("applyPreorderReserveBtn");
+      const releaseBtn=document.getElementById("releasePreorderReserveBtn");
+      if(applyBtn)applyBtn.disabled=applied;
+      if(releaseBtn)releaseBtn.disabled=!applied;
+
+      document.getElementById(
+        "preorderReserveWarning"
+      ).classList.toggle(
+        "confirmed",
+        confirmed
+      );
+
+      const reserveList =
+        document.getElementById(
+          "preorderReserveList"
+        );
+
+      const summary =
+        getPreorderReserveSummary();
+
+      reserveList.innerHTML =
+        summary.length
+          ? summary
+              .map(
+                ([name,quantity]) =>
+                  `<span class="preorder-reserve-chip">${esc(name)} × ${quantity}</span>`
+              )
+              .join("")
+          : `<span class="subtle">尚無預購保留數量</span>`;
+
+      if(getSettings().preorderReserveApplied){
+        reserveList.insertAdjacentHTML("beforeend",'<span class="preorder-reserve-chip">✓ 已套用至現場庫存</span>');
+      }
+
+      const query =
+        (
+          document.getElementById(
+            "preorderSearch"
+          )?.value || ""
+        )
+          .trim()
+          .toLowerCase();
+
+      const filtered =
+        items
+          .filter(
+            item =>
+              preorderFilter ===
+                "all" ||
+              (
+                preorderFilter ===
+                  "picked"
+                  ? item.status ===
+                      "picked"
+                  : item.status !==
+                      "picked"
+              )
+          )
+          .filter(
+            item => {
+              if (!query) {
+                return true;
+              }
+
+              const haystack = [
+                item.customer,
+                item.code,
+                item.note,
+                ...(
+                  item.items || []
+                ).map(
+                  line =>
+                    line.name
+                )
+              ]
+                .join(
+                  " "
+                )
+                .toLowerCase();
+
+              return haystack.includes(
+                query
+              );
+            }
+          )
+          .sort(
+            (a,b) =>
+              String(
+                a.code || ""
+              ).localeCompare(
+                String(
+                  b.code || ""
+                ),
+                "zh-Hant",
+                {
+                  numeric:true
+                }
+              ) ||
+              String(
+                a.customer || ""
+              ).localeCompare(
+                String(
+                  b.customer || ""
+                ),
+                "zh-Hant"
+              )
+          );
+
+      const body =
+        document.getElementById(
+          "preorderBody"
+        );
+
+      body.innerHTML =
+        "";
+
+      if (!filtered.length) {
+        body.innerHTML =
+          `<tr><td colspan="7">目前沒有符合條件的預購資料</td></tr>`;
+
+        return;
+      }
+
+      for (
+        const preorder of
+        filtered
+      ) {
+        const tr =
+          document.createElement(
+            "tr"
+          );
+
+        const itemLines =
+          (
+            preorder.items || []
+          ).map(
+            item =>
+              `<div class="preorder-item-line">${esc(item.name)} × ${Number(item.quantity || 0)}</div>`
+          ).join("");
+
+        const picked =
+          preorder.status ===
+          "picked";
+
+        tr.innerHTML =
+          `
+            <td>${esc(preorder.code || "—")}</td>
+            <td><strong>${esc(preorder.customer)}</strong></td>
+            <td><div class="preorder-items-summary">${itemLines}</div></td>
+            <td>
+              <span class="pill">${preorder.paymentStatus==="paid"?"已付款":preorder.paymentStatus==="deposit"?"已付訂金":"未付款"}</span>
+              <div class="subtle">已收 NT$ ${money(preorder.paidAmount||0)} / ${money(getPreorderTotal(preorder))}${preorder.paymentMethod?`｜${esc(preorder.paymentMethod)}`:""}</div>
+              ${Math.max(0,getPreorderTotal(preorder)-Number(preorder.paidAmount||0))?`<div class="subtle">待收 NT$ ${money(Math.max(0,getPreorderTotal(preorder)-Number(preorder.paidAmount||0)))}</div>`:""}
+            </td>
+            <td>
+              <span class="preorder-status ${picked ? "picked" : ""}">
+                ${picked ? "已取貨" : "待取貨"}
+              </span>
+              ${picked && preorder.pickedAt ? `<div class="subtle" style="margin-top:3px">${esc(timeText(preorder.pickedAt))}</div>` : ""}
+            </td>
+            <td>${preorder.note ? esc(preorder.note) : "—"}</td>
+            <td>
+              <div class="library-actions">
+                ${picked
+                  ? `<button class="small-btn" onclick="resetPreorderPickup('${preorder.id}')">改回待取貨</button>`
+                  : `<button class="small-btn" onclick="startPreorderPickup('${preorder.id}')">開始取貨</button>`
+                }
+                <button class="small-btn" onclick="openPreorderModal('${preorder.id}')">修改</button>
+                <button class="small-btn danger-btn" onclick="deletePreorder('${preorder.id}')">刪除</button>
+              </div>
+            </td>
+          `;
+
+        body.appendChild(
+          tr
+        );
+      }
+    }
+
 
     function getGifts() {
       const settings =
@@ -5093,6 +7992,11 @@
               gift.threshold || 0
             )
           : "";
+
+      document.getElementById("giftRuleType").value=gift?.ruleType||"once";
+      document.getElementById("giftPerThresholdQty").value=Math.max(1,Number(gift?.perThresholdQty||1));
+      document.getElementById("giftChoiceGroup").value=gift?.choiceGroup||"";
+      document.getElementById("giftCost").value=Math.max(0,Number(gift?.cost||0));
 
       document.getElementById(
         "giftUnlimited"
@@ -5152,6 +8056,11 @@
             "giftThreshold"
           ).value
         );
+
+      const ruleType=document.getElementById("giftRuleType").value||"once";
+      const perThresholdQty=Math.max(1,Number(document.getElementById("giftPerThresholdQty").value||1));
+      const choiceGroup=document.getElementById("giftChoiceGroup").value.trim();
+      const cost=Math.max(0,Number(document.getElementById("giftCost").value||0));
 
       const unlimited =
         document.getElementById(
@@ -5218,6 +8127,10 @@
             ...items[index],
             name,
             threshold,
+            ruleType,
+            perThresholdQty,
+            choiceGroup,
+            cost,
             stock,
             enabled
           };
@@ -5233,6 +8146,10 @@
               .slice(2,6),
           name,
           threshold,
+          ruleType,
+          perThresholdQty,
+          choiceGroup,
+          cost,
           stock,
           enabled
         });
@@ -5314,6 +8231,7 @@
           sum +
           (
             item.autoGift ||
+            item.giftChoicePlaceholder ||
             item.preorderPickup
               ? 0
               : Number(
@@ -5327,72 +8245,123 @@
       );
     }
 
-    function syncAutoGifts() {
-      cart =
-        cart.filter(
-          item =>
-            !item.autoGift
-        );
+    function giftEligibleQuantity(gift,subtotal) {
+      const threshold=Number(gift.threshold||0);
+      if(threshold<=0)return Math.max(1,Number(gift.perThresholdQty||1));
+      if(subtotal<threshold)return 0;
+      const times=gift.ruleType==="repeat"
+        ? Math.floor(subtotal/threshold)
+        : 1;
+      return times*Math.max(1,Number(gift.perThresholdQty||1));
+    }
 
-      if (
-        preorderPickupMode
-      ) {
-        return;
+    function openGiftChoice(group) {
+      const subtotal=getPaidCartSubtotal();
+      const candidates=getGifts().filter(gift=>
+        gift.enabled &&
+        gift.choiceGroup===group &&
+        giftEligibleQuantity(gift,subtotal)>0
+      );
+
+      if(!candidates.length)return;
+
+      document.getElementById("giftChoiceTitle").textContent=`選擇贈品｜${group}`;
+      const area=document.getElementById("giftChoiceOptions");
+      area.innerHTML="";
+
+      for(const gift of candidates){
+        const key=`gift:${gift.id}`;
+        const qty=giftEligibleQuantity(gift,subtotal);
+        const available=gift.stock===null?qty:Math.max(0,remaining(gift.stock,key,true));
+        const grant=Math.min(qty,available);
+        if(grant<=0)continue;
+
+        const b=document.createElement("button");
+        b.className="payment-choice";
+        b.innerHTML=`${esc(gift.name)}<small>贈送 ${grant} 個</small>`;
+        b.onclick=()=>{
+          giftChoiceSelections[group]=gift.id;
+          closeModal("giftChoiceModal");
+          syncAutoGifts();
+          renderCart();
+        };
+        area.appendChild(b);
       }
 
-      const subtotal =
-        getPaidCartSubtotal();
+      document.getElementById("giftChoiceModal").classList.remove("hidden");
+    }
 
-      for (
-        const gift of
-        getGifts()
-          .filter(
-            item =>
-              item.enabled
-          )
-          .sort(
-            (a,b) =>
-              Number(a.threshold || 0) -
-              Number(b.threshold || 0)
-          )
-      ) {
-        if (
-          subtotal <
-          Number(
-            gift.threshold || 0
-          )
-        ) {
+    function syncAutoGifts() {
+      cart=cart.filter(item=>!item.autoGift && !item.giftChoicePlaceholder);
+      if(preorderPickupMode)return;
+
+      const subtotal=getPaidCartSubtotal();
+      const gifts=getGifts().filter(item=>item.enabled)
+        .sort((a,b)=>Number(a.threshold||0)-Number(b.threshold||0));
+
+      const choiceGroups=new Map();
+
+      for(const gift of gifts){
+        const qty=giftEligibleQuantity(gift,subtotal);
+        if(qty<=0)continue;
+
+        if(gift.choiceGroup){
+          if(!choiceGroups.has(gift.choiceGroup))choiceGroups.set(gift.choiceGroup,[]);
+          choiceGroups.get(gift.choiceGroup).push(gift);
           continue;
         }
 
-        const key =
-          `gift:${gift.id}`;
+        const key=`gift:${gift.id}`;
+        const available=gift.stock===null?qty:Math.max(0,remaining(gift.stock,key,true));
+        const grant=Math.min(qty,available);
+        if(grant<=0)continue;
 
-        if (
-          !canAdd(
-            gift.stock,
-            key,
-            1
-          )
-        ) {
-          continue;
+        cart.push({
+          id:`auto-${gift.id}`,
+          inventoryKey:key,
+          name:`贈品｜${gift.name}`,
+          price:0,
+          unitCost:Number(gift.cost||0),
+          quantity:grant,
+          owner:"",
+          autoGift:true
+        });
+      }
+
+      for(const [group,candidates] of choiceGroups){
+        const selectedId=giftChoiceSelections[group];
+        const selected=candidates.find(item=>item.id===selectedId);
+
+        if(selected){
+          const qty=giftEligibleQuantity(selected,subtotal);
+          const key=`gift:${selected.id}`;
+          const available=selected.stock===null?qty:Math.max(0,remaining(selected.stock,key,true));
+          const grant=Math.min(qty,available);
+          if(grant>0){
+            cart.push({
+              id:`auto-${selected.id}`,
+              inventoryKey:key,
+              name:`贈品｜${selected.name}`,
+              price:0,
+              unitCost:Number(selected.cost||0),
+              quantity:grant,
+              owner:"",
+              autoGift:true,
+              choiceGroup:group
+            });
+            continue;
+          }
         }
 
         cart.push({
-          id:
-            `auto-${gift.id}`,
-          inventoryKey:
-            key,
-          name:
-            `贈品｜${gift.name}`,
-          price:
-            0,
-          quantity:
-            1,
-          owner:
-            "",
-          autoGift:
-            true
+          id:`gift-choice-${group}`,
+          inventoryKey:null,
+          name:`贈品擇一｜${group}`,
+          price:0,
+          quantity:1,
+          owner:"",
+          giftChoicePlaceholder:true,
+          giftChoiceGroup:group
         });
       }
     }
@@ -5441,7 +8410,10 @@
         tr.innerHTML =
           `
             <td>${esc(gift.name)}</td>
-            <td>NT$ ${money(gift.threshold)}</td>
+            <td>
+              NT$ ${money(gift.threshold)}
+              <div class="subtle">${gift.ruleType==="repeat"?"每滿額":"達標一次"} × ${Math.max(1,Number(gift.perThresholdQty||1))}${gift.choiceGroup?`｜擇一組：${esc(gift.choiceGroup)}`:""}｜成本 $${money(gift.cost||0)}</div>
+            </td>
             <td>${sold}</td>
             <td>${gift.stock===null ? '<span class="pill">不限量</span>' : `<span class="pill ${r<=getStockWarningThreshold(key)?"low":""}">${r} / ${gift.stock}</span>`}</td>
             <td><span class="pill">${gift.enabled ? "啟用" : "停用"}</span></td>
@@ -5464,6 +8436,8 @@
     function saveSharedPolaroidStock() {
       const settings =
         getSettings();
+
+      const oldValue=settings.sharedPolaroidStock;
 
       const unlimited =
         Boolean(
@@ -5514,6 +8488,11 @@
         settings
       );
 
+      if(oldValue!==null && settings.sharedPolaroidStock!==null){
+        const delta=Number(settings.sharedPolaroidStock)-Number(oldValue);
+        if(delta)appendStockLog({key:"polaroid-shared:default",name:"拍立得｜共用庫存",delta,reason:"手動調整共用庫存"});
+      }
+
       renderLibrary();
     }
 
@@ -5560,7 +8539,13 @@
     function isMainProductSoldOut(p) {
       if (preorderPickupMode) return false;
 
-      if (p.type==="simple" || p.type==="custom") return stockInfo(p.stock,inventoryKeyForProduct(p.id),true).sold;
+      if (p.type==="simple" || p.type==="custom") {
+        if(p.bundleComponents?.length){
+          const max=getBundleProductAvailable(p);
+          if(Number.isFinite(max)&&max<=0)return true;
+        }
+        return stockInfo(p.stock,inventoryKeyForProduct(p.id),true).sold;
+      }
       if (p.type==="lottery") return lotteryRemaining(true)<=0;
       if (p.type==="photoset") {
         const stocks=getPhotoStock(), themes=Object.keys(stocks);
@@ -5596,8 +8581,13 @@
       const grid = document.getElementById("mainProductGrid");
       grid.innerHTML = "";
 
+      renderProductCategoryFilters();
+
       const query=(document.getElementById("productSearchInput")?.value||"").trim().toLowerCase();
-      const products=getProducts().filter(x=>x.visible).filter(x=>!query || String(x.name||"").toLowerCase().includes(query))
+      const products=getProducts()
+        .filter(x=>x.visible)
+        .filter(x=>productCategoryFilter==="全部" || (x.category||"一般")===productCategoryFilter)
+        .filter(x=>!query || String(x.name||"").toLowerCase().includes(query))
         .map((product,index)=>({product,index,sold:isMainProductSoldOut(product)}))
         .sort((a,b)=>Number(a.sold)-Number(b.sold)||a.index-b.index).map(x=>x.product);
 
@@ -5617,6 +8607,42 @@
           stockLine = sold
             ? `<span class="sold-label">SOLD OUT</span>`
             : `<span class="stock-text ${info.low ? "low":""}">${esc(info.text)}</span>`;
+
+          if(p.bundleComponents?.length){
+            const bundleMax=getBundleProductAvailable(p);
+            if(Number.isFinite(bundleMax)){
+              sold=sold||bundleMax<=0;
+              stockLine=sold
+                ? `<span class="sold-label">SOLD OUT</span>`
+                : `<span class="stock-text ${bundleMax<=3?"low":""}">套組可售 ${bundleMax}</span>`;
+            }
+          }
+
+          if (
+            p.id ===
+              "ultimate" &&
+            getUltimateBundleSettings()
+              .enabled &&
+            getUltimateBundleSettings()
+              .components?.length
+          ) {
+            const max =
+              getMaxBundleQuantityAllowed(
+                []
+              );
+
+            if (
+              Number.isFinite(max)
+            ) {
+              sold =
+                max <= 0;
+
+              stockLine =
+                sold
+                  ? `<span class="sold-label">SOLD OUT</span>`
+                  : `<span class="stock-text ${max<=3 ? "low":""}">連動可售 ${max} 套</span>`;
+            }
+          }
         } else if (p.type === "lottery") {
           const r = lotteryRemaining(true);
           sold = r <= 0;
@@ -5725,6 +8751,14 @@
           p.id
         );
 
+      if(
+        !preorderPickupMode &&
+        p.bundleComponents?.length &&
+        getBundleProductAvailable(p)<=0
+      ){
+        return alert("這個套組的內含商品庫存不足");
+      }
+
       if (
         !preorderPickupMode &&
         !canAdd(
@@ -5743,6 +8777,7 @@
         inventoryKey:key,
         name:p.name,
         price:p.price,
+        unitCost:getSaleUnitCost(p),
         owner:p.owner
       });
     }
@@ -5874,6 +8909,16 @@
           "photoStyleStock"
         ).value.trim();
 
+      const cost =
+        Math.max(
+          0,
+          Number(
+            document.getElementById(
+              "photoStyleCost"
+            ).value || 0
+          )
+        );
+
       if (!name) {
         alert(
           "請輸入款式名稱"
@@ -5974,12 +9019,15 @@
 
       settings.photoPricing = {
         ...pricing,
-
         prices: {
           ...(pricing.prices || {}),
-          [name]:
-            price
+          [name]: price
         }
+      };
+
+      settings.photoCosts = {
+        ...(settings.photoCosts || {}),
+        [name]: cost
       };
 
       saveSettings(settings);
@@ -6005,6 +9053,8 @@
       const pricing=getPhotoPricing();
       const prices={...(pricing.prices||{})}; delete prices[theme];
       settings.photoPricing={...pricing,prices};
+      const photoCosts={...(settings.photoCosts||{})}; delete photoCosts[theme];
+      settings.photoCosts=photoCosts;
       saveSettings(settings);
       renderLibrary();
       if (!document.getElementById("subMenu").classList.contains("hidden") && document.getElementById("subTitle").textContent==="生寫真套組") openPhotoSet();
@@ -6147,6 +9197,8 @@
               ? addon
               : 0
           ),
+        unitCost:
+          getPhotoCost(theme),
         owner:
           getPhotoOwner(
             theme
@@ -6761,6 +9813,10 @@
           Number(
             lotteryProduct?.price || 0
           ),
+        unitCost:
+          Number(
+            lotteryProduct?.cost || 0
+          ),
         quantity:qty,
         owner:
           lotteryProduct?.owner || ""
@@ -6865,6 +9921,7 @@
         inventoryKey:pendingPolaroid.inventoryKey,
         name:`拍立得｜${pendingPolaroid.name}`,
         price:pendingPolaroid.price,
+        unitCost:Number(pendingPolaroid.cost||0),
         owners:
           normalizeOwnerList(
             pendingPolaroid
@@ -6979,6 +10036,8 @@
 
       document.getElementById("customName").value = "";
       document.getElementById("customPrice").value = "";
+      document.getElementById("customCost").value = "0";
+      document.getElementById("customCategory").value = "一般";
       document.getElementById("customQty").value = "1";
       const defaultOwner =
         getEnabledOwners()[0]?.name ||
@@ -7011,6 +10070,8 @@
     function saveCustomProduct() {
       const name = document.getElementById("customName").value.trim();
       const price = Number(document.getElementById("customPrice").value);
+      const cost = Math.max(0,Number(document.getElementById("customCost").value||0));
+      const category = document.getElementById("customCategory").value.trim() || "一般";
       const qty = Number(document.getElementById("customQty").value);
       const owner = document.getElementById("customOwner").value.trim();
 
@@ -7028,7 +10089,7 @@
 
       if (permanent) {
         const products = getProducts();
-        products.push({id,name,price,displayPrice:`$${money(price)}`,owner,type:"custom",visible:true,custom:true,stock,createdAt:nowISO()});
+        products.push({id,name,price,cost,category,displayPrice:`$${money(price)}`,owner,type:"custom",visible:true,custom:true,stock,bundleComponents:[],createdAt:nowISO()});
         saveProducts(products);
       }
 
@@ -7043,7 +10104,7 @@
       addToCart({
         id:permanent?id:`temp-${Date.now()}-${Math.random()}`,
         inventoryKey:permanent?inventoryKeyForProduct(id):null,
-        name,price,quantity:qty,owner
+        name,price,unitCost:cost,quantity:qty,owner
       });
 
       closeModal("customModal");
@@ -7065,6 +10126,7 @@
       document.getElementById("otherPolaroidSharedStock").checked = false;
       document.getElementById("otherPolaroidName").value = "";
       document.getElementById("otherPolaroidPrice").value = "200";
+      document.getElementById("otherPolaroidCost").value = "0";
       document.getElementById("otherPolaroidPermanent").checked = false;
       document.getElementById("otherPolaroidUnlimited").checked = true;
       document.getElementById("otherPolaroidStock").value = "0";
@@ -7084,6 +10146,7 @@
     function saveOtherPolaroid() {
       const name = document.getElementById("otherPolaroidName").value.trim();
       const price = Number(document.getElementById("otherPolaroidPrice").value);
+      const cost = Math.max(0,Number(document.getElementById("otherPolaroidCost").value||0));
       const permanent = document.getElementById("otherPolaroidPermanent").checked;
       const unlimited = document.getElementById("otherPolaroidUnlimited").checked;
       const stock = unlimited ? null : Number(document.getElementById("otherPolaroidStock").value);
@@ -7107,6 +10170,7 @@
         id:permanent?`polaroid-custom-${Date.now()}-${Math.random().toString(36).slice(2,7)}`:`polaroid-temp-${Date.now()}-${Math.random()}`,
         name,
         price,
+        cost,
         owners,
         owner:ownerListLabel(owners),
         visible:permanent,
@@ -7204,6 +10268,9 @@
       preorderPickupMode =
         !preorderPickupMode;
 
+      activePreorderPickupId =
+        null;
+
       cart =
         [];
 
@@ -7283,6 +10350,8 @@
           0,
         preorderPickup:
           true,
+        preorderId:
+          activePreorderPickupId,
         note:
           document.getElementById(
             "orderNote"
@@ -7306,6 +10375,47 @@
         orders
       );
 
+      if (
+        activePreorderPickupId
+      ) {
+        const preorders =
+          getPreorders();
+
+        const index =
+          preorders.findIndex(
+            item =>
+              item.id ===
+              activePreorderPickupId
+          );
+
+        if (index >= 0) {
+          preorders[index] = {
+            ...preorders[index],
+            status:
+              "picked",
+            pickedAt:
+              nowISO(),
+            pickupOrderId:
+              order.id
+          };
+
+          savePreorders(
+            preorders
+          );
+        }
+      }
+
+      const linked =
+        Boolean(
+          activePreorderPickupId
+        );
+
+      activePreorderPickupId =
+        null;
+
+      preorderPickupMode =
+        false;
+
       cart =
         [];
 
@@ -7317,14 +10427,20 @@
       ).value =
         "";
 
+      updatePreorderPickupUI();
       renderCart();
       renderMainProducts();
 
       alert(
         "預購取貨完成\n\n不計營收，且不會再次扣除現場庫存。"
       );
-    }
 
+      if (linked) {
+        showPage(
+          "preorderPage"
+        );
+      }
+    }
 
     function addToCart(item) {
       const wasEmpty =
@@ -7393,6 +10509,54 @@
       }
 
       if (
+        !preorderPickupMode &&
+        (
+          nextItem.id ===
+            "ultimate" ||
+          nextItem.inventoryKey ===
+            "product:ultimate" ||
+          nextItem.name ===
+            "終極大全套"
+        ) &&
+        !validateBundleStockForCart(
+          cart,
+          false
+        )
+      ) {
+        if (existing) {
+          existing.quantity -=
+            qty;
+
+          if (
+            existing.quantity <= 0
+          ) {
+            cart =
+              cart.filter(
+                item =>
+                  item !== existing
+              );
+          }
+        } else {
+          cart.pop();
+        }
+
+        const max =
+          getMaxBundleQuantityAllowed(
+            cart
+          );
+
+        alert(
+          Number.isFinite(max)
+            ? `大全套連動的零散商品庫存不足，目前最多可販售 ${max} 套。`
+            : "大全套連動的零散商品庫存不足。"
+        );
+
+        renderCart();
+        renderMainProducts();
+        return;
+      }
+
+      if (
         !preorderPickupMode
       ) {
         syncAutoGifts();
@@ -7455,8 +10619,46 @@
         }
       }
 
+      const oldQuantity =
+        Number(
+          item.quantity || 0
+        );
+
       item.quantity +=
         delta;
+
+      if (
+        delta > 0 &&
+        !preorderPickupMode &&
+        (
+          item.id ===
+            "ultimate" ||
+          item.inventoryKey ===
+            "product:ultimate" ||
+          item.name ===
+            "終極大全套"
+        ) &&
+        !validateBundleStockForCart(
+          cart,
+          false
+        )
+      ) {
+        item.quantity =
+          oldQuantity;
+
+        const max =
+          getMaxBundleQuantityAllowed(
+            cart
+          );
+
+        alert(
+          Number.isFinite(max)
+            ? `零散商品庫存不足，目前大全套最多可加入 ${max} 套。`
+            : "零散商品庫存不足，請確認大全套連動設定。"
+        );
+
+        return;
+      }
 
       if (
         item.quantity <= 0
@@ -7495,13 +10697,15 @@
           <div class="cart-item-title">
             ${esc(item.name)}
             ${item.autoGift ? '<span class="gift-auto-label">自動贈品</span>' : ''}
+            ${item.giftChoicePlaceholder ? '<span class="gift-auto-label">贈品擇一</span>' : ''}
             ${item.preorderPickup ? '<span class="gift-auto-label">預購取貨</span>' : ''}
           </div>
           ${item.signature ? `<div class="cart-item-meta">署名：${esc(item.signature)}</div>`:""}
           ${item.owner ? `<div class="cart-item-meta">成員：${esc(item.owner)}</div>` : ""}
           <div class="cart-item-row">
             <span>${item.preorderPickup ? "不計營收" : `$${money(item.price)} × ${item.quantity}`}</span>
-            ${item.autoGift ? '<span class="subtle">自動加入</span>' : `
+            ${item.giftChoicePlaceholder ? `<button class="small-btn" onclick="openGiftChoice('${esc(item.giftChoiceGroup)}')">選擇贈品</button>` :
+              item.autoGift ? '<span class="subtle">自動加入</span>' : `
               <div class="qty">
                 <button onclick="changeQty(${index},-1)">−</button>
                 <button onclick="changeQty(${index},1)">＋</button>
@@ -7523,6 +10727,7 @@
       if (!cart.length) return;
       if (!confirm("確定要清空購物車嗎？")) return;
       cart = [];
+      giftChoiceSelections = {};
       cartExpanded = false;
       document.getElementById("orderNote").value = "";
       renderCart();
@@ -7822,6 +11027,10 @@
       }
 
       renderTransferAccountPreview();
+
+      loadQrToUI("jko");
+      loadQrToUI("transfer");
+      loadQrToUI("linepay");
     }
 
     function savePaymentMethodSettings() {
@@ -7977,25 +11186,42 @@
     }
 
     function validateStock() {
-      if (lotteryInCart() > getSettings().lotteryMax - lotterySold()) {
-        alert("抽抽樂剩餘數量不足");
+      const giftChoice=cart.find(item=>item.giftChoicePlaceholder);
+      if(giftChoice){
+        alert(`請先選擇贈品：${giftChoice.giftChoiceGroup||giftChoice.name}`);
         return false;
       }
 
-      const grouped = {};
+      if (
+        lotteryInCart() >
+        getSettings().lotteryMax -
+        lotterySold()
+      ) {
+        alert(
+          "抽抽樂剩餘數量不足"
+        );
 
-      for (const i of cart) {
+        return false;
+      }
+
+      const grouped =
+        {};
+
+      for (const item of cart) {
         if (
-          i.preorderPickup ||
-          !i.inventoryKey
-        ) continue;
+          item.preorderPickup ||
+          !item.inventoryKey
+        ) {
+          continue;
+        }
 
-        grouped[i.inventoryKey] =
+        grouped[item.inventoryKey] =
           (
-            grouped[i.inventoryKey] || 0
+            grouped[item.inventoryKey] ||
+            0
           ) +
           Number(
-            i.quantity || 0
+            item.quantity || 0
           );
       }
 
@@ -8007,19 +11233,52 @@
       ) {
         grouped[adjustment.key] =
           (
-            grouped[adjustment.key] || 0
+            grouped[adjustment.key] ||
+            0
           ) +
           Number(
             adjustment.quantity || 0
           );
       }
 
-      for (const [key,qty] of Object.entries(grouped)) {
-        const stock = stockSource(key);
-        if (stock === null || stock === undefined) continue;
-        const available = Number(stock) - getSoldByKey(key);
-        if (qty > available) {
-          alert("有商品剩餘庫存不足，請重新確認購物車");
+      for (
+        const [
+          key,
+          quantity
+        ] of
+        Object.entries(
+          grouped
+        )
+      ) {
+        const stock =
+          stockSource(
+            key
+          );
+
+        if (
+          stock === null ||
+          stock === undefined
+        ) {
+          continue;
+        }
+
+        const available =
+          Math.max(
+            0,
+            Number(stock) -
+            getSoldByKey(
+              key
+            )
+          );
+
+        if (
+          Number(quantity) >
+          available
+        ) {
+          alert(
+            `庫存不足：${getBundleCandidateLabel(key)}\n\n目前可用 ${available}，購物車需要 ${quantity}。`
+          );
+
           return false;
         }
       }
@@ -8084,8 +11343,10 @@
 
     function saveOrder(payment,extra={}) {
       const s = getCurrentSession();
+      const orderNo = generateOrderNo();
       const order = {
         id:Date.now(),
+        orderNo,
         time:nowISO(),
         sessionId:currentSessionId,
         sessionDate:s?.date||"",
@@ -8094,16 +11355,48 @@
         total:getCartTotal(),
         note:document.getElementById("orderNote").value.trim(),
         items:deepCopy(cart),
+        bundleLinkSnapshot:
+          deepCopy(
+            getUltimateBundleSettings()
+          ),
+        genericBundleSnapshot:
+          deepCopy(
+            getProducts()
+              .filter(item=>item.bundleComponents?.length)
+              .map(item=>({id:item.id,name:item.name,components:item.bundleComponents}))
+          ),
         stockAdjustments:
           getBundleStockAdjustments(
             cart
           ),
+        refunds:[],
         ...extra
       };
 
       const orders = getOrders();
       orders.push(order);
       saveOrders(orders);
+
+      for(const item of order.items||[]){
+        if(item.inventoryKey && !item.preorderPickup){
+          appendStockLog({
+            key:item.inventoryKey,
+            name:item.name,
+            delta:-Number(item.quantity||0),
+            reason:"訂單售出",
+            orderNo
+          });
+        }
+      }
+
+      for(const adjustment of order.stockAdjustments||[]){
+        appendStockLog({
+          key:adjustment.key,
+          delta:-Number(adjustment.quantity||0),
+          reason:"套組連動扣庫存",
+          orderNo
+        });
+      }
 
       showCheckoutToast(
         payment,
@@ -8199,103 +11492,82 @@
     };
 
 
-    function openQrCrop(type,file) {
-      return new Promise(
-        (resolve,reject) => {
-          const url =
-            URL.createObjectURL(
-              file
-            );
-
-          const img =
-            document.getElementById(
-              "qrCropImage"
-            );
-
-          img.onload =
-            () => {
-              qrCropState = {
-                type,
-                file,
-                objectUrl:
-                  url,
-                naturalWidth:
-                  img.naturalWidth,
-                naturalHeight:
-                  img.naturalHeight,
-                baseScale:
-                  1,
-                zoom:
-                  1,
-                x:
-                  0,
-                y:
-                  0,
-                dragging:
-                  false,
-                pointerId:
-                  null,
-                startX:
-                  0,
-                startY:
-                  0,
-                originX:
-                  0,
-                originY:
-                  0,
-                resolve,
-                reject
-              };
-
-              const stage =
-                document.getElementById(
-                  "qrCropStage"
-                );
-
-              const stageSize =
-                stage.clientWidth;
-
-              qrCropState.baseScale =
-                Math.max(
-                  stageSize /
-                  img.naturalWidth,
-                  stageSize /
-                  img.naturalHeight
-                );
-
-              document.getElementById(
-                "qrCropZoom"
-              ).value =
-                "1";
-
-              updateQrCropTransform();
-
-              document.getElementById(
-                "qrCropModal"
-              ).classList.remove(
-                "hidden"
-              );
-            };
-
-          img.onerror =
-            () => {
-              URL.revokeObjectURL(
-                url
-              );
-
-              reject(
-                new Error(
-                  "圖片讀取失敗"
-                )
-              );
-            };
-
-          img.src =
-            url;
-        }
-      );
+    function isUnsupportedQrImage(file) {
+      const name = String(file?.name || "").toLowerCase();
+      const type = String(file?.type || "").toLowerCase();
+      return name.endsWith(".heic") || name.endsWith(".heif") || type.includes("heic") || type.includes("heif");
     }
 
+    function waitTwoFrames() {
+      return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    }
+
+    async function waitForQrImage(img) {
+      if (img.decode) {
+        try { await img.decode(); } catch { /* Safari fallback to onload */ }
+      }
+      await waitTwoFrames();
+    }
+
+    function openQrCrop(type,file) {
+      return new Promise((resolve,reject) => {
+        if (isUnsupportedQrImage(file)) {
+          reject(new Error("unsupported-heic"));
+          return;
+        }
+
+        const url = URL.createObjectURL(file);
+        const img = document.getElementById("qrCropImage");
+        const modal = document.getElementById("qrCropModal");
+        const stage = document.getElementById("qrCropStage");
+        const loading = document.getElementById("qrCropLoading");
+
+        /* 先顯示 modal 再量 stage，避免 iPad/Safari hidden 元素寬度為 0 */
+        modal.classList.remove("hidden");
+        loading?.classList.remove("hidden");
+        img.classList.add("qr-crop-image-loading");
+        img.removeAttribute("src");
+
+        img.onload = async () => {
+          try {
+            await waitForQrImage(img);
+            if (!img.naturalWidth || !img.naturalHeight) throw new Error("invalid-image-size");
+
+            const stageSize = Math.max(
+              260,
+              Math.round(stage.getBoundingClientRect().width || stage.clientWidth || 360)
+            );
+
+            qrCropState = {
+              type,file,objectUrl:url,
+              naturalWidth:img.naturalWidth,
+              naturalHeight:img.naturalHeight,
+              baseScale:Math.max(stageSize/img.naturalWidth,stageSize/img.naturalHeight),
+              zoom:1,x:0,y:0,dragging:false,pointerId:null,
+              startX:0,startY:0,originX:0,originY:0,
+              resolve,reject
+            };
+
+            document.getElementById("qrCropZoom").value = "1";
+            updateQrCropTransform();
+            loading?.classList.add("hidden");
+            img.classList.remove("qr-crop-image-loading");
+          } catch (error) {
+            URL.revokeObjectURL(url);
+            closeModal("qrCropModal");
+            reject(error);
+          }
+        };
+
+        img.onerror = () => {
+          URL.revokeObjectURL(url);
+          closeModal("qrCropModal");
+          reject(new Error("圖片讀取失敗"));
+        };
+
+        img.src = url;
+      });
+    }
 
     function updateQrCropTransform() {
       const img =
@@ -8309,6 +11581,28 @@
 
       img.style.transform =
         `translate(-50%, -50%) translate(${qrCropState.x}px, ${qrCropState.y}px) scale(${scale})`;
+    }
+
+
+    function resetQrCrop() {
+      if (!qrCropState?.type) return;
+      qrCropState.zoom = 1;
+      qrCropState.x = 0;
+      qrCropState.y = 0;
+      const zoom = document.getElementById("qrCropZoom");
+      if (zoom) zoom.value = "1";
+      updateQrCropTransform();
+    }
+
+    function useOriginalQrImage() {
+      const resolve = qrCropState.resolve;
+      const file = qrCropState.file;
+      if (!file) return;
+
+      if (qrCropState.objectUrl) URL.revokeObjectURL(qrCropState.objectUrl);
+      closeModal("qrCropModal");
+      qrCropState = {type:null};
+      if (resolve) resolve(file);
     }
 
 
@@ -8474,27 +11768,24 @@
         900
       );
 
-      const blob =
+      await waitForQrImage(img);
+
+      let blob =
         await new Promise(
-          (resolve,reject) => {
+          resolve => {
             canvas.toBlob(
-              result => {
-                if (result) {
-                  resolve(
-                    result
-                  );
-                } else {
-                  reject(
-                    new Error(
-                      "裁切失敗"
-                    )
-                  );
-                }
-              },
+              result => resolve(result || null),
               "image/png"
             );
           }
         );
+
+      if (!blob) {
+        const dataUrl = canvas.toDataURL("image/png");
+        blob = await fetch(dataUrl).then(response => response.blob());
+      }
+
+      if (!blob) throw new Error("裁切失敗");
 
       const resolve =
         qrCropState.resolve;
@@ -8528,15 +11819,19 @@
         return;
       }
 
-      if (
-        !file.type.startsWith(
-          "image/"
-        )
-      ) {
-        alert(
-          "請選擇圖片檔"
-        );
+      if (isUnsupportedQrImage(file)) {
+        alert("這張圖片是 HEIC／HEIF，部分 iPad／瀏覽器會出現黑畫面。\n\n請先把 QR 截圖，再上傳 PNG／JPG 圖片。");
+        return;
+      }
 
+      const allowedTypes = ["image/png","image/jpeg","image/webp"];
+      if (file.type && !allowedTypes.includes(file.type.toLowerCase())) {
+        alert("請使用 PNG、JPG 或 WebP 圖片。");
+        return;
+      }
+
+      if (file.size > 15 * 1024 * 1024) {
+        alert("圖片太大，建議先截圖或縮小後再上傳。");
         return;
       }
 
@@ -8570,7 +11865,9 @@
         );
 
         alert(
-          "QR 圖片處理失敗，請換一張圖片再試。"
+          error?.message === "unsupported-heic"
+            ? "HEIC／HEIF 在部分裝置會顯示黑畫面，請先截圖後再上傳。"
+            : "QR 圖片處理失敗。請使用 PNG／JPG 的 QR 截圖再試一次。"
         );
 
       } finally {
@@ -8587,35 +11884,62 @@
     }
 
 
-    async function loadQrToUI(type) {
-      const img = document.getElementById(`${type}QrImage`);
-      const placeholder = document.getElementById(`${type}QrPlaceholder`);
-      const remove = document.getElementById(`${type}QrRemove`);
+    async function loadQrTarget(img,placeholder,remove,blob) {
+      if (!img) return;
 
       if (img.dataset.objectUrl) {
         URL.revokeObjectURL(img.dataset.objectUrl);
         delete img.dataset.objectUrl;
       }
 
-      try {
-        const blob = await getQr(qrKey(type));
-        if (!blob) {
-          img.classList.add("hidden");
-          placeholder.classList.remove("hidden");
-          remove.classList.add("hidden");
-          return;
-        }
+      if (!blob) {
+        img.removeAttribute("src");
+        img.classList.add("hidden");
+        placeholder?.classList.remove("hidden");
+        remove?.classList.add("hidden");
+        return;
+      }
 
-        const url = URL.createObjectURL(blob);
-        img.src = url;
+      const url = URL.createObjectURL(blob);
+      img.classList.add("hidden");
+      placeholder?.classList.remove("hidden");
+
+      img.onload = () => {
         img.dataset.objectUrl = url;
         img.classList.remove("hidden");
-        placeholder.classList.add("hidden");
-        remove.classList.remove("hidden");
-      } catch {
+        placeholder?.classList.add("hidden");
+        remove?.classList.remove("hidden");
+      };
+
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
         img.classList.add("hidden");
-        placeholder.classList.remove("hidden");
-        remove.classList.add("hidden");
+        placeholder?.classList.remove("hidden");
+        remove?.classList.add("hidden");
+      };
+
+      img.src = url;
+    }
+
+    async function loadQrToUI(type) {
+      let blob = null;
+      try { blob = await getQr(qrKey(type)); } catch { blob = null; }
+
+      const targets = [
+        {
+          img:document.getElementById(`${type}QrImage`),
+          placeholder:document.getElementById(`${type}QrPlaceholder`),
+          remove:document.getElementById(`${type}QrRemove`)
+        },
+        {
+          img:document.getElementById(`${type}QrAdminImage`),
+          placeholder:document.getElementById(`${type}QrAdminPlaceholder`),
+          remove:document.getElementById(`${type}QrAdminRemove`)
+        }
+      ];
+
+      for (const target of targets) {
+        await loadQrTarget(target.img,target.placeholder,target.remove,blob);
       }
     }
 
@@ -9912,7 +13236,8 @@
       stockContext = context;
       const sold = getSoldByKey(context.key);
       document.getElementById("stockTitle").textContent = `修改庫存｜${context.name}`;
-      document.getElementById("stockSoldText").textContent = `目前已售：${sold}`;
+      const reserved=getPreorderReservationForKey(context.key);
+      document.getElementById("stockSoldText").textContent = `目前已售：${sold}｜預購保留：${reserved}`;
       const unlimited = context.stock === null || context.stock === undefined;
       document.getElementById("stockUnlimited").checked = unlimited;
       document.getElementById("stockInitial").value = unlimited ? sold : context.stock;
@@ -9936,11 +13261,14 @@
     function saveStock() {
       if (!stockContext) return;
 
+      const oldRawStock=getRawStockSource(stockContext.key);
       const unlimited = document.getElementById("stockUnlimited").checked;
       const value = unlimited ? null : Number(document.getElementById("stockInitial").value);
       const sold = getSoldByKey(stockContext.key);
+      const reserved = getPreorderReservationForKey(stockContext.key);
+      const minimum = sold + reserved;
 
-      if (!unlimited && (!Number.isInteger(value) || value<sold)) return alert(`初始數量不能小於目前已售 ${sold}`);
+      if (!unlimited && (!Number.isInteger(value) || value<minimum)) return alert(`初始數量不能小於已售 ${sold} ＋ 預購保留 ${reserved} ＝ ${minimum}`);
 
       if (stockContext.type === "product") {
         const items = getProducts();
@@ -9964,6 +13292,11 @@
           "stockWarningThreshold"
         ).value
       );
+
+      if(oldRawStock!==null && value!==null){
+        const delta=Number(value)-Number(oldRawStock);
+        if(delta)appendStockLog({key:stockContext.key,name:stockContext.name,delta,reason:"手動調整庫存"});
+      }
 
       stockContext = null;
       closeModal("stockModal");
@@ -9992,18 +13325,18 @@
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td>${esc(p.name)}</td>
+          <td>${esc(p.name)}${p.bundleComponents?.length ? ' <span class="pill">套組</span>' : ''}</td>
+          <td><input class="category-select" type="text" value="${esc(p.category||"一般")}" onchange="saveProductCategory('${p.id}',this.value)"></td>
           <td>
             <div class="inline-price-wrap">
               <span class="inline-price-prefix">$</span>
-              <input
-                class="inline-price-input"
-                type="number"
-                min="0"
-                inputmode="numeric"
-                value="${Number(p.price || 0)}"
-                onchange="saveProductInlinePrice('${p.id}', this.value)"
-              >
+              <input class="inline-price-input" type="number" min="0" inputmode="numeric" value="${Number(p.price || 0)}" onchange="saveProductInlinePrice('${p.id}', this.value)">
+            </div>
+          </td>
+          <td>
+            <div class="inline-price-wrap">
+              <span class="inline-price-prefix">$</span>
+              <input class="inline-price-input cost-input" type="number" min="0" inputmode="numeric" value="${Number(p.cost||0)}" onchange="saveProductCost('${p.id}',this.value)">
             </div>
           </td>
           <td>
@@ -10017,6 +13350,7 @@
             <div class="library-actions">
               <button class="small-btn" onclick="toggleProductVisibility('${p.id}')">${p.visible?"隱藏":"顯示"}</button>
               ${stockBtn}
+              ${(p.id!=="ultimate"&&(p.type==="simple"||p.type==="custom")) ? `<button class="small-btn" onclick="openGenericBundle('${p.id}')">${p.bundleComponents?.length?"編輯套組":"設為套組"}</button>` : ""}
               <button class="small-btn danger-btn" onclick="deleteProductAny(\'${p.id}\')">刪除</button>
             </div>
           </td>`;
@@ -10095,6 +13429,12 @@
             </div>
           </td>
           <td>
+            <div class="inline-price-wrap">
+              <span class="inline-price-prefix">$</span>
+              <input class="inline-price-input cost-input" type="number" min="0" inputmode="numeric" value="${getPhotoCost(theme)}" onchange="savePhotoCost(decodeURIComponent('${encodedTheme}'),this.value)">
+            </div>
+          </td>
+          <td>
             <select class="library-owner-select" onchange="savePhotoOwner(decodeURIComponent('${encodedTheme}'),this.value)">
               ${ownerOptionsHtml(getPhotoOwner(theme))}
             </select>
@@ -10139,6 +13479,12 @@
             </div>
           </td>
           <td>
+            <div class="inline-price-wrap">
+              <span class="inline-price-prefix">$</span>
+              <input class="inline-price-input cost-input" type="number" min="0" inputmode="numeric" value="${Number(p.cost||0)}" onchange="savePolaroidCost('${p.id}',this.value)">
+            </div>
+          </td>
+          <td>
             <div class="owner-chip-wrap">
               ${normalizeOwnerList(p).map(name=>`<span class="owner-chip">${esc(name)}</span>`).join("") || '<span class="subtle">未設定</span>'}
               <button class="small-btn" onclick="openPolaroidOwnerModal('${p.id}')">設定成員</button>
@@ -10176,8 +13522,50 @@
       const sharedText = document.getElementById("sharedPolaroidRemainingText");
       if (sharedText) sharedText.textContent = sharedUnlimited ? "共用庫存：不限量" : `共用剩餘 ${sharedRemaining} / ${settings.sharedPolaroidStock}`;
 
-      const bundleEnabled = document.getElementById("ultimateBundleEnabled");
-      if (bundleEnabled) bundleEnabled.checked = Boolean(getUltimateBundleSettings().enabled);
+      const bundleSettings =
+        getUltimateBundleSettings();
+
+      const bundleEnabled =
+        document.getElementById(
+          "ultimateBundleEnabled"
+        );
+
+      if (bundleEnabled) {
+        bundleEnabled.checked =
+          Boolean(
+            bundleSettings.enabled
+          );
+      }
+
+      const bundleStatus =
+        document.getElementById(
+          "ultimateBundleStatus"
+        );
+
+      if (bundleStatus) {
+        const components =
+          bundleSettings.components ||
+          [];
+
+        if (!components.length) {
+          bundleStatus.textContent =
+            "尚未設定連動內容";
+
+          bundleStatus.classList.remove(
+            "active"
+          );
+        } else {
+          bundleStatus.textContent =
+            `${bundleSettings.enabled ? "連動中" : "已暫停"}｜${components.length} 個零散庫存項目`;
+
+          bundleStatus.classList.toggle(
+            "active",
+            Boolean(
+              bundleSettings.enabled
+            )
+          );
+        }
+      }
 
       renderGiftLibrary();
 
@@ -12093,7 +15481,7 @@
       }
 
       const backup = {
-        version: 1,
+        version: 2,
         exportedAt: nowISO(),
         storage,
         qr
@@ -12257,7 +15645,7 @@
 
     function getCurrentSessionSummary() {
       const orders =
-        getOrders().filter(order=>!order.voided);
+        getOrders().filter(order=>!order.voided&&!order.preorderPickup);
 
       const payments = {};
       let revenue = 0;
@@ -12265,22 +15653,20 @@
 
       for (const order of orders) {
         revenue +=
-          Number(
-            order.total || 0
-          );
+          getOrderNetTotal(order);
 
         payments[order.payment] =
           (
             payments[order.payment] || 0
           ) +
-          Number(
-            order.total || 0
-          );
+          getOrderNetTotal(order);
 
-        for (const item of order.items || []) {
+        for (const [itemIndex,item] of (order.items || []).entries()) {
           items +=
-            Number(
-              item.quantity || 0
+            Math.max(
+              0,
+              Number(item.quantity || 0) -
+              getReturnedQuantity(order,itemIndex)
             );
         }
       }
@@ -12307,6 +15693,8 @@
         `
           <div class="shift-summary-row"><span>場次</span><strong>${esc(session?.name || "—")}</strong></div>
           <div class="shift-summary-row"><span>營業額</span><strong>NT$ ${money(s.revenue)}</strong></div>
+          <div class="shift-summary-row"><span>商品成本</span><strong>NT$ ${money(getOrders().filter(o=>!o.voided&&!o.preorderPickup).reduce((sum,o)=>sum+getOrderCost(o),0))}</strong></div>
+          <div class="shift-summary-row"><span>毛利</span><strong>NT$ ${money(s.revenue-getOrders().filter(o=>!o.voided&&!o.preorderPickup).reduce((sum,o)=>sum+getOrderCost(o),0))}</strong></div>
           <div class="shift-summary-row"><span>訂單</span><strong>${s.orders} 筆</strong></div>
           <div class="shift-summary-row"><span>售出數量</span><strong>${s.items}</strong></div>
           ${[
@@ -12316,6 +15704,9 @@
             ["LINE Pay",getPaymentMethodSettings().linepay]
           ].filter(item=>item[1]).map(([method])=>`<div class="shift-summary-row"><span>${method}</span><strong>NT$ ${money(s.payments[method] || 0)}</strong></div>`).join("")}
           <div class="shift-summary-row"><span>競標得標金額</span><strong>NT$ ${money(getCurrentSessionAuctionHistory().reduce((sum,item)=>sum+Number(item.finalBid||0),0))}</strong></div>
+          <div class="shift-summary-row"><span>開場零用金</span><strong>NT$ ${money(getSettings().openingCash||0)}</strong></div>
+          <div class="shift-summary-row"><span>理論現金</span><strong>NT$ ${money(Number(getSettings().openingCash||0)+getCashRevenue())}</strong></div>
+          <div class="shift-summary-row"><span>實際現金</span><strong>${getSettings().cashCount?.actual===undefined||getSettings().cashCount?.actual===null?"尚未盤點":"NT$ "+money(getSettings().cashCount.actual)}</strong></div>
         `;
 
       document.getElementById(
@@ -12326,6 +15717,12 @@
     }
 
     function finishShift() {
+      if(
+        getPaymentMethodSettings().cash &&
+        (getSettings().cashCount?.actual===undefined || getSettings().cashCount?.actual===null) &&
+        !confirm("目前還沒有做現金盤點，仍要直接收攤嗎？")
+      ) return;
+
       const auction =
         getAuctionSettings();
 
@@ -12514,168 +15911,246 @@
     }
 
 
-    function renderStats() {
-      const orders = getOrders();
-      const activeOrders =
-        orders.filter(
-          order =>
-            !order.voided &&
-            !order.preorderPickup
-        );
-      let revenue=0, itemCount=0;
-      const owners={}, payments={}, products={};
+    function openRefundModal(orderId) {
+      const order=getOrders().find(item=>item.id===orderId);
+      if(!order)return;
+      refundOrderId=orderId;
+      document.getElementById("refundModalTitle").textContent=`退款／換貨｜${order.orderNo||"舊訂單"}`;
+      document.getElementById("refundOrderInfo").textContent=`原金額 NT$ ${money(order.total)}｜已退款 NT$ ${money(getOrderRefundTotal(order))}`;
+      document.getElementById("refundType").value="refund";
+      document.getElementById("refundReason").value="";
+      document.getElementById("refundAmount").value="0";
 
-      for (const order of activeOrders) {
-        revenue += Number(order.total||0);
-        payments[order.payment] ||= {count:0,revenue:0};
-        payments[order.payment].count++;
-        payments[order.payment].revenue += Number(order.total||0);
+      const area=document.getElementById("refundItemRows");area.innerHTML="";
+      for(const [index,item] of (order.items||[]).entries()){
+        if(item.autoGift||item.giftChoicePlaceholder)continue;
+        const already=(order.refunds||[]).reduce((sum,r)=>sum+(r.items||[]).filter(x=>x.itemIndex===index).reduce((s,x)=>s+Number(x.quantity||0),0),0);
+        const max=Math.max(0,Number(item.quantity||0)-already);
+        const row=document.createElement("div");row.className="refund-item-row";
+        row.innerHTML=`<div>${esc(item.name)}<div class="subtle">可處理 ${max}｜單價 $${money(item.price)}</div></div><input class="refund-qty-input" data-index="${index}" type="number" min="0" max="${max}" value="0" inputmode="numeric" oninput="recalculateRefundAmount()">`;
+        area.appendChild(row);
+      }
+      document.getElementById("refundModal").classList.remove("hidden");
+    }
 
-        for (const item of order.items || []) {
-          const qty = Number(item.quantity||0);
-          const subtotal = Number(item.price)*qty;
-          itemCount += qty;
-          const itemOwners =
-            Array.isArray(item.owners) && item.owners.length
-              ? item.owners
-              : (
-                  item.owner
-                    ? [item.owner]
-                    : []
-                );
+    function recalculateRefundAmount() {
+      const order=getOrders().find(item=>item.id===refundOrderId);if(!order)return;
+      let amount=0;
+      for(const input of document.querySelectorAll("#refundItemRows .refund-qty-input")){
+        const item=order.items[Number(input.dataset.index)];
+        amount+=Number(item?.price||0)*Math.max(0,Number(input.value||0));
+      }
+      document.getElementById("refundAmount").value=amount;
+    }
 
-          const share =
-            itemOwners.length
-              ? subtotal / itemOwners.length
-              : 0;
+    function getRefundBundleAdjustments(order,line) {
+      const adjustments=[];
+      const add=(key,qty)=>{
+        if(!key||!qty)return;
+        const found=adjustments.find(item=>item.key===key);
+        if(found)found.quantity+=qty;
+        else adjustments.push({key,quantity:qty});
+      };
 
-          for (const ownerName of itemOwners) {
-            owners[ownerName] =
-              (owners[ownerName] || 0) +
-              share;
-          }
+      const originalItem=order.items?.[line.itemIndex];
+      if(!originalItem)return adjustments;
 
-          const ownerLabel =
-            ownerListLabel(
-              itemOwners
-            );
-
-          const key = `${item.name}||${ownerLabel}`;
-          products[key] ||= {name:item.name,owner:ownerLabel,quantity:0,revenue:0};
-          products[key].quantity += qty;
-          products[key].revenue += subtotal;
+      const isUltimate=originalItem.id==="ultimate"||originalItem.inventoryKey==="product:ultimate"||originalItem.name==="終極大全套";
+      if(isUltimate && order.bundleLinkSnapshot?.enabled){
+        for(const c of order.bundleLinkSnapshot.components||[]){
+          add(c.key,Number(line.quantity||0)*Math.max(1,Number(c.quantity||1)));
         }
       }
 
-      document.getElementById("statsRevenue").textContent = money(revenue);
-      document.getElementById("statsOrders").textContent = activeOrders.length;
-      document.getElementById("statsItems").textContent = itemCount;
-      const ownerGrid =
-        document.getElementById(
-          "ownerStatsGrid"
-        );
+      const generic=(order.genericBundleSnapshot||[]).find(item=>item.id===originalItem.id);
+      if(generic){
+        for(const c of generic.components||[]){
+          add(c.key,Number(line.quantity||0)*Math.max(1,Number(c.quantity||1)));
+        }
+      }
+      return adjustments;
+    }
 
-      ownerGrid.innerHTML =
-        "";
+    function saveRefund() {
+      const orders=getOrders(),index=orders.findIndex(item=>item.id===refundOrderId);
+      if(index<0)return;
+      const order=orders[index],type=document.getElementById("refundType").value;
+      const amount=Math.max(0,Number(document.getElementById("refundAmount").value||0));
+      const reason=document.getElementById("refundReason").value.trim();
+      const lines=[];
 
-      for (
-        const owner of
-        getEnabledOwners()
-      ) {
-        const card =
-          document.createElement(
-            "div"
-          );
-
-        card.className =
-          "card";
-
-        card.innerHTML =
-          `${esc(owner.name)}<div class="number">NT$ ${money(owners[owner.name] || 0)}</div>`;
-
-        ownerGrid.appendChild(
-          card
-        );
+      for(const input of document.querySelectorAll("#refundItemRows .refund-qty-input")){
+        const qty=Math.max(0,Number(input.value||0));
+        if(!qty)continue;
+        const itemIndex=Number(input.dataset.index),item=order.items[itemIndex];
+        if(!item)continue;
+        lines.push({
+          itemIndex,inventoryKey:item.inventoryKey||null,name:item.name,
+          quantity:qty,unitCost:Number(item.unitCost||0),unitPrice:Number(item.price||0)
+        });
       }
 
-      const paymentSettings =
-        getPaymentMethodSettings();
+      if(!lines.length && !amount)return alert("請輸入要處理的商品數量或退款金額。");
+      if(type!=="return_only" && amount>getOrderNetTotal(order))return alert("退款金額不能超過目前訂單實收金額。");
 
-      const enabledPaymentMethods = [
-        ["現金",paymentSettings.cash],
-        ["街口",paymentSettings.jko],
-        ["轉帳",paymentSettings.transfer],
-        ["LINE Pay",paymentSettings.linepay]
-      ].filter(
-        item =>
-          item[1]
+      const bundleReturnAdjustments=[];
+      if(type!=="refund_no_stock"){
+        for(const line of lines){
+          for(const adjustment of getRefundBundleAdjustments(order,line)){
+            const found=bundleReturnAdjustments.find(item=>item.key===adjustment.key);
+            if(found)found.quantity+=Number(adjustment.quantity||0);
+            else bundleReturnAdjustments.push({...adjustment});
+          }
+        }
+      }
+
+      const refund={
+        id:"refund-"+Date.now(),
+        time:nowISO(),type,amount:type==="return_only"?0:amount,reason,items:lines,
+        bundleReturnAdjustments
+      };
+
+      orders[index]={...order,refunds:[...(order.refunds||[]),refund]};
+      saveOrders(orders);
+
+      if(type!=="refund_no_stock"){
+        for(const line of lines){
+          if(line.inventoryKey){
+            appendStockLog({
+              key:line.inventoryKey,name:line.name,delta:Number(line.quantity),
+              reason:type==="return_only"?"換貨／回補庫存":"退款回補庫存",
+              orderNo:order.orderNo||""
+            });
+          }
+        }
+        for(const adjustment of bundleReturnAdjustments){
+          appendStockLog({
+            key:adjustment.key,
+            delta:Number(adjustment.quantity||0),
+            reason:"退款／換貨套組連動回補",
+            orderNo:order.orderNo||""
+          });
+        }
+      }
+
+      refundOrderId=null;closeModal("refundModal");
+      renderStats();renderLibrary();renderMainProducts();
+    }
+
+    function getReturnedQuantity(order,itemIndex) {
+      return (order.refunds||[]).reduce(
+        (sum,refund)=>{
+          if(refund.type==="refund_no_stock")return sum;
+          return sum+(refund.items||[]).filter(line=>line.itemIndex===itemIndex).reduce((s,line)=>s+Number(line.quantity||0),0);
+        },
+        0
       );
+    }
 
-      const paymentCardGrid =
-        document.getElementById(
-          "paymentCardGrid"
-        );
+    function renderStats() {
+      const orders=getOrders();
+      const activeOrders=orders.filter(order=>!order.voided&&!order.preorderPickup);
+      let revenue=0,cost=0,itemCount=0;
+      const owners={},payments={},products={};
 
-      paymentCardGrid.innerHTML =
-        "";
+      for(const order of activeOrders){
+        const net=getOrderNetTotal(order);
+        const refundTotal=getOrderRefundTotal(order);
+        revenue+=net;
+        cost+=getOrderCost(order);
 
-      for (
-        const [
-          method
-        ] of enabledPaymentMethods
-      ) {
-        const card =
-          document.createElement(
-            "div"
-          );
+        payments[order.payment]||={count:0,revenue:0};
+        payments[order.payment].count++;
+        payments[order.payment].revenue+=net;
 
-        card.className =
-          "payment-mini-card";
+        const revenueRatio=Number(order.total||0)>0?net/Number(order.total||0):1;
 
-        card.innerHTML =
-          `${esc(method)}<div class="amount">NT$ ${money(payments[method]?.revenue || 0)}</div>`;
+        for(const [itemIndex,item] of (order.items||[]).entries()){
+          if(item.giftChoicePlaceholder)continue;
+          const qty=Math.max(0,Number(item.quantity||0)-getReturnedQuantity(order,itemIndex));
+          const subtotal=Number(item.price||0)*qty*revenueRatio;
+          itemCount+=qty;
 
-        paymentCardGrid.appendChild(
-          card
-        );
+          const itemOwners=Array.isArray(item.owners)&&item.owners.length?item.owners:(item.owner?[item.owner]:[]);
+          const share=itemOwners.length?subtotal/itemOwners.length:0;
+          for(const ownerName of itemOwners)owners[ownerName]=(owners[ownerName]||0)+share;
+
+          const ownerLabel=ownerListLabel(itemOwners);
+          const key=`${item.name}||${ownerLabel}`;
+          products[key]||={name:item.name,owner:ownerLabel,quantity:0,revenue:0};
+          products[key].quantity+=qty;
+          products[key].revenue+=subtotal;
+        }
       }
 
-      const payBody = document.getElementById("paymentStatsBody");
-      payBody.innerHTML = "";
-      for (const [method] of enabledPaymentMethods) {
-        const d = payments[method] || {count:0,revenue:0};
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${method}</td><td>${d.count}</td><td>$${money(d.revenue)}</td>`;
-        payBody.appendChild(tr);
+      const profit=revenue-cost;
+      const margin=revenue>0?(profit/revenue*100):0;
+      document.getElementById("statsRevenue").textContent=money(revenue);
+      document.getElementById("statsCost").textContent=money(cost);
+      document.getElementById("statsProfit").textContent=money(profit);
+      document.getElementById("statsMargin").textContent=`${margin.toFixed(1)}%`;
+      document.getElementById("statsOrders").textContent=activeOrders.length;
+      document.getElementById("statsItems").textContent=itemCount;
+
+      const ownerGrid=document.getElementById("ownerStatsGrid");ownerGrid.innerHTML="";
+      for(const owner of getEnabledOwners()){
+        const card=document.createElement("div");card.className="card";
+        card.innerHTML=`${esc(owner.name)}<div class="number">NT$ ${money(owners[owner.name]||0)}</div>`;
+        ownerGrid.appendChild(card);
       }
 
-      const prodBody = document.getElementById("productStatsBody");
-      prodBody.innerHTML = "";
-      const values = Object.values(products);
-      if (!values.length) prodBody.innerHTML = `<tr><td colspan="4">尚無銷售紀錄</td></tr>`;
-      else for (const d of values) {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${esc(d.name)}</td><td>${esc(d.owner)}</td><td>${d.quantity}</td><td>$${money(d.revenue)}</td>`;
-        prodBody.appendChild(tr);
+      const paymentSettings=getPaymentMethodSettings();
+      const enabledPaymentMethods=[["現金",paymentSettings.cash],["街口",paymentSettings.jko],["轉帳",paymentSettings.transfer],["LINE Pay",paymentSettings.linepay]].filter(item=>item[1]);
+      const paymentCardGrid=document.getElementById("paymentCardGrid");paymentCardGrid.innerHTML="";
+      for(const [method] of enabledPaymentMethods){
+        const card=document.createElement("div");card.className="payment-mini-card";
+        card.innerHTML=`${esc(method)}<div class="amount">NT$ ${money(payments[method]?.revenue||0)}</div>`;
+        paymentCardGrid.appendChild(card);
       }
 
-      const orderBody = document.getElementById("orderBody");
-      orderBody.innerHTML = "";
-      if (!orders.length) orderBody.innerHTML = `<tr><td colspan="5">尚無訂單</td></tr>`;
-      else for (const o of [...orders].reverse()) {
-        const tr=document.createElement("tr");
-        if (o.voided) tr.classList.add("voided-order");
-        tr.innerHTML = `
+      const payBody=document.getElementById("paymentStatsBody");payBody.innerHTML="";
+      for(const [method] of enabledPaymentMethods){
+        const d=payments[method]||{count:0,revenue:0},tr=document.createElement("tr");
+        tr.innerHTML=`<td>${method}</td><td>${d.count}</td><td>$${money(d.revenue)}</td>`;payBody.appendChild(tr);
+      }
+
+      const prodBody=document.getElementById("productStatsBody");prodBody.innerHTML="";
+      const values=Object.values(products);
+      if(!values.length)prodBody.innerHTML='<tr><td colspan="4">尚無銷售紀錄</td></tr>';
+      else for(const d of values){
+        const tr=document.createElement("tr");tr.innerHTML=`<td>${esc(d.name)}</td><td>${esc(d.owner)}</td><td>${d.quantity}</td><td>$${money(d.revenue)}</td>`;prodBody.appendChild(tr);
+      }
+
+      const q=(document.getElementById("orderSearchInput")?.value||"").trim().toLowerCase();
+      const shown=orders.map((o,i)=>({o,i})).filter(({o,i})=>{
+        if(!q)return true;
+        return [
+          orderNumber(o,i),o.payment,o.total,o.note,
+          ...(o.items||[]).map(item=>item.name)
+        ].join(" ").toLowerCase().includes(q);
+      }).reverse();
+
+      const orderBody=document.getElementById("orderBody");orderBody.innerHTML="";
+      if(!shown.length)orderBody.innerHTML='<tr><td colspan="8">尚無符合的訂單</td></tr>';
+      else for(const {o,i} of shown){
+        const tr=document.createElement("tr");if(o.voided)tr.classList.add("voided-order");
+        const refunded=getOrderRefundTotal(o),net=getOrderNetTotal(o);
+        tr.innerHTML=`
+          <td class="order-no">${esc(orderNumber(o,i))}</td>
           <td>${timeText(o.time)}${o.voided?'<div class="voided-label">已作廢</div>':""}</td>
           <td>${esc(o.payment)}</td>
           <td>$${money(o.total)}</td>
+          <td>$${money(refunded)}${refunded?'<span class="refund-note">已退款</span>':""}</td>
+          <td>$${money(o.voided?0:net)}</td>
           <td>${o.note?esc(o.note):"—"}</td>
-          <td><button class="small-btn ${o.voided?"":"danger-btn"}" onclick="toggleVoidOrder(${o.id})">${o.voided?"恢復":"作廢"}</button></td>`;
+          <td><div class="library-actions">
+            ${!o.voided&&!o.preorderPickup?`<button class="small-btn" onclick="openRefundModal(${o.id})">退款／換貨</button>`:""}
+            <button class="small-btn ${o.voided?"":"danger-btn"}" onclick="toggleVoidOrder(${o.id})">${o.voided?"恢復":"作廢"}</button>
+          </div></td>`;
         orderBody.appendChild(tr);
       }
 
-      renderStatsAuctionHistory();
-      updateSessionUI();
+      renderStatsAuctionHistory();updateSessionUI();
     }
 
     function toggleVoidOrder(id) {
@@ -12684,8 +16159,19 @@
       if (index<0) return;
       const next=!orders[index].voided;
       if (next && !confirm("確定作廢這筆訂單嗎？\n\n訂單會保留，但不計入營業額，庫存會補回。")) return;
-      orders[index]={...orders[index],voided:next,voidedAt:next?nowISO():null};
+      const target=orders[index];
+      orders[index]={...target,voided:next,voidedAt:next?nowISO():null};
       saveOrders(orders);
+
+      const sign=next?1:-1;
+      for(const item of target.items||[]){
+        if(item.inventoryKey&&!item.preorderPickup){
+          appendStockLog({key:item.inventoryKey,name:item.name,delta:sign*Number(item.quantity||0),reason:next?"作廢訂單回補":"恢復訂單扣回",orderNo:target.orderNo||""});
+        }
+      }
+      for(const adjustment of target.stockAdjustments||[]){
+        appendStockLog({key:adjustment.key,delta:sign*Number(adjustment.quantity||0),reason:next?"作廢套組回補":"恢復套組扣回",orderNo:target.orderNo||""});
+      }
       renderStats(); renderMainProducts(); renderLibrary();
     }
 
@@ -12742,14 +16228,26 @@
 
 
     function undoLastOrder() {
-      const orders = getOrders();
-      if (!orders.length) return alert("目前沒有訂單");
-      if (!confirm("確定撤銷上一筆訂單嗎？")) return;
-      orders.pop();
+      const orders=getOrders();
+      const index=[...orders].map((order,i)=>({order,i})).reverse()
+        .find(entry=>!entry.order.voided&&!entry.order.preorderPickup)?.i;
+
+      if(index===undefined)return alert("目前沒有可撤銷的有效訂單");
+      const target=orders[index];
+      if(!confirm(`確定撤銷 ${target.orderNo||"上一筆訂單"} 嗎？`))return;
+
+      for(const item of target.items||[]){
+        if(item.inventoryKey){
+          appendStockLog({key:item.inventoryKey,name:item.name,delta:Number(item.quantity||0),reason:"撤銷訂單回補",orderNo:target.orderNo||""});
+        }
+      }
+      for(const adjustment of target.stockAdjustments||[]){
+        appendStockLog({key:adjustment.key,delta:Number(adjustment.quantity||0),reason:"撤銷套組連動回補",orderNo:target.orderNo||""});
+      }
+
+      orders.splice(index,1);
       saveOrders(orders);
-      renderStats();
-      renderMainProducts();
-      renderLibrary();
+      renderStats();renderMainProducts();renderLibrary();
     }
 
     function resetCurrentSession() {
@@ -12779,8 +16277,8 @@
         let revenue=0, items=0;
 
         for (const o of orders) {
-          revenue += Number(o.total||0);
-          for (const i of o.items||[]) items += Number(i.quantity||0);
+          revenue += getOrderNetTotal(o);
+          for (const [itemIndex,i] of (o.items||[]).entries()) items += Math.max(0,Number(i.quantity||0)-getReturnedQuantity(o,itemIndex));
         }
 
         allRevenue += revenue;
@@ -12799,7 +16297,7 @@
 
     /* -------------------- CSV -------------------- */
     function exportCSV() {
-      const rows = [["日期","場次名稱","時間","付款方式","商品","成員","署名","單價","數量","小計","訂單總額","訂單備註"]];
+      const rows = [["日期","場次名稱","單號","時間","付款方式","商品","成員","署名","單價","成本","數量","小計","訂單原額","退款","實收","訂單備註"]];
 
       for (const s of sortSessions(getSessions())) {
         for (const o of getOrders(s.id)) {
@@ -12808,15 +16306,19 @@
             rows.push([
               s.date||"",
               s.name||"",
+              o.orderNo||"",
               new Date(o.time).toLocaleString("zh-TW"),
               o.payment,
               i.name,
               i.owner,
               i.signature||"",
               i.price,
+              i.unitCost||0,
               i.quantity,
               Number(i.price)*Number(i.quantity),
               o.total,
+              getOrderRefundTotal(o),
+              getOrderNetTotal(o),
               o.note||""
             ]);
           }
@@ -12977,6 +16479,7 @@
     updateSessionUI();
     updatePreorderPickupUI();
     renderMainProducts();
+    renderPreorderPage();
     renderCart();
     renderPaymentMethodSettings();
     renderLotteryPrizeLibrary();

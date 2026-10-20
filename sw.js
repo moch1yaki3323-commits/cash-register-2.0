@@ -1,4 +1,4 @@
-const CACHE_NAME = "cash-register-v51";
+const CACHE_NAME = "cash-register-v74";
 const CORE = ["./", "./index.html"];
 
 self.addEventListener("install", event => {

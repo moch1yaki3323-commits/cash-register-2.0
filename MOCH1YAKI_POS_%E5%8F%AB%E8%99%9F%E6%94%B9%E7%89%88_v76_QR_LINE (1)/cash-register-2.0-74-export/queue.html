@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#f7f4f0"><title>PF45｜排隊領號 · AYAMI × YAKI</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC','Microsoft JhengHei',sans-serif;background:#f7f4f0;color:#39433e;font-size:16px}*{box-sizing:border-box}body{margin:0;min-height:100dvh}main{max-width:520px;margin:0 auto;padding:36px 18px 80px}.brand{text-align:center;margin-bottom:20px}.brand small{font-weight:800;letter-spacing:.2em;color:#89978c;font-size:11px}.brand h1{font-size:27px;letter-spacing:.02em;margin:9px 0}.brand p{margin:6px 0;color:#718078;font-size:13px}.card{background:#fff;border:1px solid #e4e9e2;border-radius:23px;padding:23px;margin-bottom:15px;box-shadow:0 8px 25px #34443a09}h2{margin:0 0 12px;font-size:17px}p{line-height:1.7;color:#758078}label{display:block;font-size:14px;font-weight:650;margin:16px 0 7px}input[type=text]{width:100%;height:52px;border:1px solid #d5ded6;border-radius:13px;padding:10px 14px;font-size:17px;color:#34443a;background:#fff;outline:none}input:focus{border-color:#719383;box-shadow:0 0 0 3px #789d8522}button,.linkbtn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border:1px solid #dae2da;border-radius:13px;padding:10px 14px;font-size:15px;font-weight:750;cursor:pointer;background:#fff;color:#466556;text-decoration:none}button:disabled{opacity:.56;cursor:wait}.primary{width:100%;color:white;background:#6d8979;border-color:#6d8979;margin-top:17px}.danger{color:#a95252;border-color:#efd7d7}.row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.muted{font-size:13px;color:#849188}.pill{font-size:12px;padding:6px 11px;border-radius:100px;background:#e6efe8;color:#50735c;font-weight:750}.pill.paused{background:#f6e8e2;color:#a56651}.opt{display:flex;gap:11px;align-items:flex-start;border:1px solid #e3e9e3;border-radius:13px;padding:13px;background:#fafcf9}.opt input{width:20px;height:20px;accent-color:#6d8979;margin-top:2px}.opt label{margin:0;flex:1}.opt small{display:block;color:#879388;font-size:12px;font-weight:400;margin-top:5px;line-height:1.6}.number{font-size:75px;font-weight:850;letter-spacing:-.07em;line-height:1.15;color:#597d6b;text-align:center;font-variant-numeric:tabular-nums;margin:14px 0 5px}.center{text-align:center}.progress{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.metric{padding:13px 8px;background:#f4f7f4;border-radius:13px;text-align:center}.metric strong{display:block;font-size:25px;line-height:1.4}.metric span{display:block;color:#85928a;font-size:12px}.code{font-weight:800;font-size:24px;letter-spacing:.07em;background:#f5f7f5;border:1px dashed #b9ccbf;padding:14px;text-align:center;border-radius:13px}.notice{font-size:13px;line-height:1.8;padding:12px 14px;border-radius:12px;background:#f7f8f4;color:#68776d;margin-top:14px}.error{color:#b45042;background:#fbefec}.success{color:#4e8061;background:#e9f3ec}.actions{display:flex;gap:9px;flex-wrap:wrap}.actions>*{flex:1}.hide{display:none!important}footer{text-align:center;font-size:11px;color:#a2ada4;margin-top:30px}a{color:#4a7a5e}.loader{padding:18px;text-align:center;color:#7b8f80}
+</style></head><body><main>
+<div class="brand"><small>PF45 • QUEUE TICKET</small><h1>AYAMI × YAKI</h1><p>花博爭艷館 P15｜掃碼排隊領號</p></div>
+<div id="message" role="status" class="notice hide"></div>
+<div class="card" id="overview"><div class="row"><h2 style="margin:0">現場排隊狀態</h2><span class="pill paused" id="stateBadge">連線中</span></div><div class="progress"><div class="metric"><strong id="current">---</strong><span>目前叫號</span></div><div class="metric"><strong id="waiting">—</strong><span>等待中的號碼</span></div></div><p class="muted" id="day">讀取中…</p></div>
+<div class="card" id="joinCard"><h2>領取排隊號碼</h2><p style="margin:3px 0">不用下載 App，也不必提供手機號碼。</p><form id="joinForm"><label for="nickname">怎麼稱呼你？</label><input id="nickname" type="text" maxlength="24" placeholder="例如：小花生" autocomplete="nickname" required><div class="opt" style="margin-top:18px"><input id="wantsLine" type="checkbox"><label for="wantsLine">我要使用 LINE 叫號通知 <small>選填；不勾選也能領號。叫號進度仍可回到此頁查看。</small></label></div><div id="captcha" style="margin-top:12px"></div><button type="submit" class="primary" id="joinBtn">確認領號</button></form></div>
+<div class="card hide" id="ticketCard"><div class="center"><span class="pill" id="ticketState">等候中</span><p style="margin:14px 0 0">我的排隊號碼</p><div class="number" id="ticketNo">---</div><strong id="ticketName"></strong></div><div class="progress"><div class="metric"><strong id="ahead">—</strong><span>前方等候組數</span></div><div class="metric"><strong id="called">---</strong><span>目前叫號</span></div></div><div class="notice" id="ticketNotice">請保留此頁面以查看叫號狀態。</div><div id="lineBox" class="hide"><h2 style="margin-top:24px">LINE 通知（選填）</h2><p class="muted">先加入官方帳號，再傳送下方綁定訊息。</p><div class="code" id="lineCode">——</div><div class="actions" style="margin-top:10px"><button id="copyCode">複製綁定訊息</button><a class="linkbtn hide" id="lineUrl" target="_blank" rel="noopener noreferrer">開啟官方 LINE</a></div><p class="muted" id="bindInfo">尚未綁定。完成後系統會在叫號時傳訊息。</p></div><div class="actions" style="margin-top:20px"><button id="toggleLine">開啟 LINE 通知</button><button class="danger" id="cancelTicket">取消排隊</button></div><p class="muted" style="margin-top:18px">頁面每 10 秒更新。關閉網頁也不會失去已領取的號碼（同一個瀏覽器）。</p></div>
+<div class="card" style="font-size:13px"><b>排隊須知</b><p>現場以叫號進度為準；輪到時請至 P15 攤位報到。LINE 通知為加值服務，即使未收到通知，也請留意叫號狀態。登記資料僅用於本次排隊及通知。</p></div><footer>MOCH1YAKI • PF45 QUEUE</footer>
+</main>
+<script>
+(()=>{'use strict';
+const ENDPOINT='https://moch1yaki-notify.q0812n.workers.dev';
+const $=id=>document.getElementById(id);
+let config=null,token='',ticket=null,updating=false,joining=false,turnstileId=null;
+const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const storageKey=()=>`moch1yaki-queue-ticket-${today()}`;
+const msg=(t,kind='error')=>{const e=$('message');e.textContent=t;e.className='notice '+kind;e.classList.remove('hide');};
+const clearMsg=()=>$('message').classList.add('hide');
+const req=async(path,method='GET',data)=>{const r=await fetch(ENDPOINT+path,{method,headers:{'Content-Type':'application/json'},...(data?{body:JSON.stringify(data)}:{})});let x={};try{x=await r.json();}catch{}if(!r.ok)throw Error(x.error||`連線失敗 (${r.status})`);return x;};
+const setText=(id,text)=>$(id).textContent=String(text??'');
+const show=id=>$(id).classList.remove('hide'),hide=id=>$(id).classList.add('hide');
+async function refresh(){
+ if(updating)return;updating=true;
+ try{
+  const base=await req('/public/status'+(token?'?token='+encodeURIComponent(token):''));config=base;
+  setText('current',base.current);setText('waiting',base.waiting);setText('day',`日期：${base.day}　｜　${base.booth}`);
+  setText('stateBadge',base.paused?'暫停領號':'開放領號');$('stateBadge').classList.toggle('paused',base.paused);
+  if(base.ticket){
+   ticket=base.ticket;hide('joinCard');show('ticketCard');
+   setText('ticketNo',ticket.number);setText('ticketName',ticket.name);setText('ahead',base.ahead);setText('called',base.current);
+   const statusName={waiting:'等候中',calling:'叫號中',called:'已叫過',done:'已完成',cancelled:'已取消'};
+   setText('ticketState',statusName[ticket.status]||'等候中');
+   setText('ticketNotice',ticket.status==='calling'?'輪到你了！請立即前往 P15 攤位報到。':ticket.status==='called'?'已叫過你的號碼，請向攤位人員確認。':ticket.status==='done'?'已完成，謝謝等候。':ticket.status==='cancelled'?'此號碼已取消。':'請留意目前叫號及前方等候組數。');
+   if(ticket.wantsLine){show('lineBox');setText('lineCode',`綁定 ${ticket.lineCode}`);setText('bindInfo',ticket.lineBound?'LINE 已綁定，叫號時會發送通知。':'尚未綁定；請將綁定訊息傳給官方帳號。');setText('toggleLine','關閉 LINE 通知');}
+   else{hide('lineBox');setText('toggleLine','開啟 LINE 通知');}
+   if(base.officialUrl&&/^https:\/\//.test(base.officialUrl)){$('lineUrl').href=base.officialUrl;show('lineUrl');}else hide('lineUrl');
+   $('toggleLine').disabled=['done','cancelled'].includes(ticket.status);$('cancelTicket').disabled=['done','cancelled'].includes(ticket.status);
+  }else{
+   ticket=null;hide('ticketCard');show('joinCard');$('joinBtn').disabled=base.paused||joining;$('joinBtn').textContent=base.paused?'目前暫停領號':'確認領號';
+   if(token){token='';localStorage.removeItem(storageKey());}
+  }
+  if(base.turnstileSiteKey&&turnstileId===null)setupCaptcha(base.turnstileSiteKey);
+ }catch(e){msg('無法讀取排隊狀態：'+e.message);}finally{updating=false;}
+}
+function setupCaptcha(siteKey){
+ if(!window.turnstile){if(!document.getElementById('turnstileScript')){const s=document.createElement('script');s.id='turnstileScript';s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';s.onload=()=>setupCaptcha(siteKey);document.head.appendChild(s);}return;}
+ turnstileId=window.turnstile.render('#captcha',{sitekey:siteKey,theme:'light'});
+}
+$('joinForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(joining||config?.paused)return;clearMsg();joining=true;$('joinBtn').disabled=true;$('joinBtn').textContent='領號中…';
+ try{
+  const turnstileToken=turnstileId!==null?window.turnstile.getResponse(turnstileId):'';
+  const result=await req('/public/join','POST',{name:$('nickname').value.trim(),wantsLine:$('wantsLine').checked,turnstileToken});
+  token=result.token;localStorage.setItem(storageKey(),token);await refresh();msg('領號成功，請保存此頁面。','success');
+ }catch(err){msg(err.message);if(turnstileId!==null)window.turnstile.reset(turnstileId);}
+ finally{joining=false;await refresh();}
+});
+$('copyCode').onclick=async()=>{if(!ticket)return;try{await navigator.clipboard.writeText('綁定 '+ticket.lineCode);msg('已複製，請貼到官方 LINE 聊天室。','success');}catch{msg('請手動複製綁定訊息。');}};
+$('toggleLine').onclick=async()=>{if(!ticket)return;try{await req('/public/line','POST',{token,wantsLine:!ticket.wantsLine});await refresh();}catch(e){msg(e.message);}};
+$('cancelTicket').onclick=async()=>{if(!ticket||!confirm(`確定取消 ${ticket.number} 號嗎？`))return;try{await req('/public/cancel','POST',{token});await refresh();msg('已取消排隊。','success');}catch(e){msg(e.message);}};
+try{token=localStorage.getItem(storageKey())||'';}catch{}
+refresh();setInterval(refresh,10000);
+})();
+</script></body></html>

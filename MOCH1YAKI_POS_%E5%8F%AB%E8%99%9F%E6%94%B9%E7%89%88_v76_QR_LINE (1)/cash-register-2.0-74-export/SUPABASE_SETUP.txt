@@ -1,0 +1,37 @@
+Supabase 雲端同步設定（選用）
+
+這個功能不是使用 GitHub Pages 當資料庫；GitHub Pages 本身不能寫入資料。
+若不需要多裝置同步，可以完全不設定，收銀機其他功能照常使用。
+
+1. 建立 Supabase 專案
+2. 在 SQL Editor 建立資料表：
+
+create table if not exists public.pos_sync (
+  sync_code text primary key,
+  payload jsonb not null,
+  updated_at timestamptz not null default now()
+);
+
+3. 若要從瀏覽器使用 anon key，必須自行設定 RLS / Policy。
+   請注意：不要把 service_role key 放進網頁。
+   收銀機只應填 Supabase 的 anon / publishable key。
+
+4. 收銀機 →「營運」→「雲端同步」
+   填入：
+   - Project URL
+   - Anon Key
+   - 自己設定的同步代碼
+
+5. 同一台或另一台裝置使用相同 Project URL、Anon Key、同步代碼，
+   即可手動上傳／下載同一份收銀資料。
+
+隱私設計
+- 同步代碼本身不會直接當資料庫 row id。
+- 程式先對同步代碼做 SHA-256。
+- 收銀資料會使用同步代碼透過 PBKDF2 派生金鑰，再以 AES-GCM 加密。
+- Supabase payload 看到的是加密資料。
+- 付款 QR 圖片不包含在同步內容中。
+
+重要
+- 雲端「下載」會覆蓋目前裝置的收銀資料，操作前會再次確認。
+- 建議重要活動結束後仍下載完整 JSON 備份。
